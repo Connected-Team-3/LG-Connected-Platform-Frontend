@@ -4,6 +4,9 @@ import debugLog from '../libs/log';
 import {closeApp, isTVBrowser, reload} from '../libs/utils';
 import { useProcStat } from '../hooks/useData';
 
+import {useContext} from 'react';
+import {PanelContext} from '../views/Context';
+
 const useVisibleChangeHandler = () =>
 	useCallback(() => {
 		const {hidden} = document;
@@ -25,9 +28,16 @@ const useHighContrastChangeHandler = setSkinVariants =>
 	}, [setSkinVariants]);
 
 export const useBackHandler = () => {
-	return useCallback(() => {
-		debugLog('BACK[I]', {});
-	}, []);
+	const {panelData, setPanelData} = useContext(PanelContext);
+
+	return () => {
+		if (panelData.length > 1) {
+			// Remove the last panel and go back to the previous one
+			setPanelData(prev => prev.slice(0, -1));
+			return true; // Indicate the back event was handled
+		}
+		return false; // If no more panels, allow the system back event
+	};
 };
 
 export const useCloseHandler = () =>
@@ -70,3 +80,4 @@ export const useDocumentEvent = setSkinVariants => {
 export const useSubscriptions = () => {
 	useProcStat();
 };
+

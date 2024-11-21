@@ -7,7 +7,8 @@ import {isDevServe} from '../libs/utils';
 import DetailPanel from '../views/DetailPanel';
 import {PanelContext} from '../views/Context';
 import SettingPanel from '../views/SettingPanel';
-
+import VideoListPanel from '../views/VideoListPanel';
+import VideoStreamingPanel from '../views/VideoStreamingPanel';
 // 실습 : 동적 panel 이동 기능 구현하기
 
 // For advanced
@@ -41,9 +42,9 @@ const mapper = item => {
 	const {name, data} = item;
 	switch (name) {
 		case 'main':
-			return <Main key={name} data={data} />;
-		case 'detail':
-			return <DetailPanel key={name} data={data} />;
+			return <VideoListPanel key={name} data={data} />;
+		case 'video':
+			return <VideoStreamingPanel key={name} data={data} />;
 		case 'setting':
 			return <SettingPanel key={name} data={data} />;
 		default:
@@ -57,6 +58,7 @@ const App = props => {
 	const handleClose = useCloseHandler();
 	useDocumentEvent(setSkinVariants);
 	const {panelData} = useContext(PanelContext);
+	console.log(panelData); 
 	return (
 		<Panels
 			{...props}

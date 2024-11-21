@@ -3,6 +3,7 @@ import {Header, Panel} from '@enact/sandstone/Panels';
 import Item from '@enact/sandstone/Item';
 import {PanelContext} from './Context';
 import {useCallback, useContext} from 'react';
+import Button from '@enact/sandstone/Button';
 
 const DetailPanel = props => {
 	const {data, ...rest} = props;
@@ -11,6 +12,7 @@ const DetailPanel = props => {
 	const handleClick = useCallback(() => {
 		setPanelData(prev => [...prev, {name: 'setting', data: {index: index + 1}}]);
 	}, [index, setPanelData]);
+
 	return (
 		<Panel {...rest}>
 			<Header title={`Detail ${index}`} />
