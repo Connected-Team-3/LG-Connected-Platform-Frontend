@@ -6,6 +6,8 @@ import {scaleToRem} from '@enact/ui/resolution';
 import {useCallback, useContext} from 'react';
 import {PanelContext} from './Context';
 
+import VideoListTab from '../components/VideoListTab';
+
 const videoData = [
 	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
 	{title: 'Video 2', description: 'Description for video 2', thumbnail: 'https://via.placeholder.com/360x240', duration: '3:45', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'},
@@ -15,40 +17,22 @@ const videoData = [
 const VideoListPanel = props => {
 	const {setPanelData} = useContext(PanelContext);
 
-	const handleVideoClick = useCallback(
-		video => () => {
-			setPanelData(prev => [...prev, {name: 'video', data: video}]);
-		},
-		[setPanelData]
-	);
-
-	const videoItems = videoData.map((video, index) => (
-		<MediaOverlay
-			key={`video-${index}`}
-			thumbnailSrc={video.thumbnail}
-			title={video.title}
-			subtitle={video.description}
-			duration={video.duration}
-			style={{
-				width: scaleToRem(768),
-				height: scaleToRem(588),
-				marginBottom: scaleToRem(24)
-			}}
-			onClick={handleVideoClick(video)}
-		/>
-	));
-
 	return (
 		<Panel {...props}>
 			<Header title="Video Collection" subtitle="Explore and Play Videos" />
 			<TabLayout>
 				<Tab title="Videos">
-					<Scroller>{videoItems}</Scroller>
+					<VideoListTab />
 				</Tab>
-				<Tab title="About">
-					<p style={{padding: scaleToRem(24)}}>
-						Welcome to the video collection. Click on any video to view its details or play it.
-					</p>
+				<Tab title="Recently Viewed">
+					<Scroller>
+
+					</Scroller>
+				</Tab>
+				<Tab title="Playlists">
+					<Scroller>
+
+					</Scroller>
 				</Tab>
 			</TabLayout>
 		</Panel>
