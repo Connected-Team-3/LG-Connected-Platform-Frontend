@@ -6,7 +6,7 @@ import Icon from '@enact/sandstone/Icon';
 import TabLayout, {Tab} from '@enact/sandstone/TabLayout';
 import {Header, Panel} from '@enact/sandstone/Panels';
 import {scaleToRem} from '@enact/ui/resolution';
-import {useCallback, useContext} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {PanelContext} from './Context';
 import {svgGenerator} from '../libs/svg';
 
@@ -18,6 +18,16 @@ const tabsWithIcons = [
 
 const Main = props => {
 	const {setPanelData} = useContext(PanelContext);
+	// 로그인 상태 확인 (JWT가 없으면 로그인 페이지로 이동)
+	useEffect(() => {
+		const token = webOS && webOS.service.request ? webOS.service.request('luna://com.webos.service.storage/getItem', { key: 'jwt' }) : null;
+		if (!token) {
+		  // JWT가 없으면 로그인 페이지로 이동
+		  setPanelData(prev => [...prev, { name: 'login', data: {} }]);
+		}
+	  }, [setPanelData]);
+	
+	  
 	const handleClick = useCallback(
 		index => () => {
 			setPanelData(prev => [...prev, {name: 'detail', data: {index}}]);
