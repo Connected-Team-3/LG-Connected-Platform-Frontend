@@ -9,6 +9,10 @@ import {PanelContext} from '../views/Context';
 import SettingPanel from '../views/SettingPanel';
 import VideoListPanel from '../views/VideoListPanel';
 import VideoStreamingPanel from '../views/VideoStreamingPanel';
+
+import {AuthProvider} from '../auth/AuthProvider';
+import LoginPage from '../views/LoginPanel';
+import VideoUploadPanel from '../views/VideoUploadPanel';
 // 실습 : 동적 panel 이동 기능 구현하기
 
 // For advanced
@@ -47,6 +51,10 @@ const mapper = item => {
 			return <VideoStreamingPanel key={name} data={data} />;
 		case 'setting':
 			return <SettingPanel key={name} data={data} />;
+		case 'login':
+			return <LoginPage key={name} data={data} />;
+		case 'videoUpload':
+			return <VideoUploadPanel key={name} data={data} />;
 		default:
 			return <Main key={name} />;
 	}
@@ -60,6 +68,7 @@ const App = props => {
 	const {panelData} = useContext(PanelContext);
 	console.log(panelData); 
 	return (
+		<AuthProvider>
 		<Panels
 			{...props}
 			index={panelData.length - 1}
@@ -69,6 +78,7 @@ const App = props => {
 		>
 			{panelData.map(mapper)}
 		</Panels>
+		</AuthProvider>
 	);
 };
 

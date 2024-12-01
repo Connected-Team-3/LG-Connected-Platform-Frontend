@@ -43,8 +43,9 @@
 		"@enact/i18n": "^4.7.0",
 		"@enact/sandstone": "^2.9.5",
 		"@enact/spotlight": "^4.7.0",
-		"@enact/ui": "^4.7.0",
+		"@enact/ui": "^4.9.4",
 		"@enact/webos": "^4.7.0",
+		"axios": "^1.7.8",
 		"ilib": "^14.17.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.3.1",
@@ -65,5 +66,6 @@
 		"src/**/*.js": [
 			"npm run lint -- --fix"
 		]
-	}
+	},
+	"proxy": "http://43.201.111.86:8080"
 }

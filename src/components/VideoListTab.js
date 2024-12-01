@@ -1,4 +1,4 @@
-import {useState, useMemo, useCallback, useContext} from 'react';
+import {useState, useMemo, useCallback, useContext, useEffect } from 'react';
 import {Item} from '@enact/sandstone/Item';
 import {Group} from '@enact/ui/Group';
 import {VirtualGridList} from '@enact/sandstone/VirtualList';
@@ -7,89 +7,90 @@ import {MediaOverlay} from '@enact/sandstone/MediaOverlay';
 import {scaleToRem} from '@enact/ui/resolution';
 import {PanelContext} from '../views/Context';
 import {Row, Cell} from '@enact/ui/Layout';
+import axiosInstance from '../auth/axiosInstance';
+import Spinner from '@enact/sandstone/Spinner';
+import Dropdown from '@enact/sandstone/Dropdown';
+import { Panel } from '@enact/sandstone/Panels';
 
-const videoData = [
-	{category: 'Movies', title: 'Movie 1', description: 'A great movie', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
-	{category: 'Movies', title: 'Movie 2', description: 'Another great movie', thumbnail: 'https://via.placeholder.com/360x240', duration: '1:45', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'},
-	{category: 'Sports', title: 'Sports 1', description: 'Exciting sports video', thumbnail: 'https://via.placeholder.com/360x240', duration: '3:15', src: 'https://example.com/sports1.mp4'},
-	{category: 'Music', title: 'Music 1', description: 'A beautiful music video', thumbnail: 'https://via.placeholder.com/360x240', duration: '4:20', src: 'https://example.com/music1.mp4'},
-	{category: 'Music', title: 'Music 2', description: 'Another beautiful music video', thumbnail: 'https://via.placeholder.com/360x240', duration: '5:10', src: 'https://example.com/music2.mp4'},
-];
-
-const categories = ['All', 'Movies', 'Sports', 'Music', 'News', 'Drama', 'Kids', 'Comedy', 'Education'];
-
-const CategoryFilter = ({selectedCategory, onSelectCategory}) => {
-	return (
-		<Row
-			align="center" // 항목을 가운데 정렬
-			style={{
-				height: scaleToRem(100),
-				marginBottom: scaleToRem(50),
-				flexWrap: 'wrap', // 화면에 공간이 부족할 경우 자동 줄바꿈
-			}}
-		>
-			{categories.map((category) => (
-				<Cell
-					key={category}
-					component={Item}
-					onClick={() => onSelectCategory(category)}
-					style={{
-						margin: `0 ${scaleToRem(10)}`,
-						backgroundColor: selectedCategory === category ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
-						borderRadius: scaleToRem(10),
-						textAlign: 'center',
-						minWidth: scaleToRem(80), // 최소 너비 설정
-						height: scaleToRem(50), // 높이 설정
-					}}
-				>
-					{category}
-				</Cell>
-			))}
-		</Row>
-	);
-};
-
-const FilteredVideos = ({category}) => {
-	const {setPanelData} = useContext(PanelContext);
-
-    const filteredVideos = useMemo(() => {
-        if (category === 'All') return videoData;
-        return videoData.filter(video => video.category === category);
-    }, [category]);
-
-    const handleVideoClick = useCallback(
-        video => () => {
-            setPanelData(prev => [...prev, {name: 'video', data: video}]);
-        },
-        [setPanelData]
-    );
-
-    return (
-        <Scroller>
-            {filteredVideos.map((video, index) => (
-                <MediaOverlay
-                    key={index}
-                    style={{margin: '10px'}}
-                    image={video.thumbnail}
-                    title={video.title}
-                    subtitle={video.description}
-                    duration={video.duration}
-                    onClick={handleVideoClick(video)}
-                />
-            ))}
-        </Scroller>
-    );
-};
+const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
 
 const VideoListTab = () => {
-	const [selectedCategory, setSelectedCategory] = useState('All');
+	const [videoData, setVideoData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState('All');
+	const [dropdownOpen, setDropdownOpen] = useState(false);
+
+	const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
+    // 드롭다운 항목 선택 핸들러
+    const handleCategorySelect = (category) => {
+		console.log(category.data);
+        setSelectedCategory(category.data);
+        setDropdownOpen(false);  // 카테고리 선택 후 드롭다운 닫기
+    };
+
+
+	useEffect(() => {
+        const fetchVideos = async () => {
+            setLoading(true); // 로딩 상태 활성화
+            try {
+                const response = await axiosInstance.get(`/api/video/${selectedCategory}`); // 카테고리에 맞는 API 요청
+                setVideoData(response.data);  // API에서 반환된 데이터로 상태 설정
+				console.log(response);
+            } catch (error) {
+                console.error('Error fetching video data:', error);
+            } finally {
+                setLoading(false); // 로딩 상태 비활성화
+            }
+        };
+
+        fetchVideos();
+    }, [selectedCategory]);
+
+	if (loading) {
+        return <Spinner />
+    }
+
+	const renderItem = (index) => {
+        const video = videoData[index]; // 해당 인덱스의 동영상
+        return (
+            <Item key={index}>
+                <MediaOverlay
+                    src={video.thumbnail}
+                    title={video.title}
+                    description={video.description}
+                    duration={video.duration}
+                />
+            </Item>
+        );
+    };
 
 	return (
-        <div style={{padding: scaleToRem(20)}}>
-            <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
-            <FilteredVideos category={selectedCategory} />
-        </div>
+		<Panel>
+            {/* 카테고리 선택 */}
+            <Dropdown
+                direction="below"
+                open={dropdownOpen}
+                onClose={() => setDropdownOpen(false)}
+                onOpen={() => setDropdownOpen(true)}
+				onSelect={handleCategorySelect}
+                size="small"
+                title="카테고리 선택"
+                width="medium"
+            >
+                {categories}
+            </Dropdown>
+
+            {/* 동영상 리스트 */}
+            <VirtualGridList
+                itemRenderer={renderItem}  // 항목을 어떻게 그릴지 정의
+                dataSize={videoData.length}  // 데이터의 길이
+                itemSize={{ minWidth: 360, minHeight: 240 }}  // 항목의 크기 설정
+            />
+		</Panel>
     );
 };
 
