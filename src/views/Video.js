@@ -21,8 +21,8 @@ const Video = ({data}) => {
 			title={data.title}
 			titleHideDelay={4000}
 		>
-			<source src={data.src} type="video/mp4" />
-			<infoComponents>{data.description}</infoComponents>
+			<source src={data.video.sourceUrl} type="video/mp4" />
+			<infoComponents>{data.video.description}</infoComponents>
 			<MediaControls
 				jumpBackwardIcon="jumpbackward"
 				jumpForwardIcon="jumpforward"

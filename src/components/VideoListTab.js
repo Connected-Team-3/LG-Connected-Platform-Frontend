@@ -15,11 +15,21 @@ import { Panel } from '@enact/sandstone/Panels';
 const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
 
-const VideoListTab = () => {
+const VideoListTab = props => {
+	const {data, ...rest} = props;
+	const index = data?.index ?? 0;
 	const [videoData, setVideoData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [selectedCategory, setSelectedCategory] = useState('KOREAN_FOOD');
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const {setPanelData} = useContext(PanelContext);
+	const handleVideoClick = useCallback((video) => {
+		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video}}]);
+	}, [index, setPanelData]);
+
+	
+
+	
 
 	const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -38,8 +48,8 @@ const VideoListTab = () => {
             setLoading(true); // 로딩 상태 활성화
             try {
                 const response = await axiosInstance.get(`/api/video/${selectedCategory}`); // 카테고리에 맞는 API 요청
-                setVideoData(response.data);  // API에서 반환된 데이터로 상태 설정
-				console.log(response);
+                setVideoData(response.data.result.list);  // API에서 반환된 데이터로 상태 설정
+				console.log(response.data.result.list);
             } catch (error) {
                 console.error('Error fetching video data:', error);
             } finally {
@@ -47,7 +57,11 @@ const VideoListTab = () => {
             }
         };
 
-        fetchVideos();
+        if (selectedCategory !== 'All') {
+            fetchVideos();
+        } else {
+            setVideoData([]);  // 카테고리가 "All"이면 비디오 데이터 초기화
+        }
     }, [selectedCategory]);
 
 	if (loading) {
@@ -56,17 +70,22 @@ const VideoListTab = () => {
 
 	const renderItem = (index) => {
         const video = videoData[index]; // 해당 인덱스의 동영상
+		
+		if (!video) return null;
+		console.log(video);
         return (
             <Item key={index}>
                 <MediaOverlay
-                    src={video.thumbnail}
+                    src={video.sourceUrl}
                     title={video.title}
                     description={video.description}
-                    duration={video.duration}
+                    poster={video.thumbUrl}
                 />
             </Item>
         );
     };
+
+	
 
 	return (
 		<Panel>
@@ -84,12 +103,21 @@ const VideoListTab = () => {
                 {categories}
             </Dropdown>
 
-            {/* 동영상 리스트 */}
-            <VirtualGridList
-                itemRenderer={renderItem}  // 항목을 어떻게 그릴지 정의
-                dataSize={videoData.length}  // 데이터의 길이
-                itemSize={{ minWidth: 360, minHeight: 240 }}  // 항목의 크기 설정
-            />
+            <Row wrap>
+                {videoData.map((video) => ( 
+					<Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
+					<MediaOverlay
+						marqueeOn="focus"
+						muted
+						subtitle={video.description}
+						textAlign="end"
+						title={video.title}
+					>
+						<source src={video.sourceUrl} />
+					</MediaOverlay>
+				</Cell>
+                ))}
+            </Row>
 		</Panel>
     );
 };
