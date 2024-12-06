@@ -11,6 +11,7 @@ import LoginPage from './LoginPanel';
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
 import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
+import PlayListPanel from './PlayListPanel';
 
 const videoData = [
 	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
@@ -32,9 +33,7 @@ const VideoListPanel = props => {
 					<RecentlyViewedVideosPanel />
 				</Tab>
 				<Tab title="Playlists">
-					<Scroller>
-
-					</Scroller>
+					<PlayListPanel />
 				</Tab>
 				<Tab title="Upload">
 					<VideoUploadPanel />
