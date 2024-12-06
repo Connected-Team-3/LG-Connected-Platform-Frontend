@@ -15,4 +15,12 @@ dist
 
 # others
 npm-debug.log
+<<<<<<< HEAD
+.eslintcache*.bash_history
+*.bash_logout
+*.bashrc
+.cache/
+.npm/
+=======
 .eslintcache
+>>>>>>> 435fb5ebc473546a59fc0b9150a6c57d2da31ef3

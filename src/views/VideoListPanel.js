@@ -10,6 +10,7 @@ import LoginPage from './LoginPanel';
 
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
+import SearchView from './SearchView'; // SearchView 컴포넌트 추가
 import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
 import PlayListPanel from './PlayListPanel';
 
@@ -28,6 +29,11 @@ const VideoListPanel = props => {
 		<Panel {...props} className={css.panel}>
 			<Header title="Video Collection" subtitle="Explore and Play Videos" className={css.header}/>
 			<TabLayout>
+				<Tab title="Search">
+					<Scroller>
+						<SearchView />
+					</Scroller>
+				</Tab>
 				<Tab title="Videos">
 					<VideoListTab />
 				</Tab>
