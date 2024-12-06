@@ -1,0 +1,15 @@
+[33m03d4d16[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/playlist[m[33m, [m[1;31morigin/feature/playlist[m[33m, [m[1;31morigin/develop[m[33m)[m Merge pull request #1 from Connected-Team-3/yongug_system
+[33m581255d[m system resource visualized panel
+[33mb50e403[m[33m ([m[1;32mmain[m[33m)[m category and streaming
+[33mf54f043[m login
+[33m7c95a6c[m video list panel
+[33mc9a4ecb[m setup
+[33m9c2f78e[m Update dynamic panel move
+[33m29ff05d[m Update request function to make it easier to understand
+[33m03bd87c[m Remove unused property in appinfo.json
+[33mdc28be0[m Update template for memorymanager
+[33m31fc71a[m Update appinfo.json
+[33m67e29d3[m update appinfo.json
+[33mabdec9d[m Fix abnormal parameter to launch app
+[33m7b2e610[m Update createRoot for react 18.0.0
+[33m6e3ca8d[m first commit for template

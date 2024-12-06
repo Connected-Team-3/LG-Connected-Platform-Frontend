@@ -1,6 +1,5 @@
-import {Header, Panel} from '@enact/sandstone/Panels';
-import {PanelContext} from './Context';
-import {useCallback, useContext} from 'react';
+import React, {useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import Video from './Video';
 import Button from '@enact/ui/Button';
 import { PageViews, Page } from '@enact/sandstone/PageViews';
@@ -40,6 +39,7 @@ const VideoStreamingPanel = props => {
 			</PageViews>
 			</Panel>
 	)
+
 };
 
 export default VideoStreamingPanel;
