@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import Video from './Video';
 import { PageViews, Page } from '@enact/sandstone/PageViews';
 import Item from '@enact/sandstone/Item';
+import IconItem from '@enact/sandstone/IconItem';
+import Icon from '@enact/sandstone/Icon';
 
 const VideoStreamingPanel = (props) => {
   const { data, ...rest } = props;
@@ -37,9 +39,25 @@ const VideoStreamingPanel = (props) => {
     ]);
   };
 
+  // Header의 홈 버튼 클릭 시 Main 화면으로 돌아가기
+  const handleHomeClick = () => {
+    setPanelData(prev => [
+      ...prev.filter(panel => panel.name !== 'videoList'),  // 기존 패널을 필터링하여 Main 화면으로 이동
+      { name: 'main', data: {} }  // 'main' 패널로 이동
+    ]);
+  };
+
   return (
-    <Panel {...rest}>
-      <Header title={`Video`} onClose={handleClose} />
+    <Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
+      <Header
+        title={`Video`}
+        slotBefore={
+          <IconItem onClick={handleHomeClick} aria-label="Go to Home">
+            <Icon>home</Icon>
+          </IconItem>
+        }
+        onClose={handleClose} // 기존 close 버튼도 여전히 활성화
+      />
       <PageViews pageIndicatorType="dot">
         <Page>
           <Video data={data} />

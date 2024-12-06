@@ -6,6 +6,8 @@ import SearchResults from '../components/SearchResults';
 import axiosInstance from '../auth/axiosInstance';
 import { PanelContext } from '../views/Context';
 import Spinner from '@enact/sandstone/Spinner';
+import IconItem from '@enact/sandstone/IconItem';
+import Icon from '@enact/sandstone/Icon';
 
 const SearchView = (props) => {
     const {data, ...rest} = props;
@@ -42,12 +44,11 @@ const SearchView = (props) => {
         setPanelData(prev => [...prev, { name: 'video', data: { video } }]);
     };
 
-    // Close 버튼 클릭 시 실행될 함수
-    const handleClose = () => {
-        // VideoListPanel로 이동
+    // 홈 버튼 클릭 시 실행될 함수
+    const handleHomeClick = () => {
         setPanelData(prev => [
             ...prev,
-            { name: 'main', data: {} }  // 'videoList'는 VideoListPanel의 이름
+            { name: 'main', data: {} }  // 'main' 패널로 이동
         ]);
     };
 
@@ -56,8 +57,15 @@ const SearchView = (props) => {
     }
 
     return (
-        <Panel {...rest}>
-            <Header title="Search Video" closeButton onClose={handleClose} />
+        <Panel {...rest} noCloseButton={true} >
+            <Header
+                title="Search Video"
+                slotAfter={
+                    <IconItem onClick={handleHomeClick} aria-label="Go to Home">
+                        <Icon>home</Icon>
+                    </IconItem>
+                }
+            />
             <SearchComponent onSearch={handleSearch} />
             {errorMessage && <Heading>{errorMessage}</Heading>}
             {/* 검색어와 결과를 표시 */}

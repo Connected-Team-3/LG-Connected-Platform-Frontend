@@ -22,7 +22,7 @@ const VideoListPanel = props => {
 	const {setPanelData} = useContext(PanelContext);
 
 	return (
-		<Panel {...props}>
+		<Panel style={{ height: '100%', overflow: 'auto' }}>
 			<Header title="Video Collection" subtitle="Explore and Play Videos" />
 			<TabLayout>
 				<Tab title="Search">

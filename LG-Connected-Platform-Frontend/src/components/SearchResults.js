@@ -6,10 +6,10 @@ import { Panel, Header } from '@enact/sandstone/Panels'; // Panel, Header 추가
 
 const SearchResults = ({ results, onVideoClick, query }) => {
     return (
-        <Panel>
+        <Panel noCloseButton={true} style={{ height: '100%', overflow: 'auto' }}>
             {/* 검색 결과가 있을 때만 Header 표시 */}
             {results.length > 0 && (
-                <Header title={`"${query}"로 검색한 결과`} closeButton={false} />  //close 버튼 숨김
+                <Header title={`"${query}"로 검색한 결과`}  />  //close 버튼 숨김
             )}
 
             {/* 검색 결과가 없을 경우 "결과가 없습니다" 메시지 표시 */}
