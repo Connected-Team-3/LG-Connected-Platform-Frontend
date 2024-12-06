@@ -1,13 +1,13 @@
 import { Panel, Header } from '@enact/sandstone/Panels';
 import { Heading } from '@enact/sandstone/Heading';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import SearchComponent from '../components/SearchComponent';
 import SearchResults from '../components/SearchResults';
 import axiosInstance from '../auth/axiosInstance';
 import { PanelContext } from '../views/Context';
 import Spinner from '@enact/sandstone/Spinner';
 
-const SearchView = () => {
+const SearchView = ({data}) => {
     const [results, setResults] = useState([]);
     const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
     const [loading, setLoading] = useState(false);
@@ -30,6 +30,12 @@ const SearchView = () => {
             setLoading(false);
         }
     };
+    // // 부가정보 클릭 후 자동 검색
+    // useEffect(() => {
+    //     if (data?.query) {
+    //         handleSearch(data.query);
+    //     }
+    // }, [data]);
 
     const handleVideoClick = (video) => {
         setPanelData(prev => [...prev, { name: 'video', data: { video } }]);

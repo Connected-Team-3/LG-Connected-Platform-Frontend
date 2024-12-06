@@ -15,6 +15,7 @@ import SearchView from './SearchView'; // SearchView 컴포넌트 추가
 
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
+import SystemState from './SystemState'; // yongug systemstate 
 
 
 const videoData = [
@@ -57,6 +58,10 @@ const VideoListPanel = props => {
 				</Tab>
 				<Tab title="Login">
 					<LoginPage />
+				</Tab>
+				{/* yongug */}
+				<Tab title="System">
+					<SystemState />
 				</Tab>
 			</TabLayout>
 		</Panel>
