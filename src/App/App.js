@@ -1,6 +1,7 @@
 import {useContext, useState} from 'react';
 import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
 import Panels from '@enact/sandstone/Panels';
+import {BrowserRouter as Router} from 'react-router-dom'; // React Router 추가
 import Main from '../views/Main';
 import {useBackHandler, useCloseHandler, useDocumentEvent} from './AppState';
 import {isDevServe} from '../libs/utils';
@@ -9,80 +10,70 @@ import {PanelContext} from '../views/Context';
 import SettingPanel from '../views/SettingPanel';
 import VideoListPanel from '../views/VideoListPanel';
 import VideoStreamingPanel from '../views/VideoStreamingPanel';
-
+import Playlist from '../views/Playlist'; // 추가된 Playlist 컴포넌트
 import {AuthProvider} from '../auth/AuthProvider';
 import { AxiosInterceptor } from '../auth/axiosInstance';
 import LoginPage from '../views/LoginPanel';
 import VideoUploadPanel from '../views/VideoUploadPanel';
-// 실습 : 동적 panel 이동 기능 구현하기
 
-// For advanced
-// 1. context를 생성하여 panel의 name과 전달할 data를 담아 배열에 저장하고 변경 가능한  Provider 구현하세요. (Context.js)
-// context 초기 데이터 : [{name: 'main', data: {}}]
-// 2. Panels 컴포넌트 children에 패널이 담긴 배열을 리턴하는 함수를 작성하세요(App.js)
-//  - useContext를 통해 panel 정보가 담긴 배열을 읽어와 name에 따라 Panel로 변환해 배열을 리턴하는 함수 작성
-//  - e.g) name이 detail인 경우 <Detail data={data} />으로 변환하고 배열로 리턴.
-// 3. 각 패널에서 다른 패널로 이동할 수 있는 이벤트 핸들러를 각각 구현해보세요
-//  - main -> detail -> settings 패널로 이동
-
-// -------------
-
-// For rookie
-// 1. git checkout feature/panels
-// 2. useBackHandler함수에서 useContext에 정의된 setPanelData 함수를 사용하여 이전 패널로 돌아가는 함수를 작성하세요.
-
-/* istanbul ignore next*/
+/* istanbul ignore next */
 if (isDevServe()) {
-	window.webOSSystem = {
-		highContrast: 'off',
-		close: () => {},
-		platformBack: () => {},
-		PmLogString: () => {},
-		screenOrientation: 'landscape',
-		setWindowOrientation: () => {}
-	};
+    window.webOSSystem = {
+        highContrast: 'off',
+        close: () => {},
+        platformBack: () => {},
+        PmLogString: () => {},
+        screenOrientation: 'landscape',
+        setWindowOrientation: () => {}
+    };
 }
 
 const mapper = item => {
-	const {name, data} = item;
-	switch (name) {
-		case 'main':
-			return <VideoListPanel key={name} data={data} />;
-		case 'video':
-			return <VideoStreamingPanel key={name} data={data} />;
-		case 'setting':
-			return <SettingPanel key={name} data={data} />;
-		case 'login':
-			return <LoginPage key={name} data={data} />;
-		case 'videoUpload':
-			return <VideoUploadPanel key={name} data={data} />;
-		default:
-			return <Main key={name} />;
-	}
+    const {name, data} = item;
+    switch (name) {
+        case 'main':
+            return <VideoListPanel key={name} data={data} />;
+        case 'video':
+            return <VideoStreamingPanel key={name} data={data} />;
+        case 'playlist':
+            return <Playlist key={name} data={data} />;
+        case 'setting':
+            return <SettingPanel key={name} data={data} />;
+        case 'login':
+            return <LoginPage key={name} data={data} />;
+        case 'videoUpload':
+            return <VideoUploadPanel key={name} data={data} />;
+        default:
+            return <Main key={name} />;
+    }
 };
 
 const App = props => {
-	const [skinVariants, setSkinVariants] = useState({highContrast: false});
-	const handleBack = useBackHandler();
-	const handleClose = useCloseHandler();
-	useDocumentEvent(setSkinVariants);
-	const {panelData} = useContext(PanelContext);
-	console.log(panelData); 
-	return (
-		<AuthProvider>
-			<AxiosInterceptor>
-		<Panels
-			{...props}
-			index={panelData.length - 1}
-			skinVariants={skinVariants}
-			onBack={handleBack}
-			onClose={handleClose}
-		>
-			{panelData.map(mapper)}
-		</Panels>
-		</AxiosInterceptor>
-		</AuthProvider>
-	);
+    const [skinVariants, setSkinVariants] = useState({highContrast: false});
+    const handleBack = useBackHandler();
+    const handleClose = useCloseHandler();
+    useDocumentEvent(setSkinVariants);
+    const {panelData} = useContext(PanelContext);
+
+    console.log(panelData); // panelData 확인용
+
+    return (
+        <AuthProvider>
+            <AxiosInterceptor>
+                <Router>
+                    <Panels
+                        {...props}
+                        index={panelData.length - 1}
+                        skinVariants={skinVariants}
+                        onBack={handleBack}
+                        onClose={handleClose}
+                    >
+                        {panelData.map(mapper)}
+                    </Panels>
+                </Router>
+            </AxiosInterceptor>
+        </AuthProvider>
+    );
 };
 
 export default ThemeDecorator(App);
