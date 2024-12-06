@@ -1,0 +1,123 @@
+/* eslint-disable enact/prop-types */
+import React, {useState, useEffect} from 'react';
+import {Header, Panel} from '@enact/sandstone/Panels';
+import Item from '@enact/sandstone/Item';
+import {PanelContext} from './Context';
+import {useCallback, useContext} from 'react';
+import Button from '@enact/sandstone/Button';
+import Spinner from '@enact/sandstone/Spinner';
+import {VirtualList, VirtualGridList} from '@enact/sandstone/VirtualList';
+import ImageItem from '@enact/sandstone/ImageItem';
+import {Cell, Row} from '@enact/ui/Layout';
+import {MediaOverlay} from '@enact/sandstone/MediaOverlay';
+import BodyText from '@enact/sandstone/BodyText';
+
+import axiosInstance from '../auth/axiosInstance';
+
+const PlayListPanel = props => {
+	const {data, ...rest} = props;
+	const index = data?.index ?? 0;
+	const {setPanelData} = useContext(PanelContext);
+    const [playList, setPlayList] = useState([]); // 사용자 기록 상태
+    const [loading, setLoading] = useState(true);
+    const [videoData, setVideoData] = useState([]);
+    const handleVideoClick = useCallback((video, playlist) => {
+		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playList:playList}}]);
+	}, [index, setPanelData]);
+
+    const fetchPlayList = async () => {
+        try {
+        const response = await axiosInstance.get(`/api/playlist/getPlaylist/2`);
+            setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
+            console.log(response.data.result.list); // 가져온 기록을 콘솔에 출력
+        } catch (error) {
+            console.error('Error fetching play list data:', error); // 오류 처리
+        } finally {
+            setLoading(false); // 로딩 상태 비활성화
+        }
+    };
+    
+    const fetchVideoDetails = async (videoIds) => {
+        try {
+            const videoInfoPromises = videoIds.map(async (videoId) => {
+            const response = await axiosInstance.get(`/api/video/play/${videoId}`);
+            return response.data.result.data; // 비디오 정보를 반환
+        });
+
+        // 모든 비디오 정보를 가져올 때까지 기다림
+        const videoData = await Promise.all(videoInfoPromises);
+        setVideoData(videoData); // 비디오 정보 상태 업데이트
+        console.log(videoData); // 비디오 정보 출력
+    } catch (error) {
+        console.error('Error fetching video details:', error); // 오류 처리
+    }
+    };
+    // 컴포넌트 마운트 시 사용자 기록을 가져옴
+    useEffect(() => {
+        fetchPlayList();
+        console.log(playList);
+    }, []);
+
+    useEffect(() => {
+        if (playList.length > 0) {
+          // 각 플레이리스트의 videoIdList 배열을 기반으로 비디오 정보 가져오기
+          const videoIds = playList.flatMap((playlist) => playlist.videoIdList);
+          fetchVideoDetails(videoIds); // 비디오 정보 가져오기
+        }
+      }, [playList]);
+
+
+
+	return (
+        <Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
+    <Header title="플레이리스트" />
+    {loading ? (
+        <Spinner size="small" />
+    ) : playList.length === 0 ? (
+        <BodyText size="large" style={{ marginLeft: '10px', color: 'gray' }}>
+            현재 비디오가 없습니다.
+        </BodyText>
+    ) : (
+        <Row wrap>
+            {playList.map((playlist) => (
+                <Cell key={playlist.id} size="auto" style={{ marginBottom: '20px', width: '100%' }}>
+                    {/* 플레이리스트 제목 표시 */}
+                    <BodyText size="large" style={{ marginLeft: '10px' }}>
+                        {playlist.title} {/* 플레이리스트 제목 표시 */}
+                    </BodyText>
+
+                    {/* 비디오들을 가로로 스크롤 가능한 영역으로 설정 */}
+                    <Row
+                        wrap={false} // 자동 줄 바꿈 비활성화
+                        style={{
+                            overflowX: 'auto', // 가로 스크롤 활성화
+                            whiteSpace: 'nowrap', // 가로로 아이템이 나열되도록 설정
+                            padding: '10px 0' // 약간의 패딩 추가
+                        }}
+                    >
+                        {playlist.videoIdList.map((videoId) => {
+                            const video = videoData.find((v) => v.id === videoId); // 비디오 ID에 해당하는 비디오 찾기
+                            if (!video) return null; // 비디오가 없으면 렌더링하지 않음
+
+                            return (
+                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playList.videoIdList)}>
+                                    <ImageItem
+                                        src={video.thumbUrl} // 썸네일 이미지
+                                        label={video.description}  // 비디오 설명
+                                        orientation="horizontal"
+                                    >
+                                        {video.title}
+                                    </ImageItem>
+                                </Cell>
+                            );
+                        })}
+                    </Row>
+                </Cell>
+            ))}
+        </Row>
+    )}
+</Panel>
+    );
+};
+
+export default PlayListPanel;

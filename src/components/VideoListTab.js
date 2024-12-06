@@ -88,7 +88,11 @@ const VideoListTab = props => {
 	
 
 	return (
+<<<<<<< HEAD
 		<Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
+=======
+		<Panel>
+>>>>>>> 435fb5ebc473546a59fc0b9150a6c57d2da31ef3
             {/* 카테고리 선택 */}
             <Dropdown
                 direction="below"
