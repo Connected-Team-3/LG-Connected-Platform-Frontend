@@ -7,6 +7,11 @@ import {useCallback, useContext} from 'react';
 import {PanelContext} from './Context';
 import LoginPage from './LoginPanel';
 
+import SearchComponent from '../components/SearchComponent';
+import SearchResults from '../components/SearchResults';
+import { Button } from '@enact/sandstone/Button'; // Button 컴포넌트 추가
+import SearchView from './SearchView'; // SearchView 컴포넌트 추가
+
 
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
@@ -20,11 +25,20 @@ const videoData = [
 
 const VideoListPanel = props => {
 	const {setPanelData} = useContext(PanelContext);
+	// 검색 버튼 클릭 시 호출되는 핸들러
+	const handleSearchClick = () => {
+		console.log(SearchView);
+		setPanelData(prev => [...prev, { name: 'search', data: {} }]); // 검색 패널로 이동
+	};
 
 	return (
 		<Panel {...props}>
 			<Header title="Video Collection" subtitle="Explore and Play Videos" />
+
 			<TabLayout>
+				<Tab title="Search">
+						<SearchView />
+				</Tab>
 				<Tab title="Videos">
 					<VideoListTab />
 				</Tab>
