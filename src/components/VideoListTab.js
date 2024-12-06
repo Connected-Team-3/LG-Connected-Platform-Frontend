@@ -11,7 +11,7 @@ import axiosInstance from '../auth/axiosInstance';
 import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
-
+import './VideoListTab.css'
 const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
 
@@ -23,14 +23,19 @@ const VideoListTab = props => {
     const [selectedCategory, setSelectedCategory] = useState('KOREAN_FOOD');
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const {setPanelData} = useContext(PanelContext);
+	// const handleVideoClick = useCallback((video) => {
+	// 	setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video}}]);
+	// }, [index, setPanelData]);
+
 	const handleVideoClick = useCallback((video) => {
-		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video}}]);
-	}, [index, setPanelData]);
+        setPanelData(prev => {
+            const updatedData = [...prev, { name: 'video', data: { index: index + 1, video: video } }];
+            console.log('Panel stack after video click:', updatedData); // 변경된 패널 스택을 로그로 출력
+            return updatedData;
+        });
+    }, [index, setPanelData]);
 
 	
-
-	
-
 	const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };

@@ -19,11 +19,11 @@ const SearchView = (props) => {
 
     // 부모 컴포넌트에서 전달받은 쿼리로 검색
     const query = props.data?.query || '';  // 'data.query'로 전달받은 검색어를 사용
-
+	const index = data?.index ?? 0;
     useEffect(() => {
-        if (query) {
-            handleSearch(query); // 쿼리가 있으면 검색 실행
-        }
+        if (query && query !== searchQuery) {  // 중복 방지: 기존 검색어와 비교
+        handleSearch(query);
+    }
     }, [query]);
 
     const handleSearch = async (query) => {
@@ -41,7 +41,7 @@ const SearchView = (props) => {
     };
 
     const handleVideoClick = (video) => {
-        setPanelData(prev => [...prev, { name: 'video', data: { video } }]);
+        setPanelData(prev => [...prev, { name: 'video',  data: {index: index + 1, video: video}}]);
     };
 
     // 홈 버튼 클릭 시 실행될 함수
