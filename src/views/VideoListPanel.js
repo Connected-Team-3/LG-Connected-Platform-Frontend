@@ -10,6 +10,7 @@ import LoginPage from './LoginPanel';
 
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
+import SystemState from './SystemState'; // yongug systemstate 
 
 const videoData = [
 	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
@@ -42,6 +43,10 @@ const VideoListPanel = props => {
 				</Tab>
 				<Tab title="Login">
 					<LoginPage />
+				</Tab>
+				{/* yongug */}
+				<Tab title="System">
+					<SystemState />
 				</Tab>
 			</TabLayout>
 		</Panel>
