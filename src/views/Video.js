@@ -110,8 +110,7 @@ const Video = props => {
 	
 
 	return (
-		<Panel>
-      {isLoading ? (
+      isLoading ? (
         <Spinner size="small" />
       ) : (
         <VideoPlayer
@@ -142,8 +141,7 @@ const Video = props => {
             <Button icon="subtitle" size="small" />
           </MediaControls>
         </VideoPlayer>
-      )}
-    </Panel>
+      )
 	);
 };
 
