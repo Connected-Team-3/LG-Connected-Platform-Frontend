@@ -14,10 +14,7 @@ import {AuthProvider} from '../auth/AuthProvider';
 import { AxiosInterceptor } from '../auth/axiosInstance';
 import LoginPage from '../views/LoginPanel';
 import VideoUploadPanel from '../views/VideoUploadPanel';
-<<<<<<< HEAD
 import SearchView from '../views/SearchView'
-=======
->>>>>>> 435fb5ebc473546a59fc0b9150a6c57d2da31ef3
 // 실습 : 동적 panel 이동 기능 구현하기
 
 // For advanced
@@ -60,11 +57,8 @@ const mapper = item => {
 			return <LoginPage key={name} data={data} />;
 		case 'videoUpload':
 			return <VideoUploadPanel key={name} data={data} />;
-<<<<<<< HEAD
 		case 'search':
 			return <SearchView key={name} data={data} />; // SearchView 매핑 추가
-=======
->>>>>>> 435fb5ebc473546a59fc0b9150a6c57d2da31ef3
 		default:
 			return <Main key={name} />;
 	}
