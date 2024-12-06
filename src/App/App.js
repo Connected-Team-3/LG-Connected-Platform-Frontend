@@ -11,6 +11,7 @@ import VideoListPanel from '../views/VideoListPanel';
 import VideoStreamingPanel from '../views/VideoStreamingPanel';
 
 import {AuthProvider} from '../auth/AuthProvider';
+import { AxiosInterceptor } from '../auth/axiosInstance';
 import LoginPage from '../views/LoginPanel';
 import VideoUploadPanel from '../views/VideoUploadPanel';
 
@@ -73,6 +74,7 @@ const App = props => {
 	console.log(panelData); 
 	return (
 		<AuthProvider>
+			<AxiosInterceptor>
 		<Panels
 			{...props}
 			index={panelData.length - 1}
@@ -82,6 +84,7 @@ const App = props => {
 		>
 			{panelData.map(mapper)}
 		</Panels>
+		</AxiosInterceptor>
 		</AuthProvider>
 	);
 };

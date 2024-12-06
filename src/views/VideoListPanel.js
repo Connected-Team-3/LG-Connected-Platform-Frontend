@@ -15,6 +15,8 @@ import SearchView from './SearchView'; // SearchView 컴포넌트 추가
 
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
+import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
+import PlayListPanel from './PlayListPanel';
 
 
 const videoData = [
@@ -43,14 +45,10 @@ const VideoListPanel = props => {
 					<VideoListTab />
 				</Tab>
 				<Tab title="Recently Viewed">
-					<Scroller>
-
-					</Scroller>
+					<RecentlyViewedVideosPanel />
 				</Tab>
 				<Tab title="Playlists">
-					<Scroller>
-
-					</Scroller>
+					<PlayListPanel />
 				</Tab>
 				<Tab title="Upload">
 					<VideoUploadPanel />
