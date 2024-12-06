@@ -1,19 +1,35 @@
-import {Header, Panel} from '@enact/sandstone/Panels';
-import {PanelContext} from './Context';
-import {useCallback, useContext} from 'react';
+import React, {useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import Video from './Video';
 
-const VideoStreamingPanel = props => {
-	const {data, ...rest} = props;
-    const index = data?.index ?? 0;
-	const {setPanelData} = useContext(PanelContext);
-    
-	return (
-		<Panel {...rest}>
-            <Header title={`Video`} />
-			<Video data={data} />
-		</Panel>
-	);
+const VideoStreamingPanel = () => {
+    const location = useLocation();
+    const {video, playlist} = location.state || {};
+    const [currentIndex, setCurrentIndex] = useState(
+        playlist.videos.findIndex((v) => v.id === video.id)
+    );
+
+    const handleNext = () => {
+        if (currentIndex < playlist.videos.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
+    };
+
+    return (
+        <div>
+            <Video
+                data={playlist.videos[currentIndex]}
+                onNext={handleNext}
+                onPrevious={handlePrevious}
+            />
+        </div>
+    );
 };
 
 export default VideoStreamingPanel;
