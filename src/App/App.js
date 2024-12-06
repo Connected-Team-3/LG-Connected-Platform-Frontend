@@ -12,6 +12,7 @@ import VideoListPanel from '../views/VideoListPanel';
 import VideoStreamingPanel from '../views/VideoStreamingPanel';
 import Playlist from '../views/Playlist'; // 추가된 Playlist 컴포넌트
 import {AuthProvider} from '../auth/AuthProvider';
+import { AxiosInterceptor } from '../auth/axiosInstance';
 import LoginPage from '../views/LoginPanel';
 import VideoUploadPanel from '../views/VideoUploadPanel';
 
@@ -54,19 +55,23 @@ const App = props => {
     useDocumentEvent(setSkinVariants);
     const {panelData} = useContext(PanelContext);
 
+    console.log(panelData); // panelData 확인용
+
     return (
         <AuthProvider>
-            <Router>
-                <Panels
-                    {...props}
-                    index={panelData.length - 1}
-                    skinVariants={skinVariants}
-                    onBack={handleBack}
-                    onClose={handleClose}
-                >
-                    {panelData.map(mapper)}
-                </Panels>
-            </Router>
+            <AxiosInterceptor>
+                <Router>
+                    <Panels
+                        {...props}
+                        index={panelData.length - 1}
+                        skinVariants={skinVariants}
+                        onBack={handleBack}
+                        onClose={handleClose}
+                    >
+                        {panelData.map(mapper)}
+                    </Panels>
+                </Router>
+            </AxiosInterceptor>
         </AuthProvider>
     );
 };
