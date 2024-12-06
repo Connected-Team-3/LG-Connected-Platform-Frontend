@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAuth } from './AuthProvider';
+import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
     headers: {
@@ -19,10 +20,10 @@ const AxiosInterceptor = ({ children }) => {
     useEffect(() => {
         const requestInterceptor = axiosInstance.interceptors.request.use(
             (config) => {
-                const token = null; //localStorage.getItem('access_token');
+                const token = Cookies.get('token');
                 if (token) {
-                config.headers['Authorization'] = `Bearer ${token}`;
-                } 
+                    config.headers['Authorization'] = `Bearer ${token}`;
+                }
                 return config;
             },
             (error) => {
@@ -36,36 +37,15 @@ const AxiosInterceptor = ({ children }) => {
             setLoading(false);
             return response;
         },
-        async (error) => {
-            const originalRequest = error.config;
-
-            if (error.response && error.response.status === 401 && !originalRequest._retry) {
-                originalRequest._retry = true;
-
-                const refreshToken = null; //localStorage.getItem('refresh_token');
-                if (refreshToken) {
-                try {
-                    const response = await axios.post('/refresh', { refresh_token: refreshToken });
-        
-                    const newAccessToken = response.data.access_token;
-                    //localStorage.setItem('access_token', newAccessToken);
-        
-                    originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-
-                    return axios(originalRequest);
-
-                } catch (refreshError) {
-                    console.error('Refresh token expired or invalid:', refreshError);
-
-                    //localStorage.removeItem('acess_token');
-                    //localStorage.removeItem('refresh_token');
-
-                    window.location.href = '/login';
-                }
+        (error) => {
+            setLoading(false);
+            // Handle errors (e.g., logout the user if 401 is encountered)
+            if (error.response && error.response.status === 401) {
+                // If unauthorized, logout the user
+                logout();
             }
+            return Promise.reject(error);
         }
-        return Promise.reject(error);
-    }
     );
 
     return () => {

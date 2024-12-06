@@ -1,49 +1,43 @@
 // src/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 // 인증 상태를 관리하는 Context 생성
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [accessToken, setAccessToken] = useState(null);
-    const [refreshToken, setRefreshToken] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const storedAccessToken = null; //localStorage.getItem('access_token');
-        const storedRefreshToken = null; //localStorage.getItem('refresh_token');
-    
-    
+  useEffect(() => {
+    // Get the stored tokens from cookies
+    const storedAccessToken = Cookies.get('token');
 
-        if (storedAccessToken && storedRefreshToken) {
-            setAccessToken(storedAccessToken);
-            setRefreshToken(storedRefreshToken);
-            setIsAuthenticated(true);
-        }
-    }, []);
+    if (storedAccessToken) {
+      setToken(storedAccessToken);
+      setIsAuthenticated(true);
+    }
+  }, []);
 
-  const login = (access_token, refresh_token) => {
-    //localStorage.setItem('access_token', access_token);
-    //localStorage.setItem('refresh_token', refresh_token);
-    setAccessToken(access_token);
-    setRefreshToken(refresh_token);
+  const login = (token) => {
+    Cookies.set('token', token, { expires: 7, secure: true, sameSite: 'Strict' });
+
+    setToken(token);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    //localStorage.removeItem('access_token');
-    //ocalStorage.removeItem('refresh_token');
-    setAccessToken(null);
-    setRefreshToken(null);
+    // Remove tokens from cookies
+    Cookies.remove('token');
+    
+    setToken(null);
     setIsAuthenticated(false);
   };
-
 
   return (
     <AuthContext.Provider
       value={{
-        accessToken,
-        refreshToken,
+        token,
         isAuthenticated,
         login,
         logout
