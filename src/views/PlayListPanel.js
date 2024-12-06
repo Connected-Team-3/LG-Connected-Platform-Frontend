@@ -18,11 +18,11 @@ const PlayListPanel = props => {
 	const {data, ...rest} = props;
 	const index = data?.index ?? 0;
 	const {setPanelData} = useContext(PanelContext);
-    const [playList, setPlayList] = useState([]); // 사용자 기록 상태
+    const [playlist, setPlayList] = useState([]); // 사용자 기록 상태
     const [loading, setLoading] = useState(true);
     const [videoData, setVideoData] = useState([]);
     const handleVideoClick = useCallback((video, playlist) => {
-		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playList:playList}}]);
+		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
 
     const fetchPlayList = async () => {
@@ -55,16 +55,16 @@ const PlayListPanel = props => {
     // 컴포넌트 마운트 시 사용자 기록을 가져옴
     useEffect(() => {
         fetchPlayList();
-        console.log(playList);
+        console.log(playlist);
     }, []);
 
     useEffect(() => {
-        if (playList.length > 0) {
+        if (playlist.length > 0) {
           // 각 플레이리스트의 videoIdList 배열을 기반으로 비디오 정보 가져오기
-          const videoIds = playList.flatMap((playlist) => playlist.videoIdList);
+          const videoIds = playlist.flatMap((playlist) => playlist.videoIdList);
           fetchVideoDetails(videoIds); // 비디오 정보 가져오기
         }
-      }, [playList]);
+      }, [playlist]);
 
 
 
@@ -73,13 +73,13 @@ const PlayListPanel = props => {
     <Header title="플레이리스트" />
     {loading ? (
         <Spinner size="small" />
-    ) : playList.length === 0 ? (
+    ) : playlist.length === 0 ? (
         <BodyText size="large" style={{ marginLeft: '10px', color: 'gray' }}>
             현재 비디오가 없습니다.
         </BodyText>
     ) : (
         <Row wrap>
-            {playList.map((playlist) => (
+            {playlist.map((playlist) => (
                 <Cell key={playlist.id} size="auto" style={{ marginBottom: '20px', width: '100%' }}>
                     {/* 플레이리스트 제목 표시 */}
                     <BodyText size="large" style={{ marginLeft: '10px' }}>
@@ -100,7 +100,7 @@ const PlayListPanel = props => {
                             if (!video) return null; // 비디오가 없으면 렌더링하지 않음
 
                             return (
-                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playList.videoIdList)}>
+                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playlist.videoIdList)}>
                                     <ImageItem
                                         src={video.thumbUrl} // 썸네일 이미지
                                         label={video.description}  // 비디오 설명
