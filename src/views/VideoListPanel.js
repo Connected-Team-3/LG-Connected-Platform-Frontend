@@ -15,6 +15,7 @@ import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
 import PlayListPanel from './PlayListPanel';
 
 import css from './VideoListPanel.module.less';
+import SystemState from './SystemState';
 
 const videoData = [
 	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
@@ -49,6 +50,10 @@ const VideoListPanel = props => {
 				<Tab title="Login">
 					<LoginPage />
 				</Tab>
+				<Tab title="Resource">
+					<SystemState></SystemState>
+				</Tab>
+				
 			</TabLayout>
 		</Panel>
 	);
