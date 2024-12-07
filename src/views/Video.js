@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect, useRef} from 'react';
+import React, {useCallback, useState, useEffect, useRef, useContext} from 'react';
 import VideoPlayer from '@enact/sandstone/VideoPlayer';
 import {MediaControls} from '@enact/sandstone/MediaPlayer';
 import Spinner from '@enact/sandstone/Spinner';
@@ -12,12 +12,22 @@ const Video = props => {
 	const {data, ...rest} = props;
 	const index = data?.index ?? 0;
 	const [videoTimeStamp, setVideoTimeStamp] = useState(0);
+	const {setPanelData} = useContext(PanelContext);
 	const [lastVideoTimeStamp, setLastVideoTimeStamp] = useState(0);
 	const [lastWatchedAt, setLastWatchedAt] = useState(null);
 	const [lastHistoryUpdate, setLastHistoryUpdate] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const videoRef = useRef(null);
+
+	const fetchVideoDetails = async (videoId) => {
+		try {
+			const response = await axiosInstance.get(`/api/video/play/${videoId}`);
+			return response.data.result.data;
+		} catch (error) {
+			console.error('Error fetching video details:', error); // 오류 처리
+		}
+	};
 
 	const fetchVideoHistory = async () => {
 		try {
@@ -86,6 +96,26 @@ const Video = props => {
 		  
 		}
 	  };
+	  const handleNextVideo = async () => {
+		// panelData에서 'video'와 'playlist'를 가져옴
+		const videoId = data.video.id;
+		const playlist = data.playlist;
+		console.log(playlist);
+	  
+		if (playlist) {
+		  const currentIndex = playlist.findIndex(v => v.id === videoId);
+		  const nextIndex = (currentIndex + 1) % playlist.length; // 다음 비디오 인덱스를 계산
+	  
+		  // 비동기 함수에서 비디오 정보를 가져옴
+		  const nextVideoData = await fetchVideoDetails(playlist[nextIndex]); // nextIndex를 사용하여 비디오 정보를 가져옵니다.
+	  
+		  // panelData 업데이트 (nextVideoData를 사용)
+		  setPanelData(prev => [
+			...prev.slice(0, -1), // 기존 항목을 제외하고
+			{ name: 'video', data: { index: nextIndex, video: nextVideoData, playlist: playlist } }, // 새로운 비디오 정보를 추가
+		  ]);
+		}
+	  };
 	
 	  useEffect(() => {
 		// 처음 한 번만 fetchVideoHistory 실행
@@ -135,7 +165,7 @@ const Video = props => {
             pauseIcon="pause"
             playIcon="play"
           >
-            <Button icon="list" size="small" />
+            <Button icon="list" size="small" onClick={handleNextVideo} />
             <Button icon="playspeed" size="small" />
             <Button icon="speakercenter" size="small" />
             <Button icon="miniplayer" size="small" />

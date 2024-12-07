@@ -13,6 +13,10 @@ import VideoUploadPanel from './VideoUploadPanel';
 import SearchView from './SearchView'; // SearchView 컴포넌트 추가
 import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
 import PlayListPanel from './PlayListPanel';
+
+import css from './VideoListPanel.module.less';
+import SystemState from './SystemState';
+
 const videoData = [
 	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
 	{title: 'Video 2', description: 'Description for video 2', thumbnail: 'https://via.placeholder.com/360x240', duration: '3:45', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'},
@@ -23,8 +27,8 @@ const VideoListPanel = props => {
 	const {setPanelData} = useContext(PanelContext);
 
 	return (
-		<Panel style={{ height: '100%', overflow: 'auto' }}>
-			<Header title="Video Collection" subtitle="Explore and Play Videos" />
+		<Panel {...props} className={css.panel}>
+			<Header title="Video Collection" subtitle="Explore and Play Videos" className={css.header}/>
 			<TabLayout>
 				<Tab title="Search">
 					<Scroller>
@@ -46,6 +50,10 @@ const VideoListPanel = props => {
 				<Tab title="Login">
 					<LoginPage />
 				</Tab>
+				<Tab title="Resource">
+					<SystemState></SystemState>
+				</Tab>
+				
 			</TabLayout>
 		</Panel>
 	);

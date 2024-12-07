@@ -73,23 +73,6 @@ const VideoListTab = props => {
         return <Spinner />
     }
 
-	const renderItem = (index) => {
-        const video = videoData[index]; // 해당 인덱스의 동영상
-		
-		if (!video) return null;
-		console.log(video);
-        return (
-            <Item key={index}>
-                <MediaOverlay
-                    src={video.sourceUrl}
-                    title={video.title}
-                    description={video.description}
-                    poster={video.thumbUrl}
-                />
-            </Item>
-        );
-    };
-
 	
 
 	return (
