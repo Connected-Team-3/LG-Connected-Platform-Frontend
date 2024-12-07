@@ -16,6 +16,7 @@ import PlayListPanel from './PlayListPanel';
 
 import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
+import {useAuth} from '../auth/AuthProvider'
 
 const videoData = [
 	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
@@ -25,10 +26,14 @@ const videoData = [
 
 const VideoListPanel = props => {
 	const {setPanelData} = useContext(PanelContext);
-
+    const { userName } = useAuth(); // 로그인된 사용자 이름 가져오기
 	return (
 		<Panel {...props} className={css.panel}>
-			<Header title="Video Collection" subtitle="Explore and Play Videos" className={css.header}/>
+			<Header 
+		      title="FOODHUB" 
+			  subtitle={userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'} 
+			  className={css.header}
+      		/>
 			<TabLayout>
 				<Tab title="Search">
 					<Scroller>

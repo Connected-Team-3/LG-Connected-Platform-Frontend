@@ -16,6 +16,7 @@ import LoginPage from '../views/LoginPanel';
 import VideoUploadPanel from '../views/VideoUploadPanel';
 import SearchView from '../views/SearchView'
 import LaunchScreenPanel from '../views/LaunchScreenPanel'; // LaunchScreen 컴포넌트
+import SignupPage from '../views/SignupPanel';
 
 // 실습 : 동적 panel 이동 기능 구현하기
 
@@ -63,6 +64,8 @@ const mapper = item => {
 			return <VideoUploadPanel key={name} data={data} />;
 		case 'search':
 			return <SearchView key={name} data={data} />; // SearchView 매핑 추가
+		case 'signup':
+			return <SignupPage key={name} data = {data} />; //sginup panel 추가
 		default:
 			return <Main key={name} />;
 	}
@@ -80,8 +83,9 @@ const App = props => {
 		// LaunchScreen에서 VideoListPanel로 1.5초 후 전환
 		useEffect(() => {
 			if (panelData[0]?.name === 'launch') {
+
 				const timer = setTimeout(() => {
-					setPanelData([{name: 'main', data: {}}]); // VideoListPanel로 전환
+					setPanelData([{name: 'login', data: {}}]); // VideoListPanel로 전환
 				}, 2000);
 	
 				return () => clearTimeout(timer); // 타이머 정리
