@@ -6,6 +6,8 @@ import { PageViews, Page } from '@enact/sandstone/PageViews';
 import Item from '@enact/sandstone/Item';
 import IconItem from '@enact/sandstone/IconItem';
 import Icon from '@enact/sandstone/Icon';
+import { Layout, Cell } from '@enact/ui/Layout';
+import { H2 } from '@enact/sandstone/Heading';
 
 const VideoStreamingPanel = (props) => {
   const { data, ...rest } = props;
@@ -24,7 +26,7 @@ const VideoStreamingPanel = (props) => {
   const handleFoodNameClick = () => {
     setPanelData(prev => [
       ...prev,
-      { name: 'search', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
+      { name: 'searcha', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
     ]);
   };
 
