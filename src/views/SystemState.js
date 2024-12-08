@@ -15,6 +15,8 @@ const IDLE = 3;
 
 // let usage = [];
 
+import css from './SystemState.module.less'; // CSS 파일 임포트
+
 const SystemState = () => {
 	const cpuRef = useRef(null);
 	const memRef = useRef(null);
@@ -88,7 +90,7 @@ const SystemState = () => {
 	console.log(idx);
 	console.log(burstFlag);
 	return (
-		<div>
+		<div className={css.systemStateContainer}>
 			{/*loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>*/}
 			<RenderingGraph cpuUsage={curCpu} />
 			<RenderingMemoryGraph memoryUsage={curMem} />

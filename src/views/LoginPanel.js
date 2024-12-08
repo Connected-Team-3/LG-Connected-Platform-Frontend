@@ -8,6 +8,8 @@ import axiosInstance from '../auth/axiosInstance';
 import Cookies from 'js-cookie'; // Import js-cookie
 import {PanelContext} from './Context';
 
+import css from './LoginPanel.module.less';
+
 const LoginPage = props => {
 	const {data, ...rest} = props;
 	const index = data?.index ?? 0;
@@ -60,13 +62,14 @@ const LoginPage = props => {
   };
 
   return (
-    <Panel {...rest}>
+    <Panel {...rest} className={css.loginPanel}>
       <Header title="로그인" />
+      <div className={css.formContainer}>
       <Input
         placeholder="사용자명"
         value={username}
         onComplete={handleUsernameComplete} // onComplete 이벤트로 처리
-        style={{ marginBottom: '10px' }}
+        className={css.inputField}
         autoFocus
       />
       <Input
@@ -74,15 +77,15 @@ const LoginPage = props => {
         type="password"
         value={password}
         onComplete={handlePasswordComplete} // onComplete 이벤트로 처리
-        style={{ marginBottom: '20px' }}
+        className={css.inputField}
       />
-      <Button onClick={handleLogin}>로그인</Button>
-      {loginCheck && <p style={{ color: 'red' }}>로그인 실패. 사용자명과 비밀번호를 확인하세요.</p>}
+      <Button onClick={handleLogin} className={css.loginButton}>로그인</Button>
+      {loginCheck && <p className={css.errorText}>로그인 실패. 사용자명과 비밀번호를 확인하세요.</p>}
        {/* "계정이 없나요?" 버튼 추가 */}
-       <Button onClick={goToSignup} 
-        style={{ marginTop: '10px' }}>
+       <Button onClick={goToSignup} className={css.signupButton}>
         계정이 없나요?
       </Button>
+      </div>
     </Panel>
   );
 };

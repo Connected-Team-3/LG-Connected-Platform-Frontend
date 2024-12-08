@@ -30,23 +30,26 @@ const VideoListPanel = props => {
 	return (
 		<Panel {...props} className={css.panel}>
 			<Header 
-		      title="FOODHUB" 
-			  subtitle={userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'} 
-			  className={css.header}
-      		/>
+		      title={<span className={css.customTitle}>FOODHUB</span>}
+			  subtitle={
+        <span className={css.customSubtitle}>
+            {userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'}
+        </span>
+    }
+			/>
 			<TabLayout>
-				<Tab title="Search">
+				<Tab icon="search" title="Search">
 					<Scroller>
 						<SearchView />
 					</Scroller>
 				</Tab>
-				<Tab title="Videos">
+				<Tab icon="home" title="Videos">
 					<VideoListTab />
 				</Tab>
-				<Tab title="Recently Viewed">
+				<Tab icon="list" title="Recently Viewed">
 					<RecentlyViewedVideosPanel />
 				</Tab>
-				<Tab title="Playlists">
+				<Tab icon="list" title="Playlists">
 					<PlayListPanel />
 				</Tab>
 				<Tab title="Upload">
@@ -55,7 +58,7 @@ const VideoListPanel = props => {
 				<Tab title="Login">
 					<LoginPage />
 				</Tab>
-				<Tab title="Resource">
+				<Tab icon="wisa" title="Resource">
 					<SystemState></SystemState>
 				</Tab>
 				

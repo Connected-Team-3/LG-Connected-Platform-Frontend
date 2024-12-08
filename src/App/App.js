@@ -85,7 +85,7 @@ const App = props => {
 			if (panelData[0]?.name === 'launch') {
 
 				const timer = setTimeout(() => {
-					setPanelData([{name: 'login', data: {}}]); // VideoListPanel로 전환
+					setPanelData([{name: 'main', data: {}}]); // VideoListPanel로 전환
 				}, 2000);
 	
 				return () => clearTimeout(timer); // 타이머 정리
