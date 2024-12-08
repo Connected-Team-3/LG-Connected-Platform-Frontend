@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Input } from '@enact/sandstone/Input';
 import Button from '@enact/sandstone/Button';
 import { Row, Cell } from '@enact/ui/Layout';
-
+import styles from './SearchComponent.module.less'; // 스타일 파일 임포트
+import Icon from '@enact/sandstone/Icon'
 const SearchComponent = ({ onSearch }) => {
     const [query, setQuery] = useState('');
 
@@ -19,17 +20,21 @@ const SearchComponent = ({ onSearch }) => {
     };
 
     return (
-        <Row align="center" wrap>
+        <Row className={styles['search-row']} align="center" >
             <Cell>
-                <Input
+                <Input 
+                    className={styles['search-input']} 
                     placeholder="제목, 요리명, 재료명으로 검색"
                     value={query}
                     onChange={handleInputChange} // 실시간 입력 업데이트
                     onComplete={handleSearch} // Enter 키로 검색 실행
                 />
             </Cell>
-            <Cell>
-                <Button onClick={handleSearch}>검색</Button>
+            <Cell shrink>
+                <Button
+                    className={styles['search-button']}  
+                    size='small'
+                    onClick={handleSearch}><Icon>search</Icon></Button>
             </Cell>
         </Row>
     );
