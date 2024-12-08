@@ -1,19 +1,30 @@
 import { Header, Panel } from '@enact/sandstone/Panels';
 import { PanelContext } from './Context';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Video from './Video';
 import { PageViews, Page } from '@enact/sandstone/PageViews';
 import Item from '@enact/sandstone/Item';
 import IconItem from '@enact/sandstone/IconItem';
 import Icon from '@enact/sandstone/Icon';
+import alert from '@enact/sandstone/Alert';
 import { Layout, Cell } from '@enact/ui/Layout';
-import { H2 } from '@enact/sandstone/Heading';
+import Button from '@enact/sandstone/Button';
 
 const VideoStreamingPanel = (props) => {
+  const [cart, setCart] = useState([]);  // 장바구니 상태 관리
   const { data, ...rest } = props;
   const { setPanelData } = useContext(PanelContext);
-  const video = data?.video; // Video data 가져오기 추가
+  const video = data?.video; // Video data 가져오기
   if (!video) return null;
+
+  // 장바구니에 재료 추가/삭제
+  const handleAddToCart = (ingredient) => {
+    if (cart.includes(ingredient)) {
+      setCart(prevCart => prevCart.filter(item => item !== ingredient));
+    } else {
+      setCart(prevCart => [...prevCart, ingredient]);
+    }
+  };
 
   // 부가정보 검색용
   const handleIngredientClick = (ingredient) => {
@@ -26,7 +37,7 @@ const VideoStreamingPanel = (props) => {
   const handleFoodNameClick = () => {
     setPanelData(prev => [
       ...prev,
-      { name: 'searcha', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
+      { name: 'search', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
     ]);
   };
 
@@ -56,15 +67,27 @@ const VideoStreamingPanel = (props) => {
           <Video data={data} />
         </Page>
         <Page aria-label="This is a description for page 1">
-          {/* 부가정보를 Item 컴포넌트에 넣기 */}
-          {ingredients.map((ingredient, index) => (
-            <Item key={index} onClick={() => handleIngredientClick(ingredient)}>
-              {ingredient}
-            </Item>
-          ))}
           <Item onClick={handleFoodNameClick}>
             {data.video.foodName}
           </Item>
+          {/* 부가정보를 Item 컴포넌트에 넣기 */}
+          {ingredients.map((ingredient, index) => (
+            <Layout key={index} align="center start" style={{ padding: '10px' }}>
+              <Cell>
+                <Item onClick={() => handleIngredientClick(ingredient)}>
+                  {ingredient}
+                </Item>
+              </Cell>
+              <Cell>
+                <Button
+                  onClick={() => handleAddToCart(ingredient)} 
+                  style={{ marginLeft: '10px', backgroundColor: cart.includes(ingredient) ? 'green' : '' }}
+                >
+                  {cart.includes(ingredient) ? '장바구니에서 삭제' : '장바구니에 추가'}
+                </Button>
+              </Cell>
+            </Layout>
+          ))}
         </Page>
       </PageViews>
     </Panel>
@@ -72,4 +95,3 @@ const VideoStreamingPanel = (props) => {
 };
 
 export default VideoStreamingPanel;
-
