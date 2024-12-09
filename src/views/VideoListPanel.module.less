@@ -1,23 +1,32 @@
 /* VideoListPanel.module.less */
+@primary-color: #0078d4;    // 주요 색상 변경
+@link-color: #1a73e8;       // 링크 색상 변경
+@text-color: #333;          // 텍스트 색상 변경
+@heading-color: #444; 
 
 .panel {
-    background-color: #4f9af1; /* Light gray background for the panel */
+    background-color: #ffffff; /* Light gray background for the panel */
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .header {
+}
+
+.header{
     font-size: 18px;
     font-weight: bold;
-    color: #19bacf;
+    color: #A50034;
     margin-bottom: 12px;
-  }
-  
-  .subtitle {
-    font-size: 14px;
-    color: #666;
-  }
+}
+
+.header title {
+    color: #A50034 !important; /* Title color */
+    font-size: 24px; /* Adjust font size as needed */
+}
+
+.header subtitle {
+    font-size: 14px; /* Adjust font size of the subtitle */
+    color: #777; /* Subtitle color (optional) */
+}
   
   .tabLayout {
     margin-top: 16px;
@@ -31,9 +40,9 @@
   }
   
   .tabTitle {
-    font-size: 16px;
+    font-size: 40px;
     font-weight: bold;
-    color: #333;
+    color: #A50034;
   }
   
   .tabContent {

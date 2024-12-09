@@ -29,7 +29,7 @@ const RecentlyViewedVideosPanel = props => {
 
     const fetchUserHistory = async () => {
         try {
-        const response = await axiosInstance.get(`/api/videoHistory/getHistories/2`);
+        const response = await axiosInstance.get(`/api/videoHistory/getHistories`);
             setHistoryData(response.data.result.list); // API에서 반환된 데이터로 상태 설정
             console.log(response.data.result.list); // 가져온 기록을 콘솔에 출력
         } catch (error) {

@@ -22,20 +22,8 @@ const PlayListPanel = props => {
     const [loading, setLoading] = useState(true);
     const [videoData, setVideoData] = useState([]);
     const handleVideoClick = useCallback((video, playlist) => {
-		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
+		setPanelData(prev => [prev.slice(0, -1), {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
-
-    const fetchPlayList = async () => {
-        try {
-        const response = await axiosInstance.get(`/api/playlist/getPlaylist/2`);
-            setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
-            console.log(response.data.result.list); // 가져온 기록을 콘솔에 출력
-        } catch (error) {
-            console.error('Error fetching play list data:', error); // 오류 처리
-        } finally {
-            setLoading(false); // 로딩 상태 비활성화
-        }
-    };
     
     const fetchVideoDetails = async (videoIds) => {
         try {
@@ -44,10 +32,15 @@ const PlayListPanel = props => {
             return response.data.result.data; // 비디오 정보를 반환
         });
 
-        // 모든 비디오 정보를 가져올 때까지 기다림
-        const videoData = await Promise.all(videoInfoPromises);
-        setVideoData(videoData); // 비디오 정보 상태 업데이트
-        console.log(videoData); // 비디오 정보 출력
+
+  // 사용자 플레이리스트를 가져오는 함수
+  const fetchPlayList = async () => {
+    try {
+        setLoading(true);
+      const response = await axiosInstance.get(`/api/playlist/getPlaylist`);
+      setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
+      console.log(response.data.result.list);
+
     } catch (error) {
         console.error('Error fetching video details:', error); // 오류 처리
     }
@@ -58,13 +51,16 @@ const PlayListPanel = props => {
         console.log(playlist);
     }, []);
 
-    useEffect(() => {
-        if (playlist.length > 0) {
-          // 각 플레이리스트의 videoIdList 배열을 기반으로 비디오 정보 가져오기
-          const videoIds = playlist.flatMap((playlist) => playlist.videoIdList);
-          fetchVideoDetails(videoIds); // 비디오 정보 가져오기
-        }
-      }, [playlist]);
+
+  // playlist가 업데이트 될 때마다 video 정보를 가져옴
+  useEffect(() => {
+    if (playlist.length > 0) {
+      const videoIds = playlist.flatMap((playlist) => playlist.videoIdList);
+      fetchVideoDetails(videoIds); // 비디오 정보 가져오기
+    }
+  }, [playlist]); // playlist가 변경될 때마다 비디오 정보 가져오기
+    
+
 
 
 
@@ -100,7 +96,7 @@ const PlayListPanel = props => {
                             if (!video) return null; // 비디오가 없으면 렌더링하지 않음
 
                             return (
-                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playlist.videoIdList)}>
+                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playlist)}>
                                     <ImageItem
                                         src={video.thumbUrl} // 썸네일 이미지
                                         label={video.description}  // 비디오 설명
