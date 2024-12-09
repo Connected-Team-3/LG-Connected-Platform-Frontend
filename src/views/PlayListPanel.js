@@ -24,18 +24,6 @@ const PlayListPanel = props => {
     const handleVideoClick = useCallback((video, playlist) => {
 		setPanelData(prev => [prev.slice(0, -1), {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
-
-  const fetchPlayList2 = async () => {
-        try {
-        const response = await axiosInstance.get(`/api/playlist/getPlaylist`);
-            setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
-            console.log(response.data.result.list); // 가져온 기록을 콘솔에 출력
-        } catch (error) {
-            console.error('Error fetching play list data:', error); // 오류 처리
-        } finally {
-            setLoading(false); // 로딩 상태 비활성화
-        }
-    };
     
    // 비디오 데이터를 가져오는 함수
    const fetchVideoDetails = async (videoIds) => {
@@ -64,8 +52,10 @@ const PlayListPanel = props => {
   // 사용자 플레이리스트를 가져오는 함수
   const fetchPlayList = async () => {
     try {
-      const response = await axiosInstance.get(`/api/playlist/getPlaylist/2`);
+        setLoading(true);
+      const response = await axiosInstance.get(`/api/playlist/getPlaylist`);
       setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
+      console.log(response.data.result.list);
     } catch (error) {
       console.error('Error fetching play list data:', error); // 오류 처리
     } finally {
@@ -81,7 +71,6 @@ const PlayListPanel = props => {
   // playlist가 업데이트 될 때마다 video 정보를 가져옴
   useEffect(() => {
     if (playlist.length > 0) {
-      setLoading(true); // 로딩 시작
       const videoIds = playlist.flatMap((playlist) => playlist.videoIdList);
       fetchVideoDetails(videoIds); // 비디오 정보 가져오기
     }
