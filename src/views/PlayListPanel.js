@@ -22,12 +22,12 @@ const PlayListPanel = props => {
     const [loading, setLoading] = useState(true);
     const [videoData, setVideoData] = useState([]);
     const handleVideoClick = useCallback((video, playlist) => {
-		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
+		setPanelData(prev => [prev.slice(0, -1), {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
 
     const fetchPlayList = async () => {
         try {
-        const response = await axiosInstance.get(`/api/playlist/getPlaylist/2`);
+        const response = await axiosInstance.get(`/api/playlist/getPlaylist`);
             setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
             console.log(response.data.result.list); // 가져온 기록을 콘솔에 출력
         } catch (error) {
@@ -100,7 +100,7 @@ const PlayListPanel = props => {
                             if (!video) return null; // 비디오가 없으면 렌더링하지 않음
 
                             return (
-                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playlist.videoIdList)}>
+                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playlist)}>
                                     <ImageItem
                                         src={video.thumbUrl} // 썸네일 이미지
                                         label={video.description}  // 비디오 설명

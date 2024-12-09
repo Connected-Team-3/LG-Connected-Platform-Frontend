@@ -6,6 +6,8 @@ import {scaleToRem} from '@enact/ui/resolution';
 import {useCallback, useContext} from 'react';
 import {PanelContext} from './Context';
 import LoginPage from './LoginPanel';
+import Button from '@enact/sandstone/Button';
+import SlotItem from '@enact/ui/SlotItem';
 
 
 import VideoListTab from '../components/VideoListTab';
@@ -16,20 +18,18 @@ import PlayListPanel from './PlayListPanel';
 
 import css from './VideoListPanel.module.less';
 
-const videoData = [
-	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
-	{title: 'Video 2', description: 'Description for video 2', thumbnail: 'https://via.placeholder.com/360x240', duration: '3:45', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'},
-	{title: 'Video 3', description: 'Description for video 3', thumbnail: 'https://via.placeholder.com/360x240', duration: '1:15', src: 'https://example.com/video3.mp4'},
-];
 
 const VideoListPanel = props => {
 	const {setPanelData} = useContext(PanelContext);
 
 	return (
 		<Panel {...props} className={css.panel}>
-			<Header title="Video Collection" subtitle="Explore and Play Videos" className={css.header}/>
-			<TabLayout>
-				<Tab title="Search">
+			<Header className={css.header} class="header">
+				<slotBefore><Button /></slotBefore>
+					<title>My Title</title>
+				</Header>
+			<TabLayout className={css.tabLayout}>
+				<Tab title="Search" className={css.tab}>
 					<Scroller>
 						<SearchView />
 					</Scroller>
