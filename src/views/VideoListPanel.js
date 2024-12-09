@@ -5,6 +5,11 @@ import {Header, Panel} from '@enact/sandstone/Panels';
 import {scaleToRem} from '@enact/ui/resolution';
 import {useCallback, useContext} from 'react';
 import {PanelContext} from './Context';
+
+import LoginPage from './LoginPanel';
+import Button from '@enact/sandstone/Button';
+import SlotItem from '@enact/ui/SlotItem';
+
 import Icon from '@enact/sandstone/Icon'
 import IconItem from '@enact/sandstone/IconItem';
 
@@ -19,11 +24,6 @@ import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
 import {useAuth} from '../auth/AuthProvider'
 
-const videoData = [
-	{title: 'Video 1', description: 'Description for video 1', thumbnail: 'https://via.placeholder.com/360x240', duration: '2:30', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
-	{title: 'Video 2', description: 'Description for video 2', thumbnail: 'https://via.placeholder.com/360x240', duration: '3:45', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'},
-	{title: 'Video 3', description: 'Description for video 3', thumbnail: 'https://via.placeholder.com/360x240', duration: '1:15', src: 'https://example.com/video3.mp4'},
-];
 
 
 const VideoListPanel = props => {
