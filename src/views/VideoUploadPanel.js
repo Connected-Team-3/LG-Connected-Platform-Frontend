@@ -47,7 +47,7 @@ function VideoUploadPanel() {
     };
 
     return (
-        <Panel>
+        <Panel style={{backgroundColor: '#fff' }}>
             <Header>동영상 업로드</Header>
             <form onSubmit={handleSubmit}>
                 <Input

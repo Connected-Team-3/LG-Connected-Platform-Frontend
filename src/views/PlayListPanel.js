@@ -14,6 +14,8 @@ import BodyText from '@enact/sandstone/BodyText';
 
 import axiosInstance from '../auth/axiosInstance';
 
+import css from './PlayListPanel.module.less';
+
 const PlayListPanel = props => {
    const {data, ...rest} = props;
    const index = data?.index ?? 0;
@@ -79,8 +81,10 @@ const PlayListPanel = props => {
 
 
 
-   return (
-        <Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
+
+
+	return (
+        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#fff' }} className={css.panel}>
     <Header title="플레이리스트" />
     {loading ? (
         <Spinner size="small" />
@@ -98,12 +102,16 @@ const PlayListPanel = props => {
                     </BodyText>
 
                     {/* 비디오들을 가로로 스크롤 가능한 영역으로 설정 */}
-                    <Row
+                    <Row className={css.playlistRow}
                         wrap={false} // 자동 줄 바꿈 비활성화
                         style={{
                             overflowX: 'auto', // 가로 스크롤 활성화
                             whiteSpace: 'nowrap', // 가로로 아이템이 나열되도록 설정
-                            padding: '10px 0' // 약간의 패딩 추가
+                            padding: '10px 0', // 약간의 패딩 추가
+
+                            /* 스크롤바 숨기기 */
+                            scrollbarWidth: 'none', // Firefox 스크롤바 제거
+                            msOverflowStyle: 'none', // Internet Explorer 스크롤바 제거
                         }}
                     >
                         {playlist.videoIdList.map((videoId) => {
@@ -111,10 +119,12 @@ const PlayListPanel = props => {
                             if (!video) return null; // 비디오가 없으면 렌더링하지 않음
 
                             return (
-                                <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video, playlist)}>
+                                <Cell key={video.id} className={css.videoItem} onClick={() => handleVideoClick(video, playlist)}>
                                     <ImageItem
                                         src={video.thumbUrl} // 썸네일 이미지
                                         label={video.description}  // 비디오 설명
+                                        
+                                        className={css.imageItem}
                                         orientation="horizontal"
                                     >
                                         {video.title}
