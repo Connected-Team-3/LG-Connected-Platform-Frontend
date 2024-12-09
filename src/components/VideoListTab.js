@@ -91,23 +91,45 @@ const VideoListTab = props => {
                 {categories}
             </Dropdown>
 
-            <Row wrap>
-                {videoData.map((video) => ( 
-					<Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
-					<MediaOverlay
-						marqueeOn="focus"
-						muted
-						subtitle={video.description}
-						textAlign="end"
-						title={video.title}
-					>
-						<source src={video.sourceUrl} />
-					</MediaOverlay>
-				</Cell>
-                ))}
+            <Row wrap={false} // 자동 줄 바꿈 비활성화
+                style={{
+                    overflowX: 'auto', // 가로 스크롤 활성화
+                    whiteSpace: 'nowrap', // 가로로 아이템이 나열되도록 설정
+                    padding: '10px 0' // 약간의 패딩 추가
+                }}
+            >
+                {videoData.map((video) => {
+                    if (!video) return null; // 비디오가 없으면 렌더링하지 않음
+
+                    return (
+                        <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video)}>
+                            <ImageItem
+                                src={video.thumbUrl} // 썸네일 이미지
+                                label={video.description}  // 비디오 설명
+                                orientation="horizontal"
+                            >
+                                {video.title}
+                            </ImageItem>
+                        </Cell>
+                    );
+                })}
             </Row>
 		</Panel>
     );
 };
 
 export default VideoListTab;
+
+// {videoData.map((video) => ( 
+//     <Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
+//     <MediaOverlay
+//         marqueeOn="focus"
+//         muted
+//         subtitle={video.description}
+//         textAlign="end"
+//         title={video.title}
+//     >
+//         <source src={video.sourceUrl} />
+//     </MediaOverlay>
+// </Cell>
+// ))}

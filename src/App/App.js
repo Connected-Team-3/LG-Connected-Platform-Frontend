@@ -69,6 +69,8 @@ const mapper = item => {
 			return <SignupPage key={name} data = {data} />; //sginup panel 추가
 		case 'updateprofile':
 			return <UpdateProfile key={name} data = {data} />; //sginup panel 추가
+		case 'cart':
+			return <Cart key={name} data = {data} />; //cart panel 추가
 		default:
 			return <Main key={name} />;
 	}
