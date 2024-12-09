@@ -11,6 +11,7 @@ import axiosInstance from '../auth/axiosInstance';
 import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
+import ImageItem from '@enact/sandstone/ImageItem';
 import './VideoListTab.css'
 const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
@@ -91,12 +92,7 @@ const VideoListTab = props => {
                 {categories}
             </Dropdown>
 
-            <Row wrap={false} // 자동 줄 바꿈 비활성화
-                style={{
-                    overflowX: 'auto', // 가로 스크롤 활성화
-                    whiteSpace: 'nowrap', // 가로로 아이템이 나열되도록 설정
-                    padding: '10px 0' // 약간의 패딩 추가
-                }}
+            <Row wrap
             >
                 {videoData.map((video) => {
                     if (!video) return null; // 비디오가 없으면 렌더링하지 않음

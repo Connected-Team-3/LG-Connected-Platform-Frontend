@@ -23,6 +23,7 @@ import UpdateProfile from './UpdateProfile';
 import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
 import {useAuth} from '../auth/AuthProvider'
+import CartPanel from './CartPanel';
 
 
 
@@ -73,8 +74,8 @@ const VideoListPanel = props => {
 				<Tab title="Playlists">
 					<PlayListPanel />
 				</Tab>
-				<Tab title="Upload">
-					<VideoUploadPanel />
+				<Tab title="Cart">
+					<CartPanel />
 				</Tab>
 				<Tab title="Update Profile">
 					<UpdateProfile />

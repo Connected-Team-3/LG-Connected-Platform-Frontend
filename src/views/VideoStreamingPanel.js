@@ -6,23 +6,27 @@ import { PageViews, Page } from '@enact/sandstone/PageViews';
 import Item from '@enact/sandstone/Item';
 import IconItem from '@enact/sandstone/IconItem';
 import Icon from '@enact/sandstone/Icon';
-import alert from '@enact/sandstone/Alert';
 import { Layout, Cell } from '@enact/ui/Layout';
 import Button from '@enact/sandstone/Button';
+import axiosInstance from '../auth/axiosInstance';
 
 const VideoStreamingPanel = (props) => {
-  const [cart, setCart] = useState([]);  // 장바구니 상태 관리
   const { data, ...rest } = props;
   const { setPanelData } = useContext(PanelContext);
   const video = data?.video; // Video data 가져오기
+  const [cartItems, setCartItems] = useState([]);
+  
   if (!video) return null;
 
-  // 장바구니에 재료 추가/삭제
-  const handleAddToCart = (ingredient) => {
-    if (cart.includes(ingredient)) {
-      setCart(prevCart => prevCart.filter(item => item !== ingredient));
-    } else {
-      setCart(prevCart => [...prevCart, ingredient]);
+  // 장바구니에 비디오 추가 (POST)
+  const handleAddToCart = async () => {
+    try {
+        const videoId = video.id;  // videoId는 video 객체에서 직접 가져옵니다
+        console.log('ID ', {videoId});
+        await axiosInstance.post(`/api/cart/add/${videoId}`);
+        console.log('장바구니에 비디오 추가됨:', videoId);
+    } catch (error) {
+        console.error('장바구니 추가 실패:', error);
     }
   };
 
@@ -37,7 +41,7 @@ const VideoStreamingPanel = (props) => {
   const handleFoodNameClick = () => {
     setPanelData(prev => [
       ...prev,
-      { name: 'search', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
+      { name: 'search', data: { query: video.foodName } }  // 'searchView'로 페이지 이동
     ]);
   };
 
@@ -52,10 +56,11 @@ const VideoStreamingPanel = (props) => {
     ]);
   };
 
+
   return (
     <Panel {...rest} noCloseButton={true} style={{ height: '100%', overflow: 'auto' }}>
       <Header
-        title={`Video`}
+        title={`Video: ${video.foodName}`}
         slotAfter={
           <IconItem onClick={handleHomeClick} aria-label="Go to Home">
             <Icon>home</Icon>
@@ -67,9 +72,19 @@ const VideoStreamingPanel = (props) => {
           <Video data={data} />
         </Page>
         <Page aria-label="This is a description for page 1">
-          <Item onClick={handleFoodNameClick}>
-            {data.video.foodName}
-          </Item>
+          {/* 음식 이름과 장바구니 추가 버튼 */}
+          <Layout align="center start" style={{ padding: '10px' }}>
+            <Cell>
+              <Item onClick={handleFoodNameClick}>
+                {video.foodName}
+              </Item>
+            </Cell>
+            <Cell>
+              <Item onClick={handleAddToCart}>
+                {'장바구니 추가'}
+              </Item>
+            </Cell>
+          </Layout>
           {/* 부가정보를 Item 컴포넌트에 넣기 */}
           {ingredients.map((ingredient, index) => (
             <Layout key={index} align="center start" style={{ padding: '10px' }}>
@@ -77,14 +92,6 @@ const VideoStreamingPanel = (props) => {
                 <Item onClick={() => handleIngredientClick(ingredient)}>
                   {ingredient}
                 </Item>
-              </Cell>
-              <Cell>
-                <Button
-                  onClick={() => handleAddToCart(ingredient)} 
-                  style={{ marginLeft: '10px', backgroundColor: cart.includes(ingredient) ? 'green' : '' }}
-                >
-                  {cart.includes(ingredient) ? '장바구니에서 삭제' : '장바구니에 추가'}
-                </Button>
               </Cell>
             </Layout>
           ))}
