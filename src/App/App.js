@@ -56,7 +56,7 @@ const mapper = item => {
 		case 'main':
 			return <VideoListPanel key={name} data={data} />;
 		case 'video':
-			return <VideoStreamingPanel key={name} data={data} />;
+			return <VideoStreamingPanel key={`video-${data.video.id}`} data={data} />;
 		case 'setting':
 			return <SettingPanel key={name} data={data} />;
 		case 'login':
