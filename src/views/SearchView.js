@@ -10,7 +10,7 @@ import IconItem from '@enact/sandstone/IconItem';
 import Icon from '@enact/sandstone/Icon';
 
 const SearchView = (props) => {
-    const {data, ...rest} = props;
+    const { data, ...rest } = props;
     const [results, setResults] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -19,10 +19,11 @@ const SearchView = (props) => {
 
     // 부모 컴포넌트에서 전달받은 쿼리로 검색
     const query = props.data?.query || '';  // 'data.query'로 전달받은 검색어를 사용
+    const index = data?.index ?? 0;
 
     useEffect(() => {
-        if (query) {
-            handleSearch(query); // 쿼리가 있으면 검색 실행
+        if (query && query !== searchQuery) {  // 중복 방지: 기존 검색어와 비교
+            handleSearch(query);
         }
     }, [query]);
 
@@ -34,14 +35,14 @@ const SearchView = (props) => {
             const response = await axiosInstance.get(`/api/video/search?query=${encodeURIComponent(query)}`);
             setResults(response.data.result.list);
         } catch (error) {
-            setErrorMessage('검색 중 오류가 발생했습니다.');
+            setErrorMessage('검색 중 오류가 발생했습니다!!!.');
         } finally {
             setLoading(false);
         }
     };
 
     const handleVideoClick = (video) => {
-        setPanelData(prev => [...prev, { name: 'video', data: { video } }]);
+        setPanelData(prev => [...prev, { name: 'video', data: { index: index + 1, video: video } }]);
     };
 
     // 홈 버튼 클릭 시 실행될 함수
@@ -57,7 +58,7 @@ const SearchView = (props) => {
     }
 
     return (
-        <Panel {...rest} noCloseButton={true} >
+        <Panel {...rest} noCloseButton={true}>
             <Header
                 title="Search Video"
                 slotAfter={
@@ -68,12 +69,20 @@ const SearchView = (props) => {
             />
             <SearchComponent onSearch={handleSearch} />
             {errorMessage && <Heading>{errorMessage}</Heading>}
-            {/* 검색어와 결과를 표시 */}
-            <SearchResults 
-                results={results} 
-                onVideoClick={handleVideoClick} 
-                query={searchQuery}  // 검색어 전달
-            />
+            {/* 검색어가 있을 때만 결과 표시 */}
+            {searchQuery && (
+                <>
+                    {results.length > 0 ? (
+                        <SearchResults
+                            results={results}
+                            onVideoClick={handleVideoClick}
+                            query={searchQuery}  // 검색어 전달
+                        />
+                    ) : (
+                        <Heading>검색 결과가 없습니다.</Heading> 
+                    )}
+                </>
+            )}
         </Panel>
     );
 };

@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useState, useEffect } from 'react';
 import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
 import Panels from '@enact/sandstone/Panels';
 import Main from '../views/Main';
@@ -15,6 +15,9 @@ import { AxiosInterceptor } from '../auth/axiosInstance';
 import LoginPage from '../views/LoginPanel';
 import VideoUploadPanel from '../views/VideoUploadPanel';
 import SearchView from '../views/SearchView'
+import LaunchScreenPanel from '../views/LaunchScreenPanel'; // LaunchScreen 컴포넌트
+import SignupPage from '../views/SignupPanel';
+
 // 실습 : 동적 panel 이동 기능 구현하기
 
 // For advanced
@@ -47,6 +50,8 @@ if (isDevServe()) {
 const mapper = item => {
 	const {name, data} = item;
 	switch (name) {
+		case 'launch':
+			return <LaunchScreenPanel key={name} data={data} />;
 		case 'main':
 			return <VideoListPanel key={name} data={data} />;
 		case 'video':
@@ -59,6 +64,8 @@ const mapper = item => {
 			return <VideoUploadPanel key={name} data={data} />;
 		case 'search':
 			return <SearchView key={name} data={data} />; // SearchView 매핑 추가
+		case 'signup':
+			return <SignupPage key={name} data = {data} />; //sginup panel 추가
 		default:
 			return <Main key={name} />;
 	}
@@ -69,8 +76,22 @@ const App = props => {
 	const handleBack = useBackHandler();
 	const handleClose = useCloseHandler();
 	useDocumentEvent(setSkinVariants);
-	const {panelData} = useContext(PanelContext);
+	//const {panelData} = useContext(PanelContext);
+	// PanelContext에서 panelData와 setPanelData 가져오기
+	const {panelData, setPanelData} = useContext(PanelContext);
 	console.log(panelData); 
+		// LaunchScreen에서 VideoListPanel로 1.5초 후 전환
+		useEffect(() => {
+			if (panelData[0]?.name === 'launch') {
+
+				const timer = setTimeout(() => {
+					setPanelData([{name: 'login', data: {}}]); // VideoListPanel로 전환
+				}, 2000);
+	
+				return () => clearTimeout(timer); // 타이머 정리
+			}
+		}, [panelData, setPanelData]);
+
 	return (
 		<AuthProvider>
 			<AxiosInterceptor>

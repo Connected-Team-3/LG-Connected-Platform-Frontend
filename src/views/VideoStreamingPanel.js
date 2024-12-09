@@ -6,6 +6,8 @@ import { PageViews, Page } from '@enact/sandstone/PageViews';
 import Item from '@enact/sandstone/Item';
 import IconItem from '@enact/sandstone/IconItem';
 import Icon from '@enact/sandstone/Icon';
+import { Layout, Cell } from '@enact/ui/Layout';
+import { H2 } from '@enact/sandstone/Heading';
 
 const VideoStreamingPanel = (props) => {
   const { data, ...rest } = props;
@@ -24,20 +26,12 @@ const VideoStreamingPanel = (props) => {
   const handleFoodNameClick = () => {
     setPanelData(prev => [
       ...prev,
-      { name: 'search', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
+      { name: 'searcha', data: { query: data.video.foodName } }  // 'searchView'로 페이지 이동
     ]);
   };
 
   // 부가 정보 (예시로 video.ingredients 사용)
   const ingredients = video?.ingredients || []; // video.ingredients를 부가정보로 사용
-  
-  // Header의 close 버튼 클릭 시 Main 페이지로 돌아가기
-  const handleClose = () => {
-    setPanelData(prev => [
-      ...prev.filter(panel => panel.name !== 'videoList'),  // 기존 패널을 필터링하여 Main 화면으로 이동
-      { name: 'main', data: {} }  // 'main' 패널로 이동
-    ]);
-  };
 
   // Header의 홈 버튼 클릭 시 Main 화면으로 돌아가기
   const handleHomeClick = () => {
@@ -48,15 +42,14 @@ const VideoStreamingPanel = (props) => {
   };
 
   return (
-    <Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
+    <Panel {...rest} noCloseButton={true} style={{ height: '100%', overflow: 'auto' }}>
       <Header
         title={`Video`}
-        slotBefore={
+        slotAfter={
           <IconItem onClick={handleHomeClick} aria-label="Go to Home">
             <Icon>home</Icon>
           </IconItem>
         }
-        onClose={handleClose} // 기존 close 버튼도 여전히 활성화
       />
       <PageViews pageIndicatorType="dot">
         <Page>
