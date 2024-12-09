@@ -95,7 +95,7 @@ const RecentlyViewedVideosPanel = props => {
     };
 
 	return (
-        <Panel {...rest}>
+        <Panel {...rest} style={{backgroundColor: '#fff' }}>
             <Header title={`최근에 시청한 동영상`} />
             {loading ? (
                 <Spinner size="small" />

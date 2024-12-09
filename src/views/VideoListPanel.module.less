@@ -1,126 +1,59 @@
-/* VideoListPanel.module.less */
-
+/* Panel 스타일 */
 .panel {
-    background-color: #4f9af1; /* Light gray background for the panel */
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  background-color: rgba(165, 0, 52, 1); /* 전체 패널 배경 */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+}
+
+.contents{
+  background-color: #fff;
+}
+
+/* Header 스타일 */
+.header {
+  background-color: rgba(165, 0, 52, 1); /* 헤더 배경 */
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px 8px 0 0; /* 상단 모서리 둥글게 */
+}
+
+.customTitle {
+  font-size:2rem;
+}
+
+/* Header Subtitle */
+.customSubtitle{
+  font-size: 0.5rem; /* 서브타이틀 크기 */
+  font-weight: normal;
+  color: #ffdab9; /* 부드러운 색상 */
   
-  .header {
-    font-size: 18px;
-    font-weight: bold;
-    color: #19bacf;
-    margin-bottom: 12px;
-  }
-  
-  .subtitle {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .tabLayout {
-    margin-top: 16px;
-  }
-  
-  .tab {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 8px 16px;
-    margin: 8px 0;
-  }
-  
-  .tabTitle {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .tabContent {
-    display: flex;
-    flex-direction: column;
-    margin-top: 12px;
-  }
-  
-  .videoItem {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    padding: 8px;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .videoThumbnail {
-    width: 120px;
-    height: 80px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 16px;
-  }
-  
-  .videoDetails {
-    flex: 1;
-  }
-  
-  .videoTitle {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .videoDescription {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .videoDuration {
-    font-size: 12px;
-    color: #999;
-    margin-top: 8px;
-  }
-  
-  .uploadButton {
-    background-color: #0066cc;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 16px;
-  }
-  
-  .uploadButton:hover {
-    background-color: #004d99;
-  }
-  
-  .loginPanel {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-  }
-  
-  .loginInput {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .loginButton {
-    background-color: #28a745;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 4px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .loginButton:hover {
-    background-color: #218838;
-  }
-  
+}
+
+/* Tab 스타일 */
+.tab {
+  background-color: #fff; /* 탭 배경 */
+  color: #8b4513; /* 탭 텍스트 색상 */
+  border: 1px solid #8b4513; /* 탭 테두리 */
+  border-radius: 8px;
+  margin: 8px 0;
+  padding: 8px;
+}
+
+.tab:hover {
+  background-color: #f4e9e2; /* 탭 호버 시 색상 */
+}
+
+/* Tab Title */
+.tab-title {
+  font-weight: bold;
+  color: #8b4513; /* 탭 제목 색상 */
+}
+
+/* Tab Content */
+.tab-content {
+  background-color: #f9f5f1; /* 탭 내용 배경 */
+  padding: 16px;
+  border-radius: 8px; /* 콘텐츠 모서리 둥글게 */
+  color: #333; /* 콘텐츠 텍스트 색상 */
+}

@@ -1,0 +1,35 @@
+.panel {
+  overflow-y: scroll; /* 스크롤은 활성화, 하지만 스크롤 바는 숨김 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.playlistRow {
+  display: flex; /* Flexbox를 사용하여 가로 정렬 */
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  white-space: nowrap; /* 아이템들이 줄 바꿈 없이 나열되도록 설정 */
+  padding: 10px 0; /* 상하 간격 추가 */
+  gap: 20px; /* 아이템 간의 간격 */
+  scrollbar-width: none; /* Firefox 스크롤바 제거 */
+  -ms-overflow-style: none; /* Internet Explorer 스크롤바 제거 */
+
+  /* Webkit 기반 브라우저의 스크롤바 숨기기 */
+  &::-webkit-scrollbar {
+      display: none;
+  }
+}
+
+.videoItem {
+    width: 200px; /* 썸네일 너비 */
+    height: 300px; /* 썸네일 높이 */
+    margin-right: 10px; /* 오른쪽 간격 */
+  }
+  
+.imageItem {
+    width: 100%; /* 이미지 너비를 부모에 맞춤 */
+    height: 100%; /* 이미지 높이를 부모에 맞춤 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
