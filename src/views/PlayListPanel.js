@@ -25,29 +25,13 @@ const PlayListPanel = props => {
 		setPanelData(prev => [prev.slice(0, -1), {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
     
-   // 비디오 데이터를 가져오는 함수
-   const fetchVideoDetails = async (videoIds) => {
-    try {
-      const videoInfoPromises = videoIds.map(async (videoId) => {
-        const response = await axiosInstance.get(`/api/video/play/${videoId}`);
-        
-        // Ensure response and response.data are valid before accessing 'data'
-        if (response && response.data && response.data.result) {
-          return response.data.result.data; // 비디오 정보를 반환
-        } else {
-          console.error(`Error: Video details not found for videoId ${videoId}`);
-          return null; // 비디오가 없으면 null 반환
-        }
-      });
+    const fetchVideoDetails = async (videoIds) => {
+        try {
+            const videoInfoPromises = videoIds.map(async (videoId) => {
+            const response = await axiosInstance.get(`/api/video/play/${videoId}`);
+            return response.data.result.data; // 비디오 정보를 반환
+        });
 
-      // 모든 비디오 정보를 가져올 때까지 기다림
-      const videoData = await Promise.all(videoInfoPromises);
-      // 필터링하여 null 값을 제외한 valid videoData만 설정
-      setVideoData(videoData.filter((video) => video !== null));
-    } catch (error) {
-      console.error('Error fetching video details:', error); // 오류 처리
-    }
-  };
 
   // 사용자 플레이리스트를 가져오는 함수
   const fetchPlayList = async () => {
@@ -56,17 +40,17 @@ const PlayListPanel = props => {
       const response = await axiosInstance.get(`/api/playlist/getPlaylist`);
       setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
       console.log(response.data.result.list);
-    } catch (error) {
-      console.error('Error fetching play list data:', error); // 오류 처리
-    } finally {
-      setLoading(false); // 로딩 상태 비활성화
-    }
-  };
 
-  // 컴포넌트 마운트 시 사용자 기록을 가져옴
-  useEffect(() => {
-    fetchPlayList();
-  }, []);
+    } catch (error) {
+        console.error('Error fetching video details:', error); // 오류 처리
+    }
+    };
+    // 컴포넌트 마운트 시 사용자 기록을 가져옴
+    useEffect(() => {
+        fetchPlayList();
+        console.log(playlist);
+    }, []);
+
 
   // playlist가 업데이트 될 때마다 video 정보를 가져옴
   useEffect(() => {
@@ -76,6 +60,7 @@ const PlayListPanel = props => {
     }
   }, [playlist]); // playlist가 변경될 때마다 비디오 정보 가져오기
     
+
 
 
 

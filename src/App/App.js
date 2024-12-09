@@ -17,6 +17,7 @@ import VideoUploadPanel from '../views/VideoUploadPanel';
 import SearchView from '../views/SearchView'
 import LaunchScreenPanel from '../views/LaunchScreenPanel'; // LaunchScreen 컴포넌트
 import SignupPage from '../views/SignupPanel';
+import UpdateProfile from '../views/UpdateProfile';
 
 // 실습 : 동적 panel 이동 기능 구현하기
 
@@ -66,6 +67,8 @@ const mapper = item => {
 			return <SearchView key={name} data={data} />; // SearchView 매핑 추가
 		case 'signup':
 			return <SignupPage key={name} data = {data} />; //sginup panel 추가
+		case 'updateprofile':
+			return <UpdateProfile key={name} data = {data} />; //sginup panel 추가
 		default:
 			return <Main key={name} />;
 	}
