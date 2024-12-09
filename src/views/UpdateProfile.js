@@ -55,7 +55,7 @@ const handleSubmit = async () => {
   };
 
   return (
-    <Panel {...props}>
+    <Panel {...props} style={{backgroundColor:'#fff'}}>
       <Header title="회원정보 수정" />
       <div style={{ padding: '20px' }}>
         <Input

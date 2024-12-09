@@ -2,11 +2,13 @@
 import React, { useState, useContext } from 'react';
 import {Header, Panel} from '@enact/sandstone/Panels';
 import Button from '@enact/sandstone/Button';
-import Input from '@enact/sandstone/Input';
+import {Input} from '@enact/sandstone/Input';
 import { useAuth } from '../auth/AuthProvider';
 import axiosInstance from '../auth/axiosInstance';
 import Cookies from 'js-cookie'; // Import js-cookie
 import {PanelContext} from './Context';
+
+import css from './LoginPanel.module.less';
 
 const LoginPage = props => {
 	const {data, ...rest} = props;
@@ -60,14 +62,14 @@ const LoginPage = props => {
   };
 
   return (
-    <Panel {...rest}>
-      <Header title="로그인" />
+    <Panel {...rest} className={css.loginPanel}>
+      <Header title={<span className={css.customTitle}>FoodHub 로그인</span>}  />
       <Input
         placeholder="사용자명"
         value={username}
         onComplete={handleUsernameComplete} // onComplete 이벤트로 처리
         style={{ marginBottom: '10px' }}
-        autoFocus
+        //autoFocus
       />
       <Input
         placeholder="비밀번호"
