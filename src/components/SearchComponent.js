@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input } from '@enact/sandstone/Input';
+import { Input, InputField} from '@enact/sandstone/Input';
 import Button from '@enact/sandstone/Button';
 import { Row, Cell } from '@enact/ui/Layout';
 import styles from './SearchComponent.module.less'; // 스타일 파일 임포트
