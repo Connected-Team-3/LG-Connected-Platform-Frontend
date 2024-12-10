@@ -51,13 +51,6 @@ const PlayListPanel = props => {
       console.error('Error fetching video details:', error); // 오류 처리
     }
   };
-
-          return videoDetails; // Return an array of video details
-      } catch (err) {
-          console.error("Error fetching video details:", err);
-          throw err; // Re-throw the error or handle it as needed
-      }
-  };
   // 사용자 플레이리스트를 가져오는 함수
   const fetchPlayList = async () => {
     try {
