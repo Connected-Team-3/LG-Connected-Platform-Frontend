@@ -26,6 +26,7 @@ import SystemState from './SystemState';
 import {useAuth} from '../auth/AuthProvider'
 import CartPanel from './CartPanel';
 import HLSVideo from './HLSVideo';
+import AlarmPanel from './AlarmPanel';
 
 
 
@@ -97,6 +98,9 @@ const VideoListPanel = props => {
 				</Tab>
 				<Tab title="Update Profile">
 					<UpdateProfile />
+				</Tab>
+				<Tab title="Timer">
+					<AlarmPanel />
 				</Tab>
 				<Tab icon='wisa' title="Resource">
 					<SystemState></SystemState>
