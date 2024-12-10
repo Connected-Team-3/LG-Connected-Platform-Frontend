@@ -32,7 +32,14 @@ const PlayListPanel = props => {
             const videoInfoPromises = videoIds.map(async (videoId) => {
             const response = await axiosInstance.get(`/api/video/play/${videoId}`);
             return response.data.result.data; // 비디오 정보를 반환
-        });
+        })
+    
+    }catch(error)
+    {
+        console.error(error);
+    };
+}
+    
 
 
   // 사용자 플레이리스트를 가져오는 함수
