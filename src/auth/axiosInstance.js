@@ -5,7 +5,7 @@ import { useAuth } from './AuthProvider';
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-    //baseURL: "http://43.201.111.86:8080",
+    baseURL: '/api',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -14,14 +14,14 @@ const axiosInstance = axios.create({
 
 const AxiosInterceptor = ({ children }) => {
 
-    const { logout } = useAuth();
+    const { logout, token } = useAuth();
 
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const requestInterceptor = axiosInstance.interceptors.request.use(
             (config) => {
-                const token = Cookies.get('token');
+                //const token = Cookies.get('token');
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 }

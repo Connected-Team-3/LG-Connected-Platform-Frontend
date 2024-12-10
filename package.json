@@ -48,6 +48,8 @@
 		"@enact/webos": "^4.9.4",
 		"axios": "^1.7.9",
 		"chart.js": "^4.4.7",
+		"hls.js": "^1.5.17",
+		"http-proxy-middleware": "^3.0.3",
 		"ilib": "^14.17.0",
 		"js-cookie": "^3.0.5",
 		"prop-types": "^15.8.1",
@@ -72,6 +74,5 @@
 		"src/**/*.js": [
 			"npm run lint -- --fix"
 		]
-	},
-	"proxy": "http://3.34.4.68:8080"
+	}
 }

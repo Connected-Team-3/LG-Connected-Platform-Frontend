@@ -9,6 +9,7 @@ import {PanelContext} from './Context';
 import LoginPage from './LoginPanel';
 import Button from '@enact/sandstone/Button';
 import SlotItem from '@enact/ui/SlotItem';
+import VideoExample from '../components/VideoExample';
 
 import Icon from '@enact/sandstone/Icon'
 import IconItem from '@enact/sandstone/IconItem';
@@ -23,6 +24,8 @@ import UpdateProfile from './UpdateProfile';
 import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
 import {useAuth} from '../auth/AuthProvider'
+import CartPanel from './CartPanel';
+import HLSVideo from './HLSVideo';
 
 
 
@@ -80,15 +83,17 @@ const VideoListPanel = props => {
 						<SearchView />
 					</Scroller>
 				</Tab>
-				<Tab icon='list' title="Recently Viewed">
+				<Tab icon='timer' title="Recently Viewed">
 					<RecentlyViewedVideosPanel />
 				</Tab>
 				<Tab icon='list' title="Playlists">
 					<PlayListPanel />
 				</Tab>
-				
-				<Tab title="Upload">
-					<VideoUploadPanel />
+				<Tab icon='seemore' title="Streaming">
+					<HLSVideo />
+				</Tab>
+          <Tab icon='shopping' title="Cart">
+            <CartPanel />
 				</Tab>
 				<Tab title="Update Profile">
 					<UpdateProfile />

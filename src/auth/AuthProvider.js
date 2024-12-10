@@ -32,6 +32,8 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
     console.log('사용자 이름:', userName);
     console.log('쿠키에 저장된 사용자 이름:', Cookies.get('userName'));
+    console.log('쿠키에 저장된 token 이름:', Cookies.get('token'));
+    console.log("auth login 함수: ", token);
   };
 
   const logout = () => {

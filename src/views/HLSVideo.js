@@ -1,16 +1,20 @@
-import {useRef, useEffect, useCallback} from 'react';
+import {useRef, useEffect, useCallback, useState} from 'react';
 import Button from '@enact/sandstone/Button'
 import Hls from 'hls.js';
+import axiosInstance from '../auth/axiosInstance';
 
 const HLSVideo = (props) => {
 	const videoRef = useRef(null);
 	const hlsRef = useRef(null);
+	const [hlsInstance, setHlsInstance] = useState(null);
+	const [quality, setQuality] = useState(null);
 
 	useEffect(() => {
+		const videoUrl = `stream/hls/hls_1/master_playlist.m3u8`;
 		if (Hls.isSupported()) {
 			const video = videoRef.current;
 			const hls = new Hls();
-			hls.loadSource(props.src);
+			hls.loadSource(videoUrl);
 			hls.attachMedia(video);
 
 			// triggered when the loaded manifest is parsed.s
@@ -61,10 +65,27 @@ const HLSVideo = (props) => {
 							);
 						}
 					}
+
+					setHlsInstance(hls);
+					hlsRef.current = hls;
 				}
+				return () => {
+					if (hlsRef.current) {
+						hlsRef.current.destroy();
+						}
+					};
 			});
 		}
 	}, [props.src]);
+
+	const handleQualityChange = (newQuality) => {
+		if (hlsInstance) {
+		  // `newQuality`는 품질 레벨의 인덱스 (0, 1, 2, ...)
+			hlsInstance.currentLevel = newQuality;
+			setQuality(newQuality);
+			console.log(`품질 레벨이 ${newQuality}로 변경되었습니다.`);
+			}
+	  	};
 
 	const handleZeroClick = useCallback(() => {
 		console.log('Button clicked!');
@@ -79,17 +100,12 @@ const HLSVideo = (props) => {
 	return (
 		<>
 			<div>
-				<Button className="btn" onClick={handleZeroClick}>
-					Level 0
-				</Button>
+				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
+				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>
+				<Button onClick={() => handleQualityChange(2)}>High Quality</Button>
 				<Button className="btn" onClick={handleAutoClick}>
 					Auto
 				</Button>
-				<Button icon="list" size="small" />
-				<Button icon="playspeed" size="small" />
-				<Button icon="speakercenter" size="small" />
-				<Button icon="miniplayer" size="small" />
-				<Button icon="subtitle" size="small" />
 			</div>
 
 			<video ref={videoRef} controls height={720} />
