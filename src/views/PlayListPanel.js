@@ -24,8 +24,9 @@ const PlayListPanel = props => {
     const [loading, setLoading] = useState(true);
     const [videoData, setVideoData] = useState([]);
     const handleVideoClick = useCallback((video, playlist) => {
-      setPanelData(prev => [prev.slice(0, -1), {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
-   }, [index, setPanelData]);
+		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
+	}, [index, setPanelData]);
+
     
    // 비디오 데이터를 가져오는 함수
    const fetchVideoDetails = async (videoIds) => {
@@ -51,6 +52,12 @@ const PlayListPanel = props => {
     }
   };
 
+          return videoDetails; // Return an array of video details
+      } catch (err) {
+          console.error("Error fetching video details:", err);
+          throw err; // Re-throw the error or handle it as needed
+      }
+  };
   // 사용자 플레이리스트를 가져오는 함수
   const fetchPlayList = async () => {
     try {
@@ -59,9 +66,9 @@ const PlayListPanel = props => {
       setPlayList(response.data.result.list); // API에서 반환된 데이터로 상태 설정
       console.log(response.data.result.list);
     } catch (error) {
-      console.error('Error fetching play list data:', error); // 오류 처리
+        console.error('Error fetching video details:', error); // 오류 처리
     } finally {
-      setLoading(false); // 로딩 상태 비활성화
+      setLoading(false);
     }
   };
 

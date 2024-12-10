@@ -9,6 +9,7 @@ import {PanelContext} from './Context';
 import LoginPage from './LoginPanel';
 import Button from '@enact/sandstone/Button';
 import SlotItem from '@enact/ui/SlotItem';
+import VideoExample from '../components/VideoExample';
 
 import Icon from '@enact/sandstone/Icon'
 import IconItem from '@enact/sandstone/IconItem';

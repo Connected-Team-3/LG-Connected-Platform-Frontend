@@ -5,7 +5,6 @@ import { useAuth } from './AuthProvider';
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-    //baseURL: "http://15.164.230.54:8080",
     headers: {
         'Content-Type': 'application/json',
     },
