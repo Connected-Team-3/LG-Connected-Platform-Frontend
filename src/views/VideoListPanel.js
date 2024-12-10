@@ -8,6 +8,7 @@ import {PanelContext} from './Context';
 import LoginPage from './LoginPanel';
 import Button from '@enact/sandstone/Button';
 import SlotItem from '@enact/ui/SlotItem';
+import VideoExample from '../components/VideoExample';
 
 
 import VideoListTab from '../components/VideoListTab';

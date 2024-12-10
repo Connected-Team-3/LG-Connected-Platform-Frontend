@@ -22,7 +22,7 @@ const PlayListPanel = props => {
     const [loading, setLoading] = useState(true);
     const [videoData, setVideoData] = useState([]);
     const handleVideoClick = useCallback((video, playlist) => {
-		setPanelData(prev => [prev.slice(0, -1), {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
+		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
     
    // 비디오 데이터를 가져오는 함수
