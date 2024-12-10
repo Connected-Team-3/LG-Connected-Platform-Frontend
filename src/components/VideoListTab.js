@@ -11,6 +11,7 @@ import axiosInstance from '../auth/axiosInstance';
 import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
+import ImageItem from '@enact/sandstone/ImageItem';
 import './VideoListTab.css'
 const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
@@ -76,7 +77,7 @@ const VideoListTab = props => {
 	
 
 	return (
-		<Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
+		<Panel {...rest} style={{ height: '100%', overflow: 'auto', backgroundColor: '#ffffff' }}>
             {/* 카테고리 선택 */}
             <Dropdown
                 direction="below"
@@ -91,23 +92,40 @@ const VideoListTab = props => {
                 {categories}
             </Dropdown>
 
-            <Row wrap>
-                {videoData.map((video) => ( 
-					<Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
-					<MediaOverlay
-						marqueeOn="focus"
-						muted
-						subtitle={video.description}
-						textAlign="end"
-						title={video.title}
-					>
-						<source src={video.sourceUrl} />
-					</MediaOverlay>
-				</Cell>
-                ))}
+            <Row wrap
+            >
+                {videoData.map((video) => {
+                    if (!video) return null; // 비디오가 없으면 렌더링하지 않음
+
+                    return (
+                        <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video)}>
+                            <ImageItem
+                                src={video.thumbUrl} // 썸네일 이미지
+                                label={video.description}  // 비디오 설명
+                                orientation="horizontal"
+                            >
+                                {video.title}
+                            </ImageItem>
+                        </Cell>
+                    );
+                })}
             </Row>
 		</Panel>
     );
 };
 
 export default VideoListTab;
+
+// {videoData.map((video) => ( 
+//     <Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
+//     <MediaOverlay
+//         marqueeOn="focus"
+//         muted
+//         subtitle={video.description}
+//         textAlign="end"
+//         title={video.title}
+//     >
+//         <source src={video.sourceUrl} />
+//     </MediaOverlay>
+// </Cell>
+// ))}

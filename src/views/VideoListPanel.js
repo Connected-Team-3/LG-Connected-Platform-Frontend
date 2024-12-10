@@ -24,6 +24,7 @@ import UpdateProfile from './UpdateProfile';
 import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
 import {useAuth} from '../auth/AuthProvider'
+import CartPanel from './CartPanel';
 
 
 
@@ -49,38 +50,51 @@ const VideoListPanel = props => {
 
 	return (
 		<Panel {...props} className={css.panel} noBackButton={true}>
-			<Header 
-		      title="FOODHUB" 
-			  subtitle={userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'} 
+			
+			<TabLayout>
+				{/* <div icon='home' title='home'>
+				<Header 
+		      title={
+			  <div>
+			  <img src="./logo.png" alt="Logo" className={css.logo} />
+			  <span className={css.customTitle}>FOODHUB</span>
+			  </div>
+			  }
+			  subtitle={
+				<span className={css.customSubtitle}>
+				{userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'}
+				</span>
+				} 
 			  className={css.header}
+			  titleClassName = {css.title}
 			  slotAfter={
                     <IconItem onClick={handleLogoutAndBack} aria-label="Logout">
                         <Icon>logout</Icon>
                     </IconItem>
                 }
       		/>
-			<TabLayout>
-				<Tab title="Search">
+				</div> */}
+				<Tab icon='home' title="Home">
+					<VideoListTab/>
+				</Tab>
+				<Tab icon='search' title="Search">
 					<Scroller>
 						<SearchView />
 					</Scroller>
 				</Tab>
-				<Tab title="Videos">
-					<VideoListTab />
-				</Tab>
-				<Tab title="Recently Viewed">
+				<Tab icon='list' title="Recently Viewed">
 					<RecentlyViewedVideosPanel />
 				</Tab>
-				<Tab title="Playlists">
+				<Tab icon='list' title="Playlists">
 					<PlayListPanel />
 				</Tab>
-				<Tab title="Upload">
-					<VideoUploadPanel />
+          <Tab title="Cart">
+            <CartPanel />
 				</Tab>
 				<Tab title="Update Profile">
 					<UpdateProfile />
 				</Tab>
-				<Tab title="Resource">
+				<Tab icon='wisa' title="Resource">
 					<SystemState></SystemState>
 				</Tab>
 			</TabLayout>

@@ -58,7 +58,7 @@ const SearchView = (props) => {
     }
 
     return (
-        <Panel {...rest} noCloseButton={true}>
+        <Panel {...rest} noCloseButton={true} sytle={{ backgroundColor: '#fff' }}>
             <Header
                 title="Search Video"
                 slotAfter={
