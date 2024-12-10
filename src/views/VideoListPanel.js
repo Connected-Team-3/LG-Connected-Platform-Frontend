@@ -25,6 +25,7 @@ import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
 import {useAuth} from '../auth/AuthProvider'
 import CartPanel from './CartPanel';
+import HLSVideo from './HLSVideo';
 
 
 
@@ -82,13 +83,16 @@ const VideoListPanel = props => {
 						<SearchView />
 					</Scroller>
 				</Tab>
-				<Tab icon='list' title="Recently Viewed">
+				<Tab icon='timer' title="Recently Viewed">
 					<RecentlyViewedVideosPanel />
 				</Tab>
 				<Tab icon='list' title="Playlists">
 					<PlayListPanel />
 				</Tab>
-          <Tab title="Cart">
+				<Tab icon='seemore' title="Streaming">
+					<HLSVideo />
+				</Tab>
+          <Tab icon='shopping' title="Cart">
             <CartPanel />
 				</Tab>
 				<Tab title="Update Profile">
