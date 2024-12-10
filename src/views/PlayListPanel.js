@@ -25,14 +25,22 @@ const PlayListPanel = props => {
 		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
 	}, [index, setPanelData]);
     
-    const fetchVideoDetails = async (videoIds) => {
-        try {
-            const videoInfoPromises = videoIds.map(async (videoId) => {
-            const response = await axiosInstance.get(`/api/video/play/${videoId}`);
-            return response.data.result.data; // 비디오 정보를 반환
-        });
+  const fetchVideoDetails = async (videoIds) => {
+      try {
+          const videoInfoPromises = videoIds.map(async (videoId) => {
+              const response = await axiosInstance.get(`/api/video/play/${videoId}`);
+              return response.data.result.data; // 비디오 정보를 반환
+          });
 
+          // Wait for all video info promises to resolve
+          const videoDetails = await Promise.all(videoInfoPromises);
 
+          return videoDetails; // Return an array of video details
+      } catch (err) {
+          console.error("Error fetching video details:", err);
+          throw err; // Re-throw the error or handle it as needed
+      }
+  };
   // 사용자 플레이리스트를 가져오는 함수
   const fetchPlayList = async () => {
     try {
@@ -43,6 +51,8 @@ const PlayListPanel = props => {
 
     } catch (error) {
         console.error('Error fetching video details:', error); // 오류 처리
+    } finally {
+      setLoading(false);
     }
     };
     // 컴포넌트 마운트 시 사용자 기록을 가져옴
