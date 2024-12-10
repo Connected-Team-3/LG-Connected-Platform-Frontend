@@ -84,8 +84,18 @@ const PlayListPanel = props => {
 
 
 	return (
-        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#fff' }} className={css.panel}>
-    <Header title="플레이리스트" />
+        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#FAF0E6' }} className={css.panel}>
+    <Header> 
+                <span
+                    style={{
+                    color: '#000', // 검은 글씨
+                    fontWeight: 'bold', // 두꺼운 글씨
+                    fontSize: '45px', // 글씨 크기
+                    }}
+                >
+                플레이리스트
+                </span>
+          </Header>
     {loading ? (
         <Spinner size="small" />
     ) : playlist.length === 0 ? (
