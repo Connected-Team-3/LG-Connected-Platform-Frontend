@@ -93,7 +93,7 @@ const App = props => {
 	
 				return () => clearTimeout(timer); // 타이머 정리
 			}
-		}, [panelData, setPanelData]);
+		}, [panelData, setPanelData])
 
 	return (
 		<AuthProvider>
