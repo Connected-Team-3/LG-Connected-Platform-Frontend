@@ -14,12 +14,13 @@
 	import Icon from '@enact/sandstone/Icon'
 	import IconItem from '@enact/sandstone/IconItem';
 
-	import VideoListTab from '../components/VideoListTab';
-	import VideoUploadPanel from './VideoUploadPanel';
-	import SearchView from './SearchView'; 
-	import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
-	import PlayListPanel from './PlayListPanel';
-	import UpdateProfile from './UpdateProfile';
+import VideoListTab from '../components/VideoListTab';
+import VideoUploadPanel from './VideoUploadPanel';
+import SearchView from './SearchView'; 
+import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
+import PlayListPanel from './PlayListPanel';
+import UpdateProfile from './UpdateProfile';
+import ProfilePanel from './ProfilePanel';
 
 	import css from './VideoListPanel.module.less';
 	import SystemState from './SystemState';
@@ -136,41 +137,76 @@
 		
 
 
-					
-					<Tab icon="home" title='home'
-					>
-						<VideoListTab userName={userName} logo={logo} />
-					</Tab>
-					<Tab icon='search' title="Search">
-						<Scroller>
-							<SearchView />
-						</Scroller>
-					</Tab>
-					<Tab icon='timer' title="Recently Viewed">
-						<RecentlyViewedVideosPanel />
-					</Tab>
-					<Tab icon='list' title="Playlists">
-						<PlayListPanel />
-					</Tab>
-					<Tab icon='seemore' title="Streaming">
-						<HLSVideo />
-					</Tab>
-			<Tab icon='shopping' title="Cart">
-				<CartPanel />
-					</Tab>
-					<Tab title="Update Profile">
-						<UpdateProfile />
-					</Tab>
-					<Tab title="Timer">
-						<AlarmPanel />
-					</Tab>
-					<Tab icon='wisa' title="Resource">
-						<SystemState></SystemState>
-					</Tab>
-					</TabLayout>
-					{/* </div> */}
-			</Panel>
-		);
-	};
-
+	return (
+		<Panel {...props} className={css.panel} noBackButton={true}>
+			{/* <div className={css.layoutContainer}> */}
+    {/* 로고와 사용자 메시지 */}
+    {/* <div className={css.headerContainer}>
+        <img src={logo} alt="Logo" className={css.logo} />
+        <div className={css.message}>
+            {userName ? (
+                <span>{`${userName}님, 무슨 음식을 좋아하시나요?`}</span>
+            ) : (
+                <span>무슨 음식을 좋아하시나요?</span>
+            )}
+        </div>
+    </div> */}
+			<TabLayout>
+				{/* <div icon='home' title='home'>
+				<Header 
+		      title={
+			  <div>
+			  <img src="./logo.png" alt="Logo" className={css.logo} />
+			  <span className={css.customTitle}>FOODHUB</span>
+			  </div>
+			  }
+			  subtitle={
+				<span className={css.customSubtitle}>
+				{userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'}
+				</span>
+				} 
+			  className={css.header}
+			  titleClassName = {css.title}
+			  slotAfter={
+                    <IconItem onClick={handleLogoutAndBack} aria-label="Logout">
+                        <Icon>logout</Icon>
+                    </IconItem>
+                }
+      		/>
+				</div> */}
+				
+				<Tab icon='home' title="Home">
+					<VideoListTab/>
+				</Tab>
+				<Tab icon='search' title="Search">
+					<Scroller>
+						<SearchView />
+					</Scroller>
+				</Tab>
+				<Tab icon='timer' title="Recently Viewed">
+					<RecentlyViewedVideosPanel />
+				</Tab>
+				<Tab icon='list' title="Playlists">
+					<PlayListPanel />
+				</Tab>
+				<Tab icon='seemore' title="Streaming">
+					<HLSVideo />
+				</Tab>
+          <Tab icon='shopping' title="Cart">
+            <CartPanel />
+				</Tab>
+				<Tab title="Profile">
+					<ProfilePanel />
+				</Tab>
+				<Tab title="Timer">
+					<AlarmPanel />
+				</Tab>
+				<Tab icon='wisa' title="Resource">
+					<SystemState></SystemState>
+				</Tab>
+				</TabLayout>
+				{/* </div> */}
+		</Panel>
+	);
+};
 	export default VideoListPanel;
