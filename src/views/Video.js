@@ -30,13 +30,14 @@ const Video = props => {
 		  ]);
 	}, [index, setPanelData]);
 
-	console.log(playlist);
+	console.log("playlist:", playlist);
 
 	const videoRef = useRef(null);
 
 	const fetchVideoDetails = async (videoId) => {
 		try {
 			const response = await axiosInstance.get(`/api/video/play/${videoId}`);
+			console.log("Video.js response: ", response);
 			return response.data.result.data;
 		} catch (error) {
 			console.error('Error fetching video details:', error); // 오류 처리
@@ -47,14 +48,15 @@ const Video = props => {
         try {
             const videoInfoPromises = videoIds.map(async (videoId) => {
             const response = await axiosInstance.get(`/api/video/play/${videoId}`);
+			//console.log(fetchAllVideodetails, response);
             return response.data.result.data; // 비디오 정보를 반환
         });
 
         // 모든 비디오 정보를 가져올 때까지 기다림
         const videoData = await Promise.all(videoInfoPromises);
         setVideoData(videoData); // 비디오 정보 상태 업데이트
-		console.log("fetch playlist videos")
-        console.log(videoData); // 비디오 정보 출력
+		console.log("fetch playlist videos: ", videoData);
+        //console.log(videoData); // 비디오 정보 출력
     } catch (error) {
         console.error('Error fetching video details:', error); // 오류 처리
     }
@@ -64,7 +66,7 @@ const Video = props => {
 		try {
 		  const videoId = data.video.id;
 		  const response = await axiosInstance.get(`/api/videoHistory/getHistoryByVideo/${videoId}`);
-		console.log(response.data);
+		console.log("fetchVideoHistory:", response.data);
 		  if (response.data.success) {
 			const videoHistory = response.data.result.data;
 			console.log('Fetched video history:', videoHistory);
@@ -144,7 +146,7 @@ const Video = props => {
 	  
 		  // 비동기 함수에서 비디오 정보를 가져옴
 		  const nextVideoData = await fetchVideoDetails(videoIdList[nextIndex]); // nextIndex를 사용하여 비디오 정보를 가져옵니다.
-		  console.log(nextVideoData);
+		  console.log("nextvideodata:", nextVideoData);
 		
 		  // panelData 업데이트 (nextVideoData를 사용)
 		  setPanelData(prev => [...prev,

@@ -54,7 +54,7 @@ const VideoListPanel = props => {
 		<Panel {...props} className={css.panel} noBackButton={true}>
 			{/* <div className={css.layoutContainer}> */}
     {/* 로고와 사용자 메시지 */}
-    {/* <div className={css.headerContainer}>
+     <div className={css.headerContainer}>
         <img src={logo} alt="Logo" className={css.logo} />
         <div className={css.message}>
             {userName ? (
@@ -63,7 +63,7 @@ const VideoListPanel = props => {
                 <span>무슨 음식을 좋아하시나요?</span>
             )}
         </div>
-    </div> */}
+    </div> 
 			<TabLayout>
 				{/* <div icon='home' title='home'>
 				<Header 
@@ -105,10 +105,10 @@ const VideoListPanel = props => {
 				<Tab icon='seemore' title="Streaming">
 					<HLSVideo />
 				</Tab>
-          <Tab icon='shopping' title="Cart">
-            <CartPanel />
+          		<Tab icon='shopping' title="Cart">
+            		<CartPanel />
 				</Tab>
-				<Tab title="Update Profile">
+				<Tab icon='profile' title="Update Profile">
 					<UpdateProfile />
 				</Tab>
 				<Tab title="Timer">

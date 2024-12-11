@@ -10,7 +10,8 @@ const HLSVideo = (props) => {
 	const [quality, setQuality] = useState(null);
 
 	useEffect(() => {
-		const videoUrl = `stream/hls/hls_1/master_playlist.m3u8`;
+		//const videoUrl = `stream/hls/hls_1/master_playlist.m3u8`;
+		const videoUrl = `https://connectedplatform.s3.ap-northeast-2.amazonaws.com/hls/hls_1/master_playlist.m3u8`
 		if (Hls.isSupported()) {
 			const video = videoRef.current;
 			const hls = new Hls();
