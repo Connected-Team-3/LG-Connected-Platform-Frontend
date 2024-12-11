@@ -20,6 +20,7 @@ import SearchView from './SearchView';
 import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
 import PlayListPanel from './PlayListPanel';
 import UpdateProfile from './UpdateProfile';
+import ProfilePanel from './ProfilePanel';
 
 import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
@@ -108,8 +109,8 @@ const VideoListPanel = props => {
           <Tab icon='shopping' title="Cart">
             <CartPanel />
 				</Tab>
-				<Tab title="Update Profile">
-					<UpdateProfile />
+				<Tab title="Profile">
+					<ProfilePanel />
 				</Tab>
 				<Tab title="Timer">
 					<AlarmPanel />

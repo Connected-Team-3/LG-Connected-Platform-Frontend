@@ -20,3 +20,4 @@ export const getCpuInfo = params =>
 const cpu_ = request('luna://com.webos.memorymanager');
 export const getMemoryInfo = params => 
 	cpu_({method: 'getUnitList', ...params});
+
