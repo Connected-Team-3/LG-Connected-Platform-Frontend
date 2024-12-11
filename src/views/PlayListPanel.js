@@ -24,8 +24,8 @@ const PlayListPanel = props => {
     const [loading, setLoading] = useState(true);
     const [videoData, setVideoData] = useState([]);
     const handleVideoClick = useCallback((video, playlist) => {
-		setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
-	}, [index, setPanelData]);
+      setPanelData(prev => [...prev, {name: 'video', data: {index: index + 1, video: video, playlist:playlist}}]);
+   }, [index, setPanelData]);
 
     
    // 비디오 데이터를 가져오는 함수
@@ -83,9 +83,9 @@ const PlayListPanel = props => {
 
 
 
-	return (
-        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#FFF6E1', margin:'0'  }} className={css.panel}>
-     <Header> 
+   return (
+        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#FAF0E6' }} className={css.panel}>
+    <Header> 
                 <span
                     style={{
                     color: '#000', // 검은 글씨
@@ -95,12 +95,7 @@ const PlayListPanel = props => {
                 >
                 플레이리스트
                 </span>
-          </Header> 
-          {/* <Header
-        title={<span style={css.customTitle}>플레이리스트</span>}
-    /> */}
-
-
+          </Header>
     {loading ? (
         <Spinner size="small" />
     ) : playlist.length === 0 ? (
@@ -108,50 +103,49 @@ const PlayListPanel = props => {
             현재 비디오가 없습니다.
         </BodyText>
     ) : (
-        <Row wrap>
-            {playlist.map((playlist) => (
-                <Cell key={playlist.id} size="auto" style={{ marginBottom: '20px', width: '100%' }}>
-                    {/* 플레이리스트 제목 표시 */}
-                    <BodyText size="large" style={{ marginLeft: '10px' }}>
-                        {playlist.title} {/* 플레이리스트 제목 표시 */}
-                    </BodyText>
+      <Row wrap>
+      {playlist.map((playlist) => (
+          <Cell key={playlist.id} style={{ marginBottom: '20px', width: '600px' }}>
+              {/* 플레이리스트 제목 표시 */}
+              <BodyText size="large" style={{ marginLeft: '10px' }}>
+                  {playlist.title} {/* 플레이리스트 제목 표시 */}
+              </BodyText>
+  
+              {/* 비디오들을 가로로 스크롤 가능한 영역으로 설정 */}
+              <Row className={css.playlistRow}
+                  wrap={false} // 자동 줄 바꿈 비활성화
+                  style={{
+                      overflowX: 'auto', // 가로 스크롤 활성화
+                      whiteSpace: 'nowrap', // 가로로 아이템이 나열되도록 설정
+                      padding: '10px 0', // 약간의 패딩 추가
 
-                    {/* 비디오들을 가로로 스크롤 가능한 영역으로 설정 */}
-                    <Row className={css.playlistRow}
-                        wrap={false} // 자동 줄 바꿈 비활성화
-                        style={{
-                            overflowX: 'auto', // 가로 스크롤 활성화
-                            whiteSpace: 'nowrap', // 가로로 아이템이 나열되도록 설정
-                            padding: '10px 0', // 약간의 패딩 추가
-
-                            /* 스크롤바 숨기기 */
-                            scrollbarWidth: 'none', // Firefox 스크롤바 제거
-                            msOverflowStyle: 'none', // Internet Explorer 스크롤바 제거
-                        }}
-                    >
-                        {playlist.videoIdList.map((videoId) => {
-                            const video = videoData.find((v) => v.id === videoId); // 비디오 ID에 해당하는 비디오 찾기
-                            if (!video) return null; // 비디오가 없으면 렌더링하지 않음
-
-                            return (
-                                <Cell key={video.id} className={css.videoItem} onClick={() => handleVideoClick(video, playlist)}>
-                                    <ImageItem
-                                        src={video.thumbUrl} // 썸네일 이미지
-                                        //label={video.description}  // 비디오 설명
-                                        
-                                        className={css.imageItem}
-                                        orientation="horizontal"
-                                    >
-                                  
-                                  <span style={{color: '#000'}}>{video.title}</span>
-                                    </ImageItem>
-                                </Cell>
-                            );
-                        })}
-                    </Row>
-                </Cell>
-            ))}
-        </Row>
+                      /* 스크롤바 숨기기 */
+                      scrollbarWidth: 'none', // Firefox 스크롤바 제거
+                      msOverflowStyle: 'none', // Internet Explorer 스크롤바 제거
+                  }}
+              >
+                  {playlist.videoIdList.map((videoId) => {
+                      const video = videoData.find((v) => v.id === videoId); // 비디오 ID에 해당하는 비디오 찾기
+                      if (!video) return null; // 비디오가 없으면 렌더링하지 않음
+  
+                      return (
+                          <Cell key={video.id} className={css.videoItem} style={{ width: '300px', height: '400px'}}  onClick={() => handleVideoClick(video, playlist)}>
+                              <ImageItem
+                                  src={video.thumbUrl} // 썸네일 이미지
+                                  //label={video.description}  // 비디오 설명
+                                  className={css.imageItem}
+                                  orientation="vertical"
+                                  style={{ width: '100%', height: '100%' }} // 이미지 크기를 100%로 설정
+                              >
+                                  <span style={{ color: '#393D46' }}>{video.title}</span>
+                              </ImageItem>
+                          </Cell>
+                      );
+                  })}
+              </Row>
+          </Cell>
+      ))}
+  </Row>
     )}
 </Panel>
     );

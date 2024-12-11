@@ -1,18 +1,18 @@
-	import MediaOverlay from '@enact/sandstone/MediaOverlay';
-	import Scroller from '@enact/sandstone/Scroller';
-	import TabLayout, {Tab} from '@enact/sandstone/TabLayout';
-	import {Header, Panel} from '@enact/sandstone/Panels';
-	import {scaleToRem} from '@enact/ui/resolution';
-	import {useCallback, useContext} from 'react';
-	import {PanelContext} from './Context';
+import MediaOverlay from '@enact/sandstone/MediaOverlay';
+import Scroller from '@enact/sandstone/Scroller';
+import TabLayout, {Tab} from '@enact/sandstone/TabLayout';
+import {Header, Panel} from '@enact/sandstone/Panels';
+import {scaleToRem} from '@enact/ui/resolution';
+import {useCallback, useContext} from 'react';
+import {PanelContext} from './Context';
 
-	import LoginPage from './LoginPanel';
-	import Button from '@enact/sandstone/Button';
-	import SlotItem from '@enact/ui/SlotItem';
-	import VideoExample from '../components/VideoExample';
+import LoginPage from './LoginPanel';
+import Button from '@enact/sandstone/Button';
+import SlotItem from '@enact/ui/SlotItem';
+import VideoExample from '../components/VideoExample';
 
-	import Icon from '@enact/sandstone/Icon'
-	import IconItem from '@enact/sandstone/IconItem';
+import Icon from '@enact/sandstone/Icon'
+import IconItem from '@enact/sandstone/IconItem';
 
 import VideoListTab from '../components/VideoListTab';
 import VideoUploadPanel from './VideoUploadPanel';
@@ -30,30 +30,30 @@ import ProfilePanel from './ProfilePanel';
 	import AlarmPanel from './AlarmPanel';
 	import Profile from './ProfilePanel'
 	import logo from './logo.png';
+import VideoListWithHLS from './VideoListWithHLS'
+import React from 'react';
+import HeaderMessage from './HeaderMessage';
 
-	import React from 'react';
-	import HeaderMessage from './HeaderMessage';
-
-	const VideoListPanel = props => {
-		
-		const { data, ...rest } = props;
-		const {setPanelData} = useContext(PanelContext);
-		const { userName } = useAuth(); // 로그인된 사용자 이름 가져오기
-		const index = data?.index ?? 0;
-		const { logout } = useAuth(); // 로그인 함수 가져오기
-		const handleLogoutAndBack = useCallback(() => {
-			try {
-			// 로그아웃 API 호출
-			logout();
-		
-			// 뒤로 가기 (panelIndex 하나 빼기)
-			if (index > 0) {
-				setPanelData(prev => prev.slice(0, -1));
-			}
-			} catch (error) {
-			console.error('로그아웃 실패:', error);
-			}
-		}, [logout, index, setPanelData]);
+const VideoListPanel = props => {
+   
+   const { data, ...rest } = props;
+   const {setPanelData} = useContext(PanelContext);
+   const { userName } = useAuth(); // 로그인된 사용자 이름 가져오기
+   const index = data?.index ?? 0;
+   const { logout } = useAuth(); // 로그인 함수 가져오기
+   const handleLogoutAndBack = useCallback(() => {
+	  try {
+	  // 로그아웃 API 호출
+	  logout();
+   
+	  // 뒤로 가기 (panelIndex 하나 빼기)
+	  if (index > 0) {
+		 setPanelData(prev => prev.slice(0, -1));
+	  }
+	  } catch (error) {
+	  console.error('로그아웃 실패:', error);
+	  }
+   }, [logout, index, setPanelData]);
 
 		return (
 			<Panel {...props} className={css.panel} noBackButton={true}>
@@ -114,25 +114,37 @@ import ProfilePanel from './ProfilePanel';
 						</Scroller>
 					</Tab>
 					<Tab icon='timer' title="Recently Viewed">
+					    <Scroller>
 						<RecentlyViewedVideosPanel />
+						</Scroller>
 					</Tab>
 					<Tab icon='list' title="Playlists">
+					<Scroller>
 						<PlayListPanel />
+						</Scroller>
 					</Tab>
 					<Tab icon='seemore' title="Streaming">
-						<HLSVideo />
+					<Scroller>
+						<VideoListWithHLS />
+						</Scroller>
 					</Tab>
 					<Tab icon='shopping' title="Cart">
+					<Scroller>
 						<CartPanel />
+						</Scroller>
 					</Tab>
 					<Tab icon='profile' title="Profile">
+					<Scroller>
 						<Profile />
+						</Scroller>
 					</Tab>
-					<Tab title="Timer">
+					{/* <Tab title="Timer">
 						<AlarmPanel />
-					</Tab>
+					</Tab> */}
 					<Tab icon='wisa' title="Resource">
+					<Scroller>
 						<SystemState></SystemState>
+						</Scroller>
 					</Tab>
 					</TabLayout>
 					{/* </div> */}

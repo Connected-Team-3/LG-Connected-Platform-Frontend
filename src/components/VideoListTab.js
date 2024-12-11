@@ -11,7 +11,6 @@ import axiosInstance from '../auth/axiosInstance';
 import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
-import ImageItem from '@enact/sandstone/ImageItem';
 import './VideoListTab.css'
 
 import React from 'react';
@@ -22,7 +21,7 @@ const categories = ['ALL', 'KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WEST
 
 
 const VideoListTab = props => {
-	const {data, userName,logo, ...rest} = props;
+	const {data, ...rest} = props;
 	const index = data?.index ?? 0;
 	const [videoData, setVideoData] = useState([]);
     const [loading, setLoading] = useState(true);
