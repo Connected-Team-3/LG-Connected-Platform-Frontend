@@ -11,7 +11,8 @@ const HLSVideo = (props) => {
 
 	useEffect(() => {
 		const videoUrl = `stream/hls/hls_6/master_playlist.m3u8`;
-		if (Hls.isSupported()) {
+		
+    if (Hls.isSupported()) {
 			const video = videoRef.current;
 			const hls = new Hls();
 			hls.loadSource(videoUrl);
@@ -99,6 +100,7 @@ const HLSVideo = (props) => {
 
 	return (
 		<>
+			<div style={{backgroundColor:'#FAF0E6'}}>
 			<div>
 				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
 				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>
@@ -108,7 +110,8 @@ const HLSVideo = (props) => {
 				</Button>
 			</div>
 
-			<video ref={videoRef} controls height={720} />
+				<video ref={videoRef} controls height={720} />
+				</div>
 		</>
 	);
 };

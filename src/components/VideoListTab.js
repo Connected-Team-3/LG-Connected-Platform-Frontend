@@ -82,10 +82,10 @@ const VideoListTab = props => {
 	
 
 	return (
-		<Panel {...rest} style={{ height: '100%', overflow: 'auto', backgroundColor: '#FAF0E6' }}>
+		<Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FAF0E6', margin:'0' }}>
             {/* HeaderMessage 추가 */}
             
-            <HeaderMessage userName={userName} logo={logo} />
+            {/* <HeaderMessage userName={userName} logo={logo} /> */}
             
             {/* 카테고리 선택 */}
             <Dropdown
@@ -112,8 +112,10 @@ const VideoListTab = props => {
                                 src={video.thumbUrl} // 썸네일 이미지
                                 label={video.description}  // 비디오 설명
                                 orientation="horizontal"
+                                style={{color:'#000'}}
                             >
-                                {video.title}
+                                {/* {video.title} */}
+                                <span style={{color: '#000'}}>{video.title}</span>
                             </ImageItem>
                         </Cell>
                     );

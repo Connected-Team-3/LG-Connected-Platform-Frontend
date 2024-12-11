@@ -88,7 +88,7 @@ const SystemState = () => {
 	console.log(idx);
 	console.log(burstFlag);
 	return (
-		<div style={{backgroundColor: '#FAF0E6' }}>
+		<div style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FAF0E6', margin:'0' }}>
 			{/*loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>*/}
 			<RenderingGraph cpuUsage={curCpu} />
 			<RenderingMemoryGraph memoryUsage={curMem} />
