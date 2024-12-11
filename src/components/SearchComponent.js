@@ -22,12 +22,15 @@ const SearchComponent = ({ onSearch }) => {
     return (
         <Row className={styles['search-row']} align="center" >
             <Cell>
-                <Input 
+                <InputField 
                     className={styles['search-input']} 
                     placeholder="제목, 요리명, 재료명으로 검색"
                     value={query}
-                    onChange={handleInputChange} // 실시간 입력 업데이트
+                    onChange={(e) => setQuery(e.value)}
                     onComplete={handleSearch} // Enter 키로 검색 실행
+                    skin="dark"
+                    style={{ marginBottom: '10px' }}
+                    //autoFocus
                 />
             </Cell>
             <Cell shrink>

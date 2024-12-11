@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Header, Panel } from '@enact/sandstone/Panels';
-import Input from '@enact/sandstone/Input';
+import {Input,InputField} from '@enact/sandstone/Input';
 import Button from '@enact/sandstone/Button';
 import axiosInstance from '../auth/axiosInstance';
 import { PanelContext } from './Context';
 import alert from '@enact/sandstone/Alert'
 import { useAuth } from '../auth/AuthProvider';
+
+import css from './SignupPanel.module.less';
 
 const SignupPage = props => {
   const { data, ...rest } = props;
@@ -46,30 +48,33 @@ const SignupPage = props => {
   };
 
   return (
-    <Panel {...rest}>
-      <Header 
-        title="회원가입" 
+    <Panel {...rest} className={css.signupPanel}>
+      <Header
+        title={<span className={css.customTitle}>회원가입</span>} 
         back
         onBack={() => setPanelData(prev => prev.slice(0, -1))} // 뒤로 가기 버튼 처리
       />
-      <Input
+      <InputField
         placeholder="사용자명 (ID)"
         value={loginId}
         onChange={(e) => setLoginId(e.value)}
         style={{ marginBottom: '10px' }}
+        skin='dark'
       />
-      <Input
+      <InputField
         placeholder="비밀번호"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.value)}
         style={{ marginBottom: '10px' }}
+        skin='dark'
       />
-      <Input
+      <InputField
         placeholder="이름"
         value={name}
         onChange={(e) => setName(e.value)}
         style={{ marginBottom: '20px' }}
+        skin='dark'
       />
       <Button onClick={handleSignup}>회원가입</Button>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

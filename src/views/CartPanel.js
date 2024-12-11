@@ -5,6 +5,8 @@ import Item from '@enact/sandstone/Item';
 import Button from '@enact/sandstone/Button';
 import alert from '@enact/sandstone/Alert'
 
+import css from './CartPanel.module.less';
+
 const CartPanel = (props) => {
   const { ...rest } = props;
   const [cartItems, setCartItems] = useState([]); // 장바구니 상태
@@ -49,15 +51,18 @@ const CartPanel = (props) => {
   };
 
   return (
-    <Panel {...rest} noCloseButton={true}>
+    <Panel {...rest} className={css.cartPanel} noCloseButton={true}>
       <Header
-        title="장바구니"
-        slotAfter={
-          <Button onClick={handleClearCart} size="small" backgroundOpacity="transparent">
-            비우기
-          </Button>
-        }
-      />
+        title={<span className={css.customTitle}>장바구니</span>}
+    />
+    <Button
+        className={css.clearCartButton}
+        onClick={handleClearCart}
+        size="small"
+        backgroundOpacity="transparent"
+    >
+        비우기
+    </Button>
       <div style={{ padding: '10px' }}>
         {cartItems.length > 0 ? (
           cartItems.map((item, index) => (
