@@ -22,15 +22,15 @@ import PlayListPanel from './PlayListPanel';
 import UpdateProfile from './UpdateProfile';
 import ProfilePanel from './ProfilePanel';
 
-import css from './VideoListPanel.module.less';
-import SystemState from './SystemState';
-import {useAuth} from '../auth/AuthProvider'
-import CartPanel from './CartPanel';
-import HLSVideo from './HLSVideo';
-import AlarmPanel from './AlarmPanel';
-import Profile from './ProfilePanel'
-import logo from './logo.png';
-
+	import css from './VideoListPanel.module.less';
+	import SystemState from './SystemState';
+	import {useAuth} from '../auth/AuthProvider'
+	import CartPanel from './CartPanel';
+	import HLSVideo from './HLSVideo';
+	import AlarmPanel from './AlarmPanel';
+	import Profile from './ProfilePanel'
+	import logo from './logo.png';
+import VideoListWithHLS from './VideoListWithHLS'
 import React from 'react';
 import HeaderMessage from './HeaderMessage';
 
@@ -55,89 +55,101 @@ const VideoListPanel = props => {
 	  }
    }, [logout, index, setPanelData]);
 
-   return (
-	  <Panel {...props} className={css.panel} noBackButton={true}>
-		 
-		 <Header 
-		 slotBefore={<img src={logo} alt="Logo" className={css.logo} />}
-		 title="오늘 뭐 먹지?" 
-		subtitle={userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'} 
-		className={css.header}
-		style={{ margin: 0, padding: 0 }} // 인라인 스타일
-		slotAfter={
-				 <IconItem onClick={handleLogoutAndBack} aria-label="Logout">
-					 <Icon>logout</Icon>
-				 </IconItem>
-			 }
-		 />
-			   
+		return (
+			<Panel {...props} className={css.panel} noBackButton={true}>
+				
+				<Header 
+				slotBefore={<img src={logo} alt="Logo" className={css.logo} />}
+		      title="오늘 뭐 먹지?" 
+			  subtitle={userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'} 
+			  className={css.header}
+			  style={{ margin: 0, padding: 0 }} // 인라인 스타일
+			  slotAfter={
+                    <IconItem onClick={handleLogoutAndBack} aria-label="Logout">
+                        <Icon>logout</Icon>
+                    </IconItem>
+                }
+      		/>
+						
+	
+				<TabLayout
+					style={{
+        			height: 'calc(100vh - 100px)', // 화면 높이에서 Header 높이를 뺀 값
+        			overflow: 'hidden', // 불필요한 스크롤 방지
+    				}}	
+				>
+					{/* <div icon='home' title='home'>
+					<Header 
+				title={
+				<div>
+				<img src="./logo.png" alt="Logo" className={css.logo} />
+				<span className={css.customTitle}>FOODHUB</span>
+				</div>
+				}
+				subtitle={
+					<span className={css.customSubtitle}>
+					{userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'}
+					</span>
+					} 
+				className={css.header}
+				titleClassName = {css.title}
+				slotAfter={
+						<IconItem onClick={handleLogoutAndBack} aria-label="Logout">
+							<Icon>logout</Icon>
+						</IconItem>
+					}
+				/>
+					</div> */}
+		
 
-		 <TabLayout
-			style={{
-			  height: 'calc(100vh - 100px)', // 화면 높이에서 Header 높이를 뺀 값
-			  overflow: 'hidden', // 불필요한 스크롤 방지
-			 }}   
-		 >
-			{/* <div icon='home' title='home'>
-			<Header 
-		 title={
-		 <div>
-		 <img src="./logo.png" alt="Logo" className={css.logo} />
-		 <span className={css.customTitle}>FOODHUB</span>
-		 </div>
-		 }
-		 subtitle={
-			<span className={css.customSubtitle}>
-			{userName ? `${userName}님, 무슨 음식을 좋아하시나요?` : '무슨 음식을 좋아하시나요?'}
-			</span>
-			} 
-		 className={css.header}
-		 titleClassName = {css.title}
-		 slotAfter={
-			   <IconItem onClick={handleLogoutAndBack} aria-label="Logout">
-				  <Icon>logout</Icon>
-			   </IconItem>
-			}
-		 />
-			</div> */}
-   
 
+					
+					<Tab icon="home" title='home'
+					>
+						<VideoListTab userName={userName} logo={logo} />
+					</Tab>
+					<Tab icon='search' title="Search">
+						<Scroller>
+							<SearchView />
+						</Scroller>
+					</Tab>
+					<Tab icon='timer' title="Recently Viewed">
+					    <Scroller>
+						<RecentlyViewedVideosPanel />
+						</Scroller>
+					</Tab>
+					<Tab icon='list' title="Playlists">
+					<Scroller>
+						<PlayListPanel />
+						</Scroller>
+					</Tab>
+					<Tab icon='seemore' title="Streaming">
+					<Scroller>
+						<VideoListWithHLS />
+						</Scroller>
+					</Tab>
+					<Tab icon='shopping' title="Cart">
+					<Scroller>
+						<CartPanel />
+						</Scroller>
+					</Tab>
+					<Tab icon='profile' title="Profile">
+					<Scroller>
+						<Profile />
+						</Scroller>
+					</Tab>
+					{/* <Tab title="Timer">
+						<AlarmPanel />
+					</Tab> */}
+					<Tab icon='wisa' title="Resource">
+					<Scroller>
+						<SystemState></SystemState>
+						</Scroller>
+					</Tab>
+					</TabLayout>
+					{/* </div> */}
+			</Panel>
+		);
+	};
 
-			
-			<Tab icon="home" title='home'
-			>
-			   <VideoListTab userName={userName} logo={logo} />
-			</Tab>
-			<Tab icon='search' title="Search">
-			   <Scroller>
-				  <SearchView />
-			   </Scroller>
-			</Tab>
-			<Tab icon='timer' title="Recently Viewed">
-			   <RecentlyViewedVideosPanel />
-			</Tab>
-			<Tab icon='list' title="Playlists">
-			   <PlayListPanel />
-			</Tab>
-			<Tab icon='seemore' title="Streaming">
-			   <HLSVideo />
-			</Tab>
-			<Tab icon='shopping' title="Cart">
-			   <CartPanel />
-			</Tab>
-			<Tab icon='profile' title="Profile">
-			   <Profile />
-			</Tab>
-			<Tab title="Timer">
-			   <AlarmPanel />
-			</Tab>
-			<Tab icon='wisa' title="Resource">
-			   <SystemState></SystemState>
-			</Tab>
-			</TabLayout>
-			{/* </div> */}
-	  </Panel>
-   );
-};
-
-export default VideoListPanel;
+	export default VideoListPanel;

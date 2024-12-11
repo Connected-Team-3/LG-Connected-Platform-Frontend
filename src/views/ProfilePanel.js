@@ -40,7 +40,7 @@ const ProfilePanel = (props) => {
     const preferredMeals = foodPreferences[timeOfDay] || [];
 
     // 더미 데이터에서 추천 식사를 선택
-    const dummyMeals = ['오믈렛', '팬케이크', '토스트', '샐러드', '샌드위치', '파스타', '피자', '스테이크', '볶음밥', '라면', '햄버거', '치킨']
+    const dummyMeals = ['오믈렛', '팬케이크', '토스트', '샐러드', '샌드위치', '파스타', '피자', '스테이크', '볶음밥', '라면', '햄버거', '치킨', '양송이 스프', '연어 구이', '꼬치 구이']
 
     // 선호도에 맞는 식사 추천
     const matchingMeals = preferredMeals.filter(meal => dummyMeals.includes(meal));

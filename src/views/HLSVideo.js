@@ -14,7 +14,8 @@ const HLSVideo = (props) => {
 	const [quality, setQuality] = useState(null);
 
 	useEffect(() => {
-		const videoUrl = `stream/hls/hls_${videoId}/master_playlist.m3u8`;
+		const videoUrl = `https://connectedplatform.s3.ap-northeast-2.amazonaws.com/hls/hls_${videoId}/master_playlist.m3u8`;
+		//const videoUrl = `stream/hls/hls_${videoId}/master_playlist.m3u8`;
 		if (Hls.isSupported()) {
 			const video = videoRef.current;
 			const hls = new Hls();
@@ -102,7 +103,7 @@ const HLSVideo = (props) => {
 	}, []);
 
 	return (
-			<Panel>
+			<Panel {...rest} >
 				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
 				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>
 				<Button onClick={() => handleQualityChange(2)}>High Quality</Button>

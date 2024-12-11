@@ -73,10 +73,7 @@ const VideoListWithHLS = props => {
 	return (
 		<Panel {...rest} style={{ height: '100%', overflow: 'auto', backgroundColor: '#FAF0E6' }}>
             {/* HeaderMessage 추가 */}
-            
-            <HeaderMessage userName={userName} logo={logo} />
-            
-            
+
             <Row wrap
             >
                 {videoData.map((video) => {
@@ -86,10 +83,11 @@ const VideoListWithHLS = props => {
                         <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video)}>
                             <ImageItem
                                 src={video.thumbUrl} // 썸네일 이미지
-                                label={video.description}  // 비디오 설명
+                                //label={video.description}  // 비디오 설명
                                 orientation="horizontal"
                             >
-                                {video.title}
+                                {/* {video.title} */}
+                                {<span style={{ color: '#000' }}>{video.title}</span>}
                             </ImageItem>
                         </Cell>
                     );

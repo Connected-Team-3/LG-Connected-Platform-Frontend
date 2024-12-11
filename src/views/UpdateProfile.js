@@ -11,7 +11,7 @@
     const [loginId, setLoginId] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { userName } = useAuth(); // 로그인된 사용자 이름을 가져옵니다.
+    const { userName, token } = useAuth(); // 로그인된 사용자 이름을 가져옵니다.
 
     // 로그인된 사용자 정보를 가져와서 초기 값 설정
     useEffect(() => {
@@ -20,7 +20,7 @@
 
     // 로그인된 사용자 인증 토큰을 확인한 후, 요청 헤더에 포함시켜야 합니다.
   const handleSubmit = async () => {
-      const token = Cookies.get('token'); // 저장된 토큰을 가져옴
+      //const token = Cookies.get('token'); // 저장된 토큰을 가져옴
       if (!token) {
         setMessage('로그인 후 시도해 주세요.');
         return;
@@ -55,7 +55,7 @@
     };
 
     return (
-      <Panel {...props} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FAF0E6', margin:'0'}}>
+      <Panel {...props} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FFF6E1', margin:'0'}}>
         <Header> 
           <span
             style={{
@@ -94,7 +94,7 @@
               borderRadius: '0px',
               width: '100%',
               boxSizing: 'border-box',
-              backgroundColor: '#FAF0E6',
+              backgroundColor: '#FFF6E1',
             }}
             readOnly
           />
@@ -110,7 +110,7 @@
               borderRadius: '0px',
               width: '100%',
               boxSizing: 'border-box',
-              backgroundColor: '#FAF0E6',
+              backgroundColor: '#FFF6E1',
             }}
           />
           <InputField

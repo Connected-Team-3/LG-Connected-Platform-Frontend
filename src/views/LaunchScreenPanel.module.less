@@ -1,49 +1,37 @@
 .launchContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: rgba(165, 0, 52, 1);
-    /* 배경색 */
+    background-color:#555C66; /* 원하는 배경색 */
+    height: 100vh; /* 화면 전체 높이 */
 }
 
 .logoRow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /* Row를 전체 너비로 확장 */
+    height: 100%; /* 행 전체 높이 사용 */
 }
 
-.logoContainer {
+.contentCell {
     display: flex;
-    flex-direction: column;
-    /* 세로로 배치 */
-    align-items: center;
-    /* 중앙 정렬 */
-    justify-content: center;
+    flex-direction: row; /* 가로로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
 }
 
 .brandLogo {
-    width: 150px;
-    /* 로고 크기 설정 */
-    height: 150px;
-    /* 로고 크기 설정 */
-    border-radius: 50%;
-    /* 동그랗게 만들기 */
-    object-fit: cover;
-    /* 이미지 비율 유지 */
-    margin-bottom: 20px;
-    /* 로고와 텍스트 간격 */
+    width: 100px; /* 로고 크기 조정 */
+    height: auto;
+    margin-right: 20px; /* 로고와 텍스트 간 간격 */
 }
 
 .brandName {
-    font-size: 100px;
-    /* 글씨 크기 설정 */
-    font-weight: bold;
-    color: #FFF;
-    /* 글씨 색상 설정 */
-    text-align: center;
-    /* 텍스트 중앙 정렬 */
+    font-size: 4rem; /* 텍스트 크기 */
+    color: #FFF6E1; /* 텍스트 색상 */
+    margin: 0; /* 기본 여백 제거 */
 }
+
+
+.logo {
+    width: 500px;
+    /* 로고 너비 */
+    height: 500px;
+    /* 비율에 맞게 높이 자동 조정 */
+    object-fit: contain;
+    /* 비율 유지 */
+  }

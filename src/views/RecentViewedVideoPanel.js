@@ -95,7 +95,7 @@ const RecentlyViewedVideosPanel = props => {
     };
 
 	return (
-        <Panel {...rest} style={{ height:'100vh', width:'100vw', overflow:'auto',  backgroundColor: '#FAF0E6' }}>
+        <Panel {...rest} style={{ height:'100vh', width:'100vw', overflow:'auto',  backgroundColor: '#FFF6E1' }}>
             <Header> 
                 <span
                     style={{
@@ -116,7 +116,7 @@ const RecentlyViewedVideosPanel = props => {
                         <MediaOverlay
                                 marqueeOn="focus"
                                 muted
-                                subtitle={video.description}
+                                //subtitle={video.description}
                                 textAlign="end"
                                 //title={video.title}
                                 title={<span style={{ color: '#000' }}>{video.title}</span>}

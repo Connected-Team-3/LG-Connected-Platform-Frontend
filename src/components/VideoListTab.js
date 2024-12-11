@@ -12,7 +12,12 @@ import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
 import './VideoListTab.css'
-const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
+
+import React from 'react';
+import HeaderMessage from '../views/HeaderMessage';
+
+
+const categories = ['ALL', 'KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
 
 const VideoListTab = props => {
@@ -20,7 +25,7 @@ const VideoListTab = props => {
 	const index = data?.index ?? 0;
 	const [videoData, setVideoData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState('KOREAN_FOOD');
+    const [selectedCategory, setSelectedCategory] = useState('ALL');
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const {setPanelData} = useContext(PanelContext);
 	// const handleVideoClick = useCallback((video) => {
@@ -74,40 +79,84 @@ const VideoListTab = props => {
     }
 
 	
+    return (
+        <Panel {...rest} style={{ height: '100%', overflow: 'auto' ,backgroundColor: '#FFF6E1'}}>
+              {/* 카테고리 선택 */}
+              <Dropdown
+                  direction="below"
+                  open={dropdownOpen}
+                  onClose={() => setDropdownOpen(false)}
+                  onOpen={() => setDropdownOpen(true)}
+              onSelect={handleCategorySelect}
+                  size="small"
+                  //title="카테고리 선택"
+                  width="medium"
+              >
+                  {categories}
+              </Dropdown>
+  
+              <Row wrap>
+                  {videoData.map((video) => ( 
+                 <Cell key={video.id} size="auto" style={{color:'#000'}} onClick={() => handleVideoClick(video)}>
+                 <MediaOverlay
+                    marqueeOn="focus"
+                    muted
+                    //subtitle={video.description}
+                    textAlign="end"
+                    //title={video.title}
+                    title={<span style={{ color: '#000' }}>{video.title}</span>}
+                    style={{color:'#000'}}
+                 >
+                    <source src={video.sourceUrl} />
+                 </MediaOverlay>
+              </Cell>
+                  ))}
+              </Row>
+        </Panel>
+      );
 
-	return (
-		<Panel {...rest} style={{ height: '100%', overflow: 'auto' }}>
-            {/* 카테고리 선택 */}
-            <Dropdown
-                direction="below"
-                open={dropdownOpen}
-                onClose={() => setDropdownOpen(false)}
-                onOpen={() => setDropdownOpen(true)}
-				onSelect={handleCategorySelect}
-                size="small"
-                title="카테고리 선택"
-                width="medium"
-            >
-                {categories}
-            </Dropdown>
+// 	return (
+// 		<Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FFF6E1', margin:'0' }}>
+//             {/* HeaderMessage 추가 */}
+            
+//             {/* <HeaderMessage userName={userName} logo={logo} /> */}
+            
+//             {/* 카테고리 선택 */}
+//             <Dropdown
+//                 direction="below"
+//                 open={dropdownOpen}
+//                 onClose={() => setDropdownOpen(false)}
+//                 onOpen={() => setDropdownOpen(true)}
+// 				onSelect={handleCategorySelect}
+//                 size="small"
+//                 //title="카테고리 선택"
+//                 width="medium"
+//             >
+//                 {categories}
+//             </Dropdown>
 
-            <Row wrap>
-                {videoData.map((video) => ( 
-					<Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
-					<MediaOverlay
-						marqueeOn="focus"
-						muted
-						subtitle={video.description}
-						textAlign="end"
-						title={video.title}
-					>
-						<source src={video.sourceUrl} />
-					</MediaOverlay>
-				</Cell>
-                ))}
-            </Row>
-		</Panel>
-    );
+//             <Row wrap
+//             >
+//                 {videoData.map((video) => {
+//                     if (!video) return null; // 비디오가 없으면 렌더링하지 않음
+
+//                     return (
+//                         <Cell key={video.id}  style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video)}>
+//                             <ImageItem
+//                                 src={video.thumbUrl} // 썸네일 이미지
+//                                 l//abel={video.description}  // 비디오 설명
+//                                 orientation="horizontal"
+//                                 style={{color:'#000'}}
+//                             >
+//                                 {/* {video.title} */}
+//                                 <span style={{color: '#000'}}>{video.title}</span>
+//                             </ImageItem>
+//                         </Cell>
+//                     );
+//                 })}
+//             </Row>
+// 		</Panel>
+//     );
 };
 
 export default VideoListTab;

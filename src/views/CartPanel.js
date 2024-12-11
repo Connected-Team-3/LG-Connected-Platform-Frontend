@@ -51,7 +51,7 @@ const CartPanel = (props) => {
   };
 
   return (
-    <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FAF0E6', margin:'0' }} className={css.cartPanel} noCloseButton={true}>
+    <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FFF6E1', margin:'0' }} className={css.cartPanel} noCloseButton={true}>
       <Header
         title={<span className={css.customTitle}>장바구니</span>}
     />

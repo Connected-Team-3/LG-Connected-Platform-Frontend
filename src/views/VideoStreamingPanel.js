@@ -60,7 +60,7 @@ const VideoStreamingPanel = (props) => {
   return (
     <Panel {...rest} noCloseButton={true} style={{ height: '100%', overflow: 'auto'}}>
       <Header
-        title={`Video: ${video.foodName}`}
+        title={`${video.title}`}
         slotAfter={
           <IconItem onClick={handleHomeClick} aria-label="Go to Home">
             <Icon>home</Icon>

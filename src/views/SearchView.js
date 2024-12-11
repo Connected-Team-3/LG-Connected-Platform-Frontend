@@ -64,13 +64,13 @@ const SearchView = (props) => {
             <Header
                 title={<span className={css.customTitle}>Search Video</span>}
             />
-            <IconItem
+            {/* <IconItem
             className={css.homeIcon}
             onClick={handleHomeClick}
             aria-label="Go to Home"
             >
             <Icon>home</Icon>
-             </IconItem>
+             </IconItem> */}
             <SearchComponent onSearch={handleSearch} />
             {errorMessage && <Heading>{errorMessage}</Heading>}
             {/* 검색어가 있을 때만 결과 표시 */}
@@ -79,9 +79,11 @@ const SearchView = (props) => {
                     
                     {results.length > 0 ? (
                         <SearchResults
+                            
                             results={results}
                             onVideoClick={handleVideoClick}
                             query={searchQuery}  // 검색어 전달
+                            //title={<span style={{ color: '#000' }}>{video.title}</span>}
                         />
                     ) : (
                         <Heading>검색 결과가 없습니다.</Heading> 
