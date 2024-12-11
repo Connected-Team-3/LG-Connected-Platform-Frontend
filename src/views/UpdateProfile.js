@@ -55,7 +55,7 @@
     };
 
     return (
-      <Panel {...props} style={{backgroundColor:'#FAF0E6'}}>
+      <Panel {...props} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FAF0E6', margin:'0'}}>
         <Header> 
           <span
             style={{
