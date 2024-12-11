@@ -84,8 +84,8 @@ const PlayListPanel = props => {
 
 
 	return (
-        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#FAF0E6' }} className={css.panel}>
-    <Header> 
+        <Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor:'#FFF6E1', margin:'0'  }} className={css.panel}>
+     <Header> 
                 <span
                     style={{
                     color: '#000', // 검은 글씨
@@ -95,7 +95,12 @@ const PlayListPanel = props => {
                 >
                 플레이리스트
                 </span>
-          </Header>
+          </Header> 
+          {/* <Header
+        title={<span style={css.customTitle}>플레이리스트</span>}
+    /> */}
+
+
     {loading ? (
         <Spinner size="small" />
     ) : playlist.length === 0 ? (
@@ -132,7 +137,7 @@ const PlayListPanel = props => {
                                 <Cell key={video.id} className={css.videoItem} onClick={() => handleVideoClick(video, playlist)}>
                                     <ImageItem
                                         src={video.thumbUrl} // 썸네일 이미지
-                                        label={video.description}  // 비디오 설명
+                                        //label={video.description}  // 비디오 설명
                                         
                                         className={css.imageItem}
                                         orientation="horizontal"

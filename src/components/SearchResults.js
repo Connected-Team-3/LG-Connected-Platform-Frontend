@@ -33,9 +33,10 @@ const SearchResults = ({ results, onVideoClick, query }) => {
                         <MediaOverlay
                             marqueeOn="focus"
                             muted
-                            subtitle={video.description}
+                            //subtitle={video.description}
                             textAlign="end"
-                            title={video.title}
+                            //title={video.title}
+                            title={<span style={{ color: '#000' }}>{video.title}</span>}
                         >
                             <source src={video.sourceUrl} />
                         </MediaOverlay>

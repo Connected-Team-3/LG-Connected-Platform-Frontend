@@ -14,12 +14,13 @@
 	import Icon from '@enact/sandstone/Icon'
 	import IconItem from '@enact/sandstone/IconItem';
 
-	import VideoListTab from '../components/VideoListTab';
-	import VideoUploadPanel from './VideoUploadPanel';
-	import SearchView from './SearchView'; 
-	import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
-	import PlayListPanel from './PlayListPanel';
-	import UpdateProfile from './UpdateProfile';
+import VideoListTab from '../components/VideoListTab';
+import VideoUploadPanel from './VideoUploadPanel';
+import SearchView from './SearchView'; 
+import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
+import PlayListPanel from './PlayListPanel';
+import UpdateProfile from './UpdateProfile';
+import ProfilePanel from './ProfilePanel';
 
 	import css from './VideoListPanel.module.less';
 	import SystemState from './SystemState';
@@ -27,7 +28,7 @@
 	import CartPanel from './CartPanel';
 	import HLSVideo from './HLSVideo';
 	import AlarmPanel from './AlarmPanel';
-
+	import Profile from './ProfilePanel'
 	import logo from './logo.png';
 
 	import React from 'react';
@@ -124,8 +125,8 @@
 					<Tab icon='shopping' title="Cart">
 						<CartPanel />
 					</Tab>
-					<Tab icon='profile' title="Update Profile">
-						<UpdateProfile />
+					<Tab icon='profile' title="Profile">
+						<Profile />
 					</Tab>
 					<Tab title="Timer">
 						<AlarmPanel />

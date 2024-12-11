@@ -100,7 +100,7 @@ const HLSVideo = (props) => {
 
 	return (
 		<>
-			<div style={{backgroundColor:'#FAF0E6'}}>
+			<div style={{backgroundColor:'#FFF6E1'}}>
 			<div>
 				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
 				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>

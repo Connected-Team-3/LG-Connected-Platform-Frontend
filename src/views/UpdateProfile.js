@@ -55,7 +55,7 @@
     };
 
     return (
-      <Panel {...props} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FAF0E6', margin:'0'}}>
+      <Panel {...props} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FFF6E1', margin:'0'}}>
         <Header> 
           <span
             style={{
@@ -94,7 +94,7 @@
               borderRadius: '0px',
               width: '100%',
               boxSizing: 'border-box',
-              backgroundColor: '#FAF0E6',
+              backgroundColor: '#FFF6E1',
             }}
             readOnly
           />
@@ -110,7 +110,7 @@
               borderRadius: '0px',
               width: '100%',
               boxSizing: 'border-box',
-              backgroundColor: '#FAF0E6',
+              backgroundColor: '#FFF6E1',
             }}
           />
           <InputField
