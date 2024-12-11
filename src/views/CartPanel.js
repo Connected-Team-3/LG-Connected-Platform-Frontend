@@ -63,7 +63,7 @@ const CartPanel = (props) => {
     >
         비우기
     </Button>
-      <div style={{ padding: '10px' }}>
+      <div style={{ padding: '10px', color:'#000'}}>
         {cartItems.length > 0 ? (
           cartItems.map((item, index) => (
             <Item key={index}>
@@ -71,7 +71,7 @@ const CartPanel = (props) => {
             </Item>
           ))
         ) : (
-          <p>장바구니가 비어 있습니다.</p>
+          <p style={{color:'#000'}}>장바구니가 비어 있습니다.</p>
         )}
       </div>
     </Panel>

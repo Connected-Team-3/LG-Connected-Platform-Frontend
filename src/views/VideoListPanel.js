@@ -28,7 +28,7 @@ import CartPanel from './CartPanel';
 import HLSVideo from './HLSVideo';
 import AlarmPanel from './AlarmPanel';
 
-
+import logo from './logo.png';
 
 const VideoListPanel = props => {
 	const { data, ...rest } = props;
@@ -52,7 +52,18 @@ const VideoListPanel = props => {
 
 	return (
 		<Panel {...props} className={css.panel} noBackButton={true}>
-			
+			{/* <div className={css.layoutContainer}> */}
+    {/* 로고와 사용자 메시지 */}
+    {/* <div className={css.headerContainer}>
+        <img src={logo} alt="Logo" className={css.logo} />
+        <div className={css.message}>
+            {userName ? (
+                <span>{`${userName}님, 무슨 음식을 좋아하시나요?`}</span>
+            ) : (
+                <span>무슨 음식을 좋아하시나요?</span>
+            )}
+        </div>
+    </div> */}
 			<TabLayout>
 				{/* <div icon='home' title='home'>
 				<Header 
@@ -76,6 +87,7 @@ const VideoListPanel = props => {
                 }
       		/>
 				</div> */}
+				
 				<Tab icon='home' title="Home">
 					<VideoListTab/>
 				</Tab>
@@ -105,7 +117,8 @@ const VideoListPanel = props => {
 				<Tab icon='wisa' title="Resource">
 					<SystemState></SystemState>
 				</Tab>
-			</TabLayout>
+				</TabLayout>
+				{/* </div> */}
 		</Panel>
 	);
 };
