@@ -10,6 +10,8 @@ import {PanelContext} from './Context';
 
 import css from './LoginPanel.module.less';
 
+import logo from './logo.png';
+
 const LoginPage = props => {
 	const {data, ...rest} = props;
 	const index = data?.index ?? 0;
@@ -63,7 +65,10 @@ const LoginPage = props => {
 
   return (
     <Panel {...rest} className={css.loginPanel}>
-      <Header title={<span className={css.customTitle}>FoodHub 로그인</span>} />
+      
+      <Header
+        slotBefore={<img src={logo} alt="Logo" className={css.logo} />}
+        title={<span className={css.customTitle}>FoodHub 로그인</span>} />
       <div style={{ padding: '40px' }}>
         <div
           style={{
