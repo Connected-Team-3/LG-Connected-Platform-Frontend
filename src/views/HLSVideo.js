@@ -2,15 +2,19 @@ import {useRef, useEffect, useCallback, useState} from 'react';
 import Button from '@enact/sandstone/Button'
 import Hls from 'hls.js';
 import axiosInstance from '../auth/axiosInstance';
+import { Panel } from '@enact/sandstone/Panels';
 
 const HLSVideo = (props) => {
+	const {data, ...rest} = props;
+	const index = data?.index ?? 0;
+	const videoId = data.videoId;
 	const videoRef = useRef(null);
 	const hlsRef = useRef(null);
 	const [hlsInstance, setHlsInstance] = useState(null);
 	const [quality, setQuality] = useState(null);
 
 	useEffect(() => {
-		const videoUrl = `stream/hls/hls_6/master_playlist.m3u8`;
+		const videoUrl = `stream/hls/hls_${videoId}/master_playlist.m3u8`;
 		if (Hls.isSupported()) {
 			const video = videoRef.current;
 			const hls = new Hls();
@@ -98,18 +102,17 @@ const HLSVideo = (props) => {
 	}, []);
 
 	return (
-		<>
-			<div>
+			<Panel>
 				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
 				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>
 				<Button onClick={() => handleQualityChange(2)}>High Quality</Button>
 				<Button className="btn" onClick={handleAutoClick}>
 					Auto
 				</Button>
-			</div>
+
 
 			<video ref={videoRef} controls height={720} />
-		</>
+			</Panel>
 	);
 };
 

@@ -21,6 +21,7 @@ import RecentlyViewedVideosPanel from './RecentViewedVideoPanel';
 import PlayListPanel from './PlayListPanel';
 import UpdateProfile from './UpdateProfile';
 import ProfilePanel from './ProfilePanel';
+import VideoListWithHLS from './VideoListWithHLS';
 
 import css from './VideoListPanel.module.less';
 import SystemState from './SystemState';
@@ -104,7 +105,7 @@ const VideoListPanel = props => {
 					<PlayListPanel />
 				</Tab>
 				<Tab icon='seemore' title="Streaming">
-					<HLSVideo />
+					<VideoListWithHLS />
 				</Tab>
           <Tab icon='shopping' title="Cart">
             <CartPanel />
