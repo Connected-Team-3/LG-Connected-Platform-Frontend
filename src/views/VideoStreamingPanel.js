@@ -58,7 +58,7 @@ const VideoStreamingPanel = (props) => {
 
 
   return (
-    <Panel {...rest} noCloseButton={true} style={{ height: '100%', overflow: 'auto' }}>
+    <Panel {...rest} noCloseButton={true} style={{ height: '100%', overflow: 'auto'}}>
       <Header
         title={`Video: ${video.foodName}`}
         slotAfter={
