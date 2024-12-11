@@ -68,7 +68,7 @@ const LoginPage = props => {
       
       <Header
         slotBefore={<img src={logo} alt="Logo" className={css.logo} />}
-        title={<span className={css.customTitle}>FoodHub 로그인</span>} />
+        title={<span className={css.customTitle}> 오늘 뭐 먹지? 로그인</span>} />
       <div style={{ padding: '40px' }}>
         <div
           style={{

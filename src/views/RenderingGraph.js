@@ -39,8 +39,8 @@ function RenderingGraph({cpuUsage}) {
 			<div
 			  key={index}
 			  style={{
-				width: index===0 ? '150px' : '100px',
-				height: index===0 ? '150px' : '100px',
+				width: index===0 ? '150px' : '50px',
+				height: index===0 ? '150px' : '50px',
 				margin: '10px',
 				flex: index === 0 ? '0 0 66%' : '0 0 33%',
 				marginTop: index===0 ? '50px' : '15px',
@@ -62,7 +62,7 @@ function RenderingGraph({cpuUsage}) {
 				}}
 				options={chartOptions}
 			  />
-			  <h6 style={{ fontSize: '20px', fontWeight: 'bold' }}>{labelsForCpu[index]}</h6>
+				  <h6 style={{ fontSize: '20px', fontWeight: 'bold', color: '#000' }}>{labelsForCpu[index]}</h6>
 			</div>
 		  ))}
 		</div>

@@ -12,8 +12,11 @@ import BodyText from '@enact/ui/BodyText';
 import {Cell, Row} from '@enact/ui/Layout';
 import ImageItem from '@enact/sandstone/ImageItem';
 
+import css from './Video.module.less';
+
 const Video = props => {
-	const {data, ...rest} = props;
+	const { data, ...rest } = props;
+	console.log(data);
 	const index = data?.index ?? 0;
 	const playlist = data?.playlist ?? null;
 	const videoIdList = playlist?.videoIdList ?? null;
@@ -188,7 +191,7 @@ const Video = props => {
 		if (videoIdList && videoIdList.length > 0) {
 			// 각 플레이리스트의 videoIdList 배열을 기반으로 비디오 정보 가져오기
 			fetchAllVideoDetails(playlist.videoIdList); // 비디오 정보 가져오기
-		  }
+		  }	
 	
 		// Cleanup the interval when the component unmounts
 		return () => clearInterval(intervalId);
@@ -280,8 +283,10 @@ const Video = props => {
 							src={video.thumbUrl} // 썸네일 이미지
 							label={video.description}  // 비디오 설명
 							orientation="horizontal"
+							className={css.customItem}
 						>
-							{video.title}
+							
+							<span style={{color: '#000'}}>{video.title}</span>
 						</ImageItem>
 					</Cell>
 				);

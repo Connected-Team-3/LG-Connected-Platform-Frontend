@@ -95,7 +95,7 @@ const RecentlyViewedVideosPanel = props => {
     };
 
 	return (
-        <Panel {...rest} style={{backgroundColor: '#FAF0E6' }}>
+        <Panel {...rest} style={{ height:'100vh', width:'100vw', overflow:'auto',  backgroundColor: '#FAF0E6' }}>
             <Header> 
                 <span
                     style={{
@@ -114,11 +114,12 @@ const RecentlyViewedVideosPanel = props => {
                     {videoData.map((video) => ( 
                         <Cell key={video.id} size="auto" onClick={() => handleVideoClick(video)}>
                         <MediaOverlay
-                            marqueeOn="focus"
-                            muted
-                            subtitle={video.description}
-                            textAlign="end"
-                            title={video.title}
+                                marqueeOn="focus"
+                                muted
+                                subtitle={video.description}
+                                textAlign="end"
+                                //title={video.title}
+                                title={<span style={{ color: '#000' }}>{video.title}</span>}
                         >
                             <source src={video.sourceUrl} />
                         </MediaOverlay>
