@@ -137,7 +137,8 @@ const PlayListPanel = props => {
                                         className={css.imageItem}
                                         orientation="horizontal"
                                     >
-                                        {video.title}
+                                  
+                                  <span style={{color: '#000'}}>{video.title}</span>
                                     </ImageItem>
                                 </Cell>
                             );
