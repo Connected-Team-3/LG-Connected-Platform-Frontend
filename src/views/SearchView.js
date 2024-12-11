@@ -9,6 +9,8 @@ import Spinner from '@enact/sandstone/Spinner';
 import IconItem from '@enact/sandstone/IconItem';
 import Icon from '@enact/sandstone/Icon';
 
+import css from './SearchView.module.less';
+
 const SearchView = (props) => {
     const { data, ...rest } = props;
     const [results, setResults] = useState([]);
@@ -58,15 +60,17 @@ const SearchView = (props) => {
     }
 
     return (
-        <Panel {...rest} noCloseButton={true} sytle={{ backgroundColor: '#fff' }}>
+        <Panel {...rest} className={css.searchviewPanel} noCloseButton={true} >
             <Header
-                title="Search Video"
-                slotAfter={
-                    <IconItem onClick={handleHomeClick} aria-label="Go to Home">
-                        <Icon>home</Icon>
-                    </IconItem>
-                }
+                title={<span className={css.customTitle}>Search Video</span>}
             />
+            <IconItem
+            className={css.homeIcon}
+            onClick={handleHomeClick}
+            aria-label="Go to Home"
+            >
+            <Icon>home</Icon>
+             </IconItem>
             <SearchComponent onSearch={handleSearch} />
             {errorMessage && <Heading>{errorMessage}</Heading>}
             {/* 검색어가 있을 때만 결과 표시 */}
