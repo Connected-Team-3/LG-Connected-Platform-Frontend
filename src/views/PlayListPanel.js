@@ -108,7 +108,9 @@ const PlayListPanel = props => {
           <Cell key={playlist.id} style={{ marginBottom: '20px', width: '600px' }}>
               {/* 플레이리스트 제목 표시 */}
               <BodyText size="large" style={{ marginLeft: '10px' }}>
-                  {playlist.title} {/* 플레이리스트 제목 표시 */}
+                  {/* {playlist.title} 플레이리스트 제목 표시 */}
+                  <span style={{color: '#000' }}>{playlist.title}</span>
+                  
               </BodyText>
   
               {/* 비디오들을 가로로 스크롤 가능한 영역으로 설정 */}
