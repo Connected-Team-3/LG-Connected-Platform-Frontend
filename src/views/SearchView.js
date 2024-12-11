@@ -76,6 +76,7 @@ const SearchView = (props) => {
             {/* 검색어가 있을 때만 결과 표시 */}
             {searchQuery && (
                 <>
+                    
                     {results.length > 0 ? (
                         <SearchResults
                             results={results}

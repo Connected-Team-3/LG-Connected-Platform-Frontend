@@ -63,7 +63,23 @@ const LoginPage = props => {
 
   return (
     <Panel {...rest} className={css.loginPanel}>
-      <Header title={<span className={css.customTitle}>FoodHub 로그인</span>}  />
+      <Header title={<span className={css.customTitle}>FoodHub 로그인</span>} />
+      <div style={{ padding: '40px' }}>
+        <div
+          style={{
+              border: '2px solid black', // 검은 외곽선
+              borderRadius: '20px', // 둥근 모서리
+              overflow: 'hidden', // 내부 요소가 둥근 외곽선 안에서 표시되도록 설정
+              padding: '40px', // 내부 여백
+              marginBottom: '20px', // 아래 여백
+              display: 'flex', // 내부 정렬을 위한 flexbox
+              flexDirection: 'column', // 세로 방향 정렬
+              alignItems: 'stretch', // 내부 요소를 컨테이너에 맞게 늘림
+              gap: '10px', // 요소 간의 간격
+              minHeight: '200px'
+              
+            }}
+        >
       <InputField
         placeholder="사용자명"
         value={username}
@@ -90,7 +106,9 @@ const LoginPage = props => {
        <Button onClick={goToSignup} 
         style={{ marginTop: '10px' }}>
         계정이 없나요?
-      </Button>
+          </Button>
+          </div>
+        </div>
     </Panel>
   );
 };

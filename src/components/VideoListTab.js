@@ -13,11 +13,16 @@ import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
 import ImageItem from '@enact/sandstone/ImageItem';
 import './VideoListTab.css'
+
+import React from 'react';
+import HeaderMessage from '../views/HeaderMessage';
+
+
 const categories = ['KOREAN_FOOD', 'JAPANESE_FOOD', 'CHINESE_FOOD', 'WESTERN_FOOD', 'SNACK_BAR', 'DESSERT', 'VEGETARIAN'];
 
 
 const VideoListTab = props => {
-	const {data, ...rest} = props;
+	const {data, userName,logo, ...rest} = props;
 	const index = data?.index ?? 0;
 	const [videoData, setVideoData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -78,6 +83,10 @@ const VideoListTab = props => {
 
 	return (
 		<Panel {...rest} style={{ height: '100%', overflow: 'auto', backgroundColor: '#FAF0E6' }}>
+            {/* HeaderMessage 추가 */}
+            
+            <HeaderMessage userName={userName} logo={logo} />
+            
             {/* 카테고리 선택 */}
             <Dropdown
                 direction="below"
