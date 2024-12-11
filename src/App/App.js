@@ -19,6 +19,7 @@ import LaunchScreenPanel from '../views/LaunchScreenPanel'; // LaunchScreen 컴�
 import SignupPage from '../views/SignupPanel';
 import UpdateProfile from '../views/UpdateProfile';
 import Cart from '../views/CartPanel';
+import HLSVideo from '../views/HLSVideo';
 // 실습 : 동적 panel 이동 기능 구현하기
 
 // For advanced
@@ -69,6 +70,8 @@ const mapper = item => {
 			return <SignupPage key={name} data = {data} />; //sginup panel 추가
 		case 'updateprofile':
 			return <UpdateProfile key={name} data = {data} />; //sginup panel 추가
+		case 'hls':
+			return <HLSVideo key={name} data = {data} />;
 		case 'cart':
 			return <Cart key={name} data = {data} />; //cart panel 추가
 		default:
