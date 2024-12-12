@@ -12,28 +12,30 @@ import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
 import ImageItem from '@enact/sandstone/ImageItem';
-
-
 import React from 'react';
-import HeaderMessage from '../views/HeaderMessage';
+import styles from './VideoListWithHLS.module.less'; // styles.module.less 파일을 import
+
 
 
 const ids = [3, 5, 6, 7, 8];
 
 
 const VideoListWithHLS = props => {
-	const {data, userName,logo, ...rest} = props;
+	const {data,...rest} = props;
 	const index = data?.index ?? 0;
 	const [videoData, setVideoData] = useState([]);
     const [loading, setLoading] = useState(true);
 	const {setPanelData} = useContext(PanelContext);
 	const handleVideoClick = useCallback((video) => {
-        setPanelData(prev => {
-            const updatedData = [...prev, { name: 'hls', data: { index: index + 1, videoId: video.id } }];
-            console.log('Panel stack after video click:', updatedData); // 변경된 패널 스택을 로그로 출력
-            return updatedData;
-        });
+        // setPanelData(prev => {
+        //      [...prev, { name: 'hls', data: { index: index + 1, videoId: video.id } }];
+        //     //console.log('Panel stack after video click:', updatedData); // 변경된 패널 스택을 로그로 출력
+        //     return updatedData;
+        // });
+        setPanelData(prev => [...prev, { name: 'hls', data: { index: index + 1, videoId: video.id} }]);
     }, [index, setPanelData]);
+
+    
 
     const fetchVideoDetails = async (videoIds) => {
         try {
@@ -69,32 +71,87 @@ const VideoListWithHLS = props => {
     }
 
 	
+    return (
+      <Panel
+          {...rest}
+          style={{
+              height: '100%',
+              overflow: 'auto',
+              backgroundColor: '#FFF6E1', // 기본 배경색
+              padding: '5px',
+          }}
+      >
+          <div
+              style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)', // 한 줄에 3개씩 고정
+                  gap: '20px', // 아이템 간격
+              }}
+          >
+              {videoData.map((video) => {
+                  if (!video) return null;
 
-	return (
-		<Panel {...rest} style={{ height: '100%', overflow: 'auto', backgroundColor: '#FAF0E6' }}>
-            {/* HeaderMessage 추가 */}
+                  return (
+                      <div
+                          key={video.id}
+                          style={{
+                              width: '100%', // 부모 그리드 크기에 따라 자동 조정
+                              height: '400px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'flex-start', // 텍스트를 좌측 정렬
+                              cursor: 'pointer',
+                              backgroundColor: '#FFF6E1', // 기본 배경색
+                              padding: '10px',
+                              boxShadow: 'none', // 기본 상태에서 그림자 없음
+                              transition: 'background-color 0.3s, box-shadow 0.3s', // 애니메이션 효과
+                          }}
+                          onClick={() => handleVideoClick(video)}
+                          onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#FFFFFF'; // 마우스 올렸을 때 배경 흰색
+                              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)'; // 그림자 효과
+                          }}
+                          onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = '#FFF6E1'; // 마우스가 떠날 때 배경 복귀
+                              e.currentTarget.style.boxShadow = 'none'; // 그림자 제거
+                          }}
+                      >
+                          <ImageItem
+                              src={video.thumbUrl} // 썸네일 이미지
+                              orientation="vertical"
+                              className={styles['no-transition-image']} // CSS 모듈로 클래스를 적용
+                              style={{
+                                  width: '100%',
+                                  height: '300px',
+                                  padding: '5px', // 패딩 감소
+                                  transition: 'none', // 애니메이션 효과 제거
+                                  transform: 'none', // 확대 효과 제거
+                              }}
+                              
+                          />
+                          <span
+                              style={{
+                                  color: '#393D46',
+                                  textAlign: 'left', // 좌측 정렬
+                                  marginTop: '10px', // 썸네일과 간격 줄이기
+                                  marginBottom: '10px', // 하단 여백 제거
+                                  fontSize: '30px', // 텍스트 크기 조정
+                                  fontWeight: 'bold', // 글씨 굵게
+                                  width: '100%', // 제목이 썸네일과 맞춰지도록 설정
+                              }}
+                          >
+                              {video.title}
+                          </span>
+                      </div>
+                  );
+              })}
+          </div>
+      </Panel>
+  );
 
-            <Row wrap
-            >
-                {videoData.map((video) => {
-                    if (!video) return null; // 비디오가 없으면 렌더링하지 않음
 
-                    return (
-                        <Cell key={video.id} style={{ width: '150px', height: '250px', marginRight: '10px' }} onClick={() => handleVideoClick(video)}>
-                            <ImageItem
-                                src={video.thumbUrl} // 썸네일 이미지
-                                //label={video.description}  // 비디오 설명
-                                orientation="horizontal"
-                            >
-                                {/* {video.title} */}
-                                {<span style={{ color: '#000' }}>{video.title}</span>}
-                            </ImageItem>
-                        </Cell>
-                    );
-                })}
-            </Row>
-		</Panel>
-    );
+  
+  
 };
 
 export default VideoListWithHLS;

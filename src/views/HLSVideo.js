@@ -2,7 +2,7 @@ import {useRef, useEffect, useCallback, useState} from 'react';
 import Button from '@enact/sandstone/Button'
 import Hls from 'hls.js';
 import axiosInstance from '../auth/axiosInstance';
-import { Panel } from '@enact/sandstone/Panels';
+import { Panel, Header } from '@enact/sandstone/Panels';
 
 const HLSVideo = (props) => {
 	const {data, ...rest} = props;
@@ -14,8 +14,7 @@ const HLSVideo = (props) => {
 	const [quality, setQuality] = useState(null);
 
 	useEffect(() => {
-		const videoUrl = `https://connectedplatform.s3.ap-northeast-2.amazonaws.com/hls/hls_${videoId}/master_playlist.m3u8`;
-		//const videoUrl = `stream/hls/hls_${videoId}/master_playlist.m3u8`;
+		const videoUrl = `stream/hls/hls_${videoId}/master_playlist.m3u8`;
 		if (Hls.isSupported()) {
 			const video = videoRef.current;
 			const hls = new Hls();
@@ -103,7 +102,8 @@ const HLSVideo = (props) => {
 	}, []);
 
 	return (
-			<Panel {...rest} >
+			<Panel>
+			<Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}></Header>
 				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
 				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>
 				<Button onClick={() => handleQualityChange(2)}>High Quality</Button>
