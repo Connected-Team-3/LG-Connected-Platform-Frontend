@@ -1,20 +1,26 @@
-import {useRef, useEffect, useCallback, useState} from 'react';
+import {useRef, useEffect, useCallback, useState, useContext} from 'react';
 import Button from '@enact/sandstone/Button'
 import Hls from 'hls.js';
 import axiosInstance from '../auth/axiosInstance';
-import { Panel } from '@enact/sandstone/Panels';
-
+import { Panel, Header } from '@enact/sandstone/Panels';
+import {PanelContext} from './Context';
+import icon from '@enact/sandstone/Icon'
 const HLSVideo = (props) => {
 	const {data, ...rest} = props;
 	const index = data?.index ?? 0;
+	const {setPanelData} = useContext(PanelContext);
 	const videoId = data.videoId;
 	const videoRef = useRef(null);
 	const hlsRef = useRef(null);
 	const [hlsInstance, setHlsInstance] = useState(null);
 	const [quality, setQuality] = useState(null);
-
+	// 뒤로 가기 기능을 위한 핸들러
+	const handleGoBack = () => {
+		setPanelData(prev => prev.slice(0, prev.length - 1));
+	};
 	useEffect(() => {
 		const videoUrl = `https://connectedplatform.s3.ap-northeast-2.amazonaws.com/hls/hls_${videoId}/master_playlist.m3u8`;
+
 		//const videoUrl = `stream/hls/hls_${videoId}/master_playlist.m3u8`;
 		if (Hls.isSupported()) {
 			const video = videoRef.current;
@@ -103,7 +109,8 @@ const HLSVideo = (props) => {
 	}, []);
 
 	return (
-			<Panel {...rest} >
+		<Panel >
+
 				<Button onClick={() => handleQualityChange(0)}>Low Quality</Button>
 				<Button onClick={() => handleQualityChange(1)}>Medium Quality</Button>
 				<Button onClick={() => handleQualityChange(2)}>High Quality</Button>

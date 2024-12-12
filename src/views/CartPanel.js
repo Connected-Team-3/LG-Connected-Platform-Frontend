@@ -63,6 +63,7 @@ const CartPanel = (props) => {
     >
         비우기
     </Button>
+    
       <div style={{ padding: '10px', color:'#000'}}>
         {cartItems.length > 0 ? (
           cartItems.map((item, index) => (

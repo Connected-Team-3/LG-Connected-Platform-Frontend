@@ -104,7 +104,7 @@ const VideoListPanel = props => {
 
 
 					
-					<Tab icon="home" title='home'
+					<Tab icon="home" title='Home'
 					>
 						<VideoListTab userName={userName} logo={logo} />
 					</Tab>

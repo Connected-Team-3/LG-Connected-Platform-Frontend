@@ -12,7 +12,7 @@ import Spinner from '@enact/sandstone/Spinner';
 import Dropdown from '@enact/sandstone/Dropdown';
 import { Panel } from '@enact/sandstone/Panels';
 import './VideoListTab.css'
-
+import ImageItem from '@enact/sandstone/ImageItem';
 import React from 'react';
 import HeaderMessage from '../views/HeaderMessage';
 
@@ -80,40 +80,82 @@ const VideoListTab = props => {
 
 	
     return (
-        <Panel {...rest} style={{ height: '100%', overflow: 'auto' ,backgroundColor: '#FFF6E1'}}>
-              {/* 카테고리 선택 */}
-              <Dropdown
-                  direction="below"
-                  open={dropdownOpen}
-                  onClose={() => setDropdownOpen(false)}
-                  onOpen={() => setDropdownOpen(true)}
-              onSelect={handleCategorySelect}
-                  size="small"
-                  //title="카테고리 선택"
-                  width="medium"
-              >
-                  {categories}
-              </Dropdown>
-  
-              <Row wrap>
-                  {videoData.map((video) => ( 
-                 <Cell key={video.id} size="auto" style={{color:'#000'}} onClick={() => handleVideoClick(video)}>
-                 <MediaOverlay
-                    marqueeOn="focus"
-                    muted
-                    //subtitle={video.description}
-                    textAlign="end"
-                    //title={video.title}
-                    title={<span style={{ color: '#000' }}>{video.title}</span>}
-                    style={{color:'#000'}}
-                 >
-                    <source src={video.sourceUrl} />
-                 </MediaOverlay>
-              </Cell>
-                  ))}
-              </Row>
+        <Panel
+            {...rest}
+            style={{
+                height: '100%',
+                overflow: 'auto',
+                backgroundColor: '#FFF6E1', // 기본 배경색
+                padding: '10px',
+            }}
+        >
+        {/* 카테고리 선택 */}
+        <Dropdown
+    direction="below"
+    open={dropdownOpen}
+    onClose={() => setDropdownOpen(false)}
+    onOpen={() => setDropdownOpen(true)}
+    onSelect={(category) => handleCategorySelect(category)}
+    size="small"
+    selected={categories.indexOf(selectedCategory)} // 선택된 카테고리 유지
+    width="medium"
+>
+    {categories}
+</Dropdown>
+
+            <div
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)', // 한 줄에 3개씩 고정
+                    gap: '20px', // 아이템 간격
+                }}
+            >
+                {videoData.map((video) => {
+                    if (!video) return null;
+    
+                    return (
+                        <Cell key={video.id}  style={{ color: '#000', height: '500px'  }} 
+                        onClick={() => handleVideoClick(video)}
+                        onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#FFFFFF'; // 마우스 올렸을 때 배경 흰색
+                              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)'; // 그림자 효과
+                          }}
+                          onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = '#FFF6E1'; // 마우스가 떠날 때 배경 복귀
+                              e.currentTarget.style.boxShadow = 'none'; // 그림자 제거
+                          }}>
+
+                            <ImageItem
+                                src={video.thumbUrl} // 썸네일 이미지
+                                orientation="vertical"
+                                style={{
+                                    width: '100%',
+                                    height: '400px',
+                                    padding: '20px', // 패딩 감소
+                                    transition: 'none', // 애니메이션 효과 제거
+                                    transform: 'none', // 확대 효과 제거
+                                }}
+                            />
+                            <span
+                                style={{
+                                    color: '#393D46',
+                                    textAlign: 'left', // 좌측 정렬
+                                    //marginTop: '10px', // 썸네일과 간격 줄이기
+                                    margin: '40px 20px', // 상하 40픽셀, 좌우 20픽셀
+                                    fontSize: '30px', // 텍스트 크기 조정
+                                    //fontWeight: 'bold', // 글씨 굵게
+                                    width: '100%', // 제목이 썸네일과 맞춰지도록 설정
+                                }}
+                            >
+                                {video.title}
+                            </span>
+                        </Cell>
+                    );
+                })}
+            </div>
         </Panel>
-      );
+    );
+    
 
 // 	return (
 // 		<Panel {...rest} style={{ height: '100vh', width:'100vw', overflow: 'auto', backgroundColor: '#FFF6E1', margin:'0' }}>
