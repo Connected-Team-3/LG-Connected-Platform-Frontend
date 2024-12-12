@@ -33,8 +33,7 @@
 | 성명                                                      | 역할                                                                                             |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | 이용욱</br>[@yongug](https://github.com/yongug)           | Frontend 전반 구현: 로그인/로그인/회원가입/회원 정보 수정/ 시스템 리소스 시각화 기능 구현 및 CSS |
-| 정현정</br>[@hyeonnnjung](https://github.com/hyeonnnjung) | DB 전반 설계, Backend 전반 구현,                                                                 |
-| Adaptive Streaming 구현, Backend 배포 기획                |
+| 정현정</br>[@hyeonnnjung](https://github.com/hyeonnnjung) | DB 전반 설계, Backend 전반 구현, Adaptive Streaming 구현, Backend 배포 기획                         |
 | 이서연</br>[@tjdus](https://github.com/tjdus)             | 비디오/플레이리스트/프로필/시청 기록 구현 및 Backend API 연동기획                                |
 | 이소연</br>[@lsoyeon](https://github.com/lsoyeon)         | Figma 디자인, 검색/비디오 정보/장바구니/회원정보 기능 구현 및 CSS                                |
 
