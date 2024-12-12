@@ -8,7 +8,7 @@ import css from './SearchResults.module.less';
 
 const SearchResults = ({ results, onVideoClick, query }) => {
     return (
-        <Panel noCloseButton={true} style={{ height: '100%', overflow: 'auto' }}>
+        <Panel noCloseButton={true} style={{ height: '200%', overflow: 'auto' }}>
             {/* 검색 결과가 있을 때만 Header 표시 */}
             {results.length > 0 && (
                 <Header

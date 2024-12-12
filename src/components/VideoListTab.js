@@ -91,17 +91,18 @@ const VideoListTab = props => {
         >
         {/* 카테고리 선택 */}
         <Dropdown
-                  direction="below"
-                  open={dropdownOpen}
-                  onClose={() => setDropdownOpen(false)}
-                  onOpen={() => setDropdownOpen(true)}
-              onSelect={handleCategorySelect}
-                  size="small"
-                  //title="카테고리 선택"
-                  width="medium"
-              >
-                  {categories}
-              </Dropdown>
+    direction="below"
+    open={dropdownOpen}
+    onClose={() => setDropdownOpen(false)}
+    onOpen={() => setDropdownOpen(true)}
+    onSelect={(category) => handleCategorySelect(category)}
+    size="small"
+    selected={categories.indexOf(selectedCategory)} // 선택된 카테고리 유지
+    width="medium"
+>
+    {categories}
+</Dropdown>
+
             <div
                 style={{
                     display: 'grid',
