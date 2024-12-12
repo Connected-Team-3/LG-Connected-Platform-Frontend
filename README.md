@@ -1,25 +1,170 @@
-# Enact Template
+# 2024-2 서강대학교 커넥티드플랫폼이론과실제(CSE4103)<br/>3조 Project
 
-Enact system application template for new developers
+# 발표 PPT
 
-## How to use
+# 개발 개요
 
-1. Clone this repository to your local.
-1. Remove `.git` from root directory.
-1. Initialize git with `git init`.
-1. Add origin to your remote `git remote add origin ${YOUR_APP_REPOSITORY}`.
-1. Modify codes.
+```
+💡 Enact를 활용한 WebOS 기반의 개인화 요리 레시피 플레이어
+```
 
-## How to update
+> 최근 1인 가구 / 요리 관련 TV 프로그램 증가로 요리에 대한 사람들의 관심이 늘어나고 있다.  
+> 실제 주방에서 요리를 할 때 스탠바이미와 같이 손쉽게 시청하면서 요리를 하고자 하는 수요가 있다.
+> 오늘 뭐 먹지 앱은 요리에 존재하는 재료를 손쉽게 담아서 주문 가능하고 사용자 시청 기록을 기반으로 레시피 영상 추천 등의 서비스 등 개인화된 서비스를 제공하여 손쉬운 요리 레시피 시청 및 요리가 가능하도록 돕는다.
 
-### What can we discuss?
+# 개발 계획
 
-- Structure of directories
-- What is the best practice of using redux, hooks or states?
-- Good codes to be added
-- Bad codes to be removed
-- And so on
+- 1주차: 개발환경 세팅 및 설계
+- 2~3주차: 핵심 기능 개발
+- 4주차: 디버깅 및 테스트 코드 작성
+- 5주차: 개발 문서 작성 및 추가 기능 구현
 
-### How do we discuss?
+# 기술 스택
 
-Please make an issue and let's talk.
+- F/E: Enact
+- B/E: Spring boot / Aws
+- DB: MySQL
+- Documentation: Swagger, Notion
+- UI/UX: Figma
+- Version Control: Github
+
+# 역할 배분
+
+| 성명                                                      | 역할                                                                                             |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 이용욱</br>[@yongug](https://github.com/yongug)           | Frontend 전반 구현: 로그인/로그인/회원가입/회원 정보 수정/ 시스템 리소스 시각화 기능 구현 및 CSS |
+| 정현정</br>[@hyeonnnjung](https://github.com/hyeonnnjung) | DB 전반 설계, Backend 전반 구현,                                                                 |
+| Adaptive Streaming 구현, Backend 배포 기획                |
+| 이서연</br>[@tjdus](https://github.com/tjdus)             | 비디오/플레이리스트/프로필/시청 기록 구현 및 Backend API 연동기획                                |
+| 이소연</br>[@lsoyeon](https://github.com/lsoyeon)         | Figma 디자인, 검색/비디오 정보/장바구니/회원정보 기능 구현 및 CSS                                |
+
+---
+
+# 개발 내용
+
+일반적인 요리 영상 목록과 달리 재료별 / 개인별 식이에 따른 요리 영상을 보여주고 장바구니에 해당 영상의 재료를 담을 수 있다.
+
+```어플리케이션의 전반적인 흐름도는 위와 같다.
+이에 더해 프로젝트 필수 구현 사항인 미디어 이어보기 기능, 실시간 시스템 자원현황 시각화(CPU, Memory)를 구현하였다.
+
+## 로그인 / 회원가입
+
+~~ 어플리케이션을 실행하면 로그인 또는 회원가입을 진행한다.
+
+
+## 홈
+
+
+- 동영상 썸네일과 제목들이 그리드 형태로 나열되어 있다.
+- 좌측에 다른 화면으로 넘어갈 수 있는 ‘탭 사이드바’가 존재하며, 이를 통해 홈, 검색, 기록, 플레이리스트, 스트리밍, 장바구니, 프로필, 시스템 사용량 화면으로 전환할 수 있다.
+
+- 각 행에 해당 사용자가 시청한 영상 / 만든 플레이 리스트를 리스트업한다.
+
+- 리모컨을 이용해 focus하면 각 썸네일이 영상 미리보기로 전환된다.
+- 원하는 영상을 선택하면 차후 설명할 영상 재생 화면으로 진행된다.
+
+## 영상 재생
+
+
+## 검색
+
+- 요리 영상 제목 / 재료명 등으로 검색이 가능하다.
+
+## 프로필
+
+회원이 조회한 영상/시간대 기반으로 음식 선호도 분석 및 정보 수정 기능
+
+## 기록
+
+내가 본 동영상을 리스트업하여 검토할 수 있다.
+
+
+## 리소스 사용량
+
+실시간 시스템 자원현황 시각화(CPU, Memory)를 구현하였다.
+
+
+## 백엔드-프론트엔드 **간 상호작용**
+
+백엔드와 프론트엔드간 간 상호작용하는 부분은 다음과 같다.
+
+1. 회원가입 / 로그인 / 로그아웃
+2. 사용자 기록 / 플레이리스트 조회
+3. 검색
+4. 장바구니 담기
+
+각 기능을 구현한 컴포넌트들에서 DB 조회가 필요한 이벤트가 발생할 때마다 async/await를 이용한 비동기방식으로 데이터들을 fetch하였다. fetch 시의 api는 백엔드 단에서 정의 해놓은 양식대로 호출하였고, api들은 모두 스웨거 문서에 정의돼있다. 다음 사진은 api router들이다.
+
+
+api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스를 검증한 경우에는 에러 메시지를 출력하여 사용자가 올바른 동작을 수행할 수 있도록 하였다. 다음은 몇 가지 테스트 케이스들 목록이다.
+
+
+## 프론트엔드 각 컴포넌트의 역할
+
+ 프론트엔드 구현 시 각 컴포넌트 별 하나의 기능만 수행하도록 최대한 모듈화하여 구현하였다. 다음은 각 컴포넌트에 대한 설명이다.
+
+**1.** **App**
+- App 을 실행하면 로그인/회원가입 패널을 런치하고 이후 패널 데이터에 따라 패널을 관리한다.
+
+
+
+<img src="https://github.com/Connected-Team-3/LG-Connected-Platform-Frontend/issues/26#issue-2734876186" width="600">
+
+**2.** **Home**
+- 홈 화면으로 유저에게 알맞은 영상들을 리스트업해서 보여준다.
+
+**3.** **Search**
+- 요리명/ 재료명/ 제목 등으로 요리 레시피를 검색한다.
+
+**4.** **Playlists**
+- 사용자가 원하는 플레이리스트를 보여준다.
+
+**5.** **Streaming**
+- 스트리밍 패널이다. HLS 를 도입하였다.
+
+**6.** **Cart**
+- 장바구니 패널이다.
+
+**8.** **Profile**
+- 사용자의 음식 선호도 / 프로필 수정하기
+
+**9.** **Resource**
+- Luna System Call을 호출하여 현재 시스템의 Cpu, Memory 사용량을 fetch하고 이를 Rendering Graph, RenderingMemoryGraph 컴포넌트의 props로 넣어준다.
+
+---
+
+# Back-End Design Architecture
+
+
+# DataBase Schema
+
+
+# Back-End Test Plan
+1. User
+
+2. Video
+
+4. ViewHistory
+ - 시청기록 생성 API 통신 Test
+    * 시청기록 생성 API를 호출하였을 때 올바른 응답과 시청기록이 생성되는지 테스트
+ - 시청기록 조회 API 통신 Test
+    * 시청기록 조회 API를 호출하였을 때 올바른 응답과 시청기록 list가 return 되는지 테스트
+
+
+
+# Use Case 검토 및 추가 활용 방안
+
+- 쇼핑 앱과 연동하여 편리한 주문 도입
+
+  요리 영상을 시청한 후 편리하게 장바구니에 재료를 담아 추후 쇼핑앱(쿠팡/SSG) 등 과 연동한다면 편리한 주문을 구현할 수 있다.
+
+- 알레르기 / 비건 등 개인의 취향에 맞는 요리를 선정하여 안전한 식생활의 추구
+
+  개인화 시스템을 도입하여 알레르기 / 비건 등 개인의 취향에 맞는 요리를 선정하여 안전한 식생활의 추구한다.
+
+### 비즈니스 모델
+
+- 제휴 마케팅 및 콘텐츠 스폰서십
+
+    제휴를 통해 식품회사 등 여러 회사의 제품을 앱 내에서 홍보할 수 있다.
+```
