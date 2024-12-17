@@ -1,6 +1,7 @@
 # 2024-2 서강대학교 커넥티드플랫폼이론과실제(CSE4103)<br/>3조 Project
 
 # 발표 PPT
+[오늘뭐먹지.pptx](https://docs.google.com/presentation/d/1Vu5V02wbtnJ3gf9xR64yyw9Vxhhht80k/export/pptx)
 
 # 개발 개요
 
